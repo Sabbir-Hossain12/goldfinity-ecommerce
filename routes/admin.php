@@ -171,6 +171,7 @@ Route::group(['prefix'=>'admin','middleware' => ['auth.admin:admin']], function 
     Route::resource('/blogs', BlogController::class)->names('admin.blogs');
     Route::get('blog/get/data', [BlogController::class, 'blogdata'])->name('admin.blog.data');
     Route::put('blog/status', [BlogController::class, 'statusupdate']);
+    Route::post('/upload-ckeditor-image', [BlogController::class, 'uploadCkeditorImage'])->name('admin.ckeditor.upload');
     
     
 

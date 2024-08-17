@@ -36,13 +36,33 @@
                             <thead class="thead-light">
                             <tr>
                                 <th>SL</th>
-                                <th>Admin</th>
-                                <th>Email</th>
-                                <th>Roles</th>
+                                <th>Image</th>
+                                <th>Title</th>
+                                <th>Date</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
+                            
+                            @foreach($data as $key => $value) 
+                                
+                                <tr>
+                                    <td>{{$key+1}}</td>
+                                    <td><img src="{{asset($value->main_img)}}" alt="" style="width: 80px;height: 80px"></td>
+                                    <td>{{$value->title}}</td>
+                                    <td>{{$value->created_at->format('d M Y h:i A')}}</td>
+                                    <td>
+                                        <a href="{{route('admin.blogs.edit',$value->id)}}" class="btn btn-info">Edit</a>
+                                        
+                                        <button type="submit" form="blogDelete" class="btn btn-danger" >Delete</button>
+                                        <form id="blogDelete" action="{{route('admin.blogs.destroy',$value->id)}}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                    </td>
+                                
+                                
+                            @endforeach
                        
                             </tbody>
                         </table>
@@ -53,11 +73,35 @@
 
         </div>
     </div>
-
+    <script src="{{asset('https://cdn.jsdelivr.net/npm/sweetalert2@11')}}"></script>
     <script>
         $(document).ready( function () {
             $('#roleinfo').DataTable();
         } );
+
+        $('#blogDelete').on('submit', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                    // $(this).submit();
+                    $('#blogDelete').off('submit').submit();
+                }
+            })
+        })
+        
     </script>
 
 @endsection
