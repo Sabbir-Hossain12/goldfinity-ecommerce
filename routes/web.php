@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\TrackVisitor;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebviewController;
@@ -18,7 +19,7 @@ use App\Http\Controllers\OrderController;
 
 Route::get('/', function () {
     return view('webview.content.maincontent');
-});
+})->middleware(TrackVisitor::class);
 // web view
 
 Route::get('venture/{slug}', [WebviewController::class, 'index']);
