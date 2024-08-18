@@ -29,6 +29,21 @@ class SubcategoryController extends Controller
         $subcategory =new Subcategory();
         $subcategory->sub_category_name =$request->sub_category_name;
         $subcategory->category_id =$request->category_id;
+
+        $subcategory->meta_title= $request->meta_title;
+        $subcategory->meta_desc= $request->meta_desc;
+        $subcategory->meta_keyword= $request->meta_keyword;
+
+        if ($request->hasFile('meta_image'))
+        {
+            $file = $request->file('meta_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() .uniqid() .'.' . $extension;
+            $file->move('public/images/subcategory/meta/', $filename);
+            $subcategory->meta_image = 'public/images/subcategory/meta/'.$filename;
+        }
+        
+        
         $subcategory_icon = $request->file('subcategory_icon');
         $name = time() . "_" . $subcategory_icon->getClientOriginalName();
         $uploadPath = ('public/images/subcategory/');
@@ -75,6 +90,22 @@ class SubcategoryController extends Controller
         $subcategory = Subcategory::findOrfail($id);
         $subcategory->sub_category_name =$request->sub_category_name;
         $subcategory->category_id =$request->category_id;
+
+        $subcategory->meta_title= $request->meta_title;
+        $subcategory->meta_desc= $request->meta_desc;
+        $subcategory->meta_keyword= $request->meta_keyword;
+
+        if ($request->hasFile('meta_image'))
+        {
+            if ($subcategory->meta_image && file_exists($subcategory->meta_image)) {
+                unlink($subcategory->meta_image);
+            }
+            $file = $request->file('meta_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() .uniqid() .'.' . $extension;
+            $file->move('public/images/subcategory/meta/', $filename);
+            $subcategory->meta_image = 'public/images/subcategory/meta/'.$filename;
+        }
 
         if($request->subcategory_icon){
             if(isset($subcategory->subcategory_icon)){

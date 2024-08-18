@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Backend\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Visitor;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
+use PHPUnit\Framework\Constraint\Count;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -84,8 +87,18 @@ class AuthenticatedSessionController extends Controller
 
     public function dashboard(){
         $admin=Admin::where('email',Auth::guard('admin')->user()->email)->first();
+//       overall Count
+        $visitorCountToday= Visitor::count();
+//       This Month Count
+        $lastMonth = Carbon::now()->subMonth()->month;
+        $lastYear = Carbon::now()->subMonth()->year;
+
+        $visitorCountLastMonth = Visitor::whereMonth('visited_date', $lastMonth)
+            ->whereYear('visited_date', $lastYear)
+            ->count();
+        
         if($admin->hasrole('superadmin')){
-            return view('backend.content.maincontent');
+            return view('backend.content.maincontent',compact(['visitorCountToday','visitorCountLastMonth']));
         }else{
             abort(403);
         }

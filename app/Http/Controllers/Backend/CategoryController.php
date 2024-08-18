@@ -31,14 +31,28 @@ class CategoryController extends Controller
     {
         $category =new Category();
         $category->category_name =$request->category_name;
+        $category->meta_title= $request->meta_title;
+        $category->meta_desc= $request->meta_desc;
+        $category->meta_keyword= $request->meta_keyword;
+
+
+        if ($request->hasFile('meta_image'))
+        {
+            $file = $request->file('meta_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() .uniqid() .'.' . $extension;
+            $file->move('public/images/category/meta/', $filename);
+            $category->meta_image = 'public/images/category/meta/'.$filename;
+        }
+        
+        
+        
         $category_icon = $request->file('category_icon');
         $name = time() . "_" . $category_icon->getClientOriginalName();
         $uploadPath = ('public/images/category/'); 
         $category_icon->move($uploadPath, $name);
         $category_iconImgUrl = $uploadPath . $name;
         $webp = $category_iconImgUrl;
-        
-        
         $im = imagecreatefromstring(file_get_contents($webp));
         $new_webp = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp', $webp);
         imagewebp($im, $new_webp, 50);
@@ -89,6 +103,23 @@ class CategoryController extends Controller
     {
         $category = Category::findOrfail($id);
         $category->category_name =$request->category_name;
+
+        $category->meta_title= $request->meta_title;
+        $category->meta_desc= $request->meta_desc;
+        $category->meta_keyword= $request->meta_keyword;
+
+
+        if ($request->hasFile('meta_image'))
+        {
+            if ($category->main_img && file_exists($category->main_img)) {
+                unlink($category->main_img);
+            }
+            $file = $request->file('meta_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() .uniqid() .'.' . $extension;
+            $file->move('public/images/category/meta/', $filename);
+            $category->meta_image = 'public/images/category/meta/'.$filename;
+        }
         if($request->category_icon){ 
             $category_icon = $request->file('category_icon');
             $name = time() . "_" . $category_icon->getClientOriginalName();

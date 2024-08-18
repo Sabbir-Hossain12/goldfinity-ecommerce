@@ -21,6 +21,12 @@ class CreateSubcategoriesTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->text('subcategory_icon')->nullable();
             $table->string('status')->default('Active');
+
+            $table->string('meta_title')->nullable();
+            $table->text('meta_desc')->nullable();
+            $table->text('meta_keyword')->nullable();
+            $table->text('meta_image')->nullable();
+            
             $table->timestamps();
         });
     }

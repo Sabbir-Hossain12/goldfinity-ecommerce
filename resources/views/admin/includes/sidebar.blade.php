@@ -151,6 +151,13 @@
                             <span>Payment</span>
                         </a>
                     </li>
+
+                    <li>
+                        <a href="{{ route('visitorReport') }}">
+                            <span>Visitor</span>
+                        </a>
+                    </li>
+                    
                 </ul>
             </li><!-- End Tables Nav -->
 

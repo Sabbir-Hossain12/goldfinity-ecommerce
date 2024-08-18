@@ -22,6 +22,12 @@ class CreateSlidersTable extends Migration
             $table->text('slider_btn_link')->nullable();
             $table->string('slug')->unique();
             $table->text('slider_image')->nullable();
+            
+            $table->string('meta_title')->nullable();
+            $table->text('meta_desc')->nullable();
+            $table->text('meta_keyword')->nullable();
+            $table->text('meta_image')->nullable();
+            
             $table->string('status')->default('Active');
             $table->timestamps();
         });

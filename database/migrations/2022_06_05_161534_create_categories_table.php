@@ -18,6 +18,12 @@ class CreateCategoriesTable extends Migration
             $table->string('category_name');
             $table->string('slug')->unique();
             $table->text('category_icon')->nullable();
+            
+            $table->string('meta_title')->nullable();
+            $table->text('meta_desc')->nullable();
+            $table->text('meta_keyword')->nullable();
+            $table->text('meta_image')->nullable();
+            
             $table->string('status')->default('Active');
             $table->timestamps();
         });

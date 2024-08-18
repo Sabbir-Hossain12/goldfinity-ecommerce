@@ -294,6 +294,8 @@ Route::group(['middleware' => ['auth.admin:admin']], function () {
     Route::get('admin/user/report', [ReportController::class, 'userreport'])->name('userreport');
     Route::get('admin/payment/report', [ReportController::class, 'paymentreport'])->name('paymentreport');
     Route::get('admin/product/report', [ReportController::class, 'productreport'])->name('productreport');
+    Route::get('admin/visitor/report', [ReportController::class, 'visitorReport'])->name('visitorReport');
+    
 
     //report data
     Route::get('admin/courier/user/report/data', [ReportController::class, 'courieruserreportdata']);
@@ -301,6 +303,7 @@ Route::group(['middleware' => ['auth.admin:admin']], function () {
     Route::get('admin/user/report/data', [ReportController::class, 'userreportdata']);
     Route::get('admin/payment/report/data', [ReportController::class, 'paymentreportdata']);
     Route::get('admin/product/report/data', [ReportController::class, 'productreportdata']);
+    Route::get('admin/visitor/report/data', [ReportController::class, 'visitorReportData']);
 
 
 });

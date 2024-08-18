@@ -25,9 +25,6 @@ class TrackVisitor
             $existingVisitor = Visitor::where('ip_address', $ipAddress)
                 ->where('visited_date', $currentDate)
                 ->first();
-
-            
-            
             
             $ip = $request->ip();
             

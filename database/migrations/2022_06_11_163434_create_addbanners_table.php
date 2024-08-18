@@ -17,6 +17,12 @@ class CreateAddbannersTable extends Migration
             $table->id();
             $table->text('add_link')->nullable();
             $table->longText('add_image');
+            
+            $table->string('meta_title')->nullable();
+            $table->text('meta_desc')->nullable();
+            $table->text('meta_keyword')->nullable();
+            $table->text('meta_image')->nullable();
+            
             $table->string('status')->default('Active');
             $table->timestamps();
         });

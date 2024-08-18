@@ -19,6 +19,12 @@ class CreateMenusTable extends Migration
             $table->string('slug')->unique();
             $table->text('menu_banner')->nullable();
             $table->string('status')->default('Active');
+
+            $table->string('meta_title')->nullable();
+            $table->text('meta_desc')->nullable();
+            $table->text('meta_keyword')->nullable();
+            $table->text('meta_image')->nullable();
+            
             $table->timestamps();
         });
     }

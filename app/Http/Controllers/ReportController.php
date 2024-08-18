@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Courier;
 use App\Models\Admin;
+use App\Models\Visitor;
 use Illuminate\Http\Request;
 use DB;
 use DataTables;
@@ -31,6 +32,21 @@ class ReportController extends Controller
     {
         return view('admin.content.report.userreport');
     }
+
+    public function visitorReport()
+    {
+        return view('admin.content.report.visitor-report');
+    }
+    
+    
+    public function visitorReportData(Request $request)
+    {
+        $visitors = Visitor::whereBetween('visited_date', [$request->startDate, $request->endDate])->get();
+
+
+        return DataTables::of($visitors)->make();
+    }
+
 
 
     public function courieruserreportdata(Request $request)
@@ -320,26 +336,8 @@ class ReportController extends Controller
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
+        
 
 
 
