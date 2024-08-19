@@ -30,8 +30,23 @@ class BrandController extends Controller
     {
         $brand =new Brand();
         $brand->brand_name =$request->brand_name;
+        $brand->meta_title= $request->meta_title;
+        $brand->meta_desc= $request->meta_desc;
+        $brand->meta_keyword= $request->meta_keyword;
+
+        if ($request->hasFile('meta_image'))
+        {
+            $file = $request->file('meta_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() .uniqid() .'.' . $extension;
+            $file->move('public/images/brand/meta/', $filename);
+            $brand->meta_image = 'public/images/brand/meta/'.$filename;
+        }
+        
+        
+        
         $brand_icon = $request->file('brand_icon');
-        $name = time() . "_" . $brand_icon->getClientOriginalName();
+        $name = time() .uniqid() . "_" . $brand_icon->getClientOriginalExtension();
         $uploadPath = ('public/images/brand/');
         $brand_icon->move($uploadPath, $name);
         $brand_iconImgUrl = $uploadPath . $name;
@@ -75,15 +90,32 @@ class BrandController extends Controller
     {
         $brand = Brand::findOrfail($id);
         $brand->brand_name =$request->brand_name;
+        $brand->meta_title= $request->meta_title;
+        $brand->meta_desc= $request->meta_desc;
+        $brand->meta_keyword= $request->meta_keyword;
+
+        if ($request->hasFile('meta_image'))
+        {
+            if ($brand->meta_image && file_exists($brand->meta_image)) {
+                unlink($brand->meta_image);
+            }
+            $file = $request->file('meta_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() .uniqid() .'.' . $extension;
+            $file->move('public/images/brand/meta/', $filename);
+            $brand->meta_image = 'public/images/brand/meta/'.$filename;
+        }
+
         if($request->brand_icon){
             unlink($brand->brand_icon);
             $brand_icon = $request->file('brand_icon');
-            $name = time() . "_" . $brand_icon->getClientOriginalName();
+            $name = time() .uniqid() . "_" . $brand_icon->getClientOriginalExtension();
             $uploadPath = ('public/images/brand/');
             $brand_icon->move($uploadPath, $name);
             $brand_iconImgUrl = $uploadPath . $name;
             $brand->brand_icon = $brand_iconImgUrl;
         }
+        
         $brand->save();
         return response()->json($brand, 200);
     }

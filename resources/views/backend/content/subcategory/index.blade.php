@@ -191,7 +191,7 @@
                             </div>
                             <div class="m-3 ms-0 mb-0"
                                  style="text-align: center;height: 100px;margin-top:20px !important">
-                                <h4 style="width:30%;float: left;text-align: left;">Icon : </h4>
+                                <h4 style="width:30%;float: left;text-align: left;">Meta Image</h4>
                                 <div id="previmg2" style="float: left;"></div>
                             </div>
                             <br>
@@ -203,6 +203,7 @@
                                         class="btn btn-primary AddCourierBtn btn-block">Update</button>
                                 </div>
                             </div>
+                            
                         </form>
 
                     </div>

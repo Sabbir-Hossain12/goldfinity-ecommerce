@@ -78,6 +78,30 @@
                                     type="file">
                             </div>
                             <br>
+                            <br>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" name="meta_title" id="meta_title"
+                                       placeholder="Meta Title">
+                                <label for="floatingInput">Meta Title</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <textarea type="text" class="form-control" name="meta_desc" id="meta_desc"
+                                          placeholder="meta_desc"></textarea>
+                                <label for="meta_desc">Meta Description</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <textarea type="text" class="form-control" name="meta_keyword" id="meta_keyword"
+                                          placeholder="meta_keyword"></textarea>
+                                <label for="meta_keyword">Meta Keywords</label>
+                            </div>
+
+                            <div class="mt-4 mb-4">
+                                <input class="form-control form-control-lg bg-dark" name="meta_image"
+                                       id="meta_image" type="file">
+                            </div>
+                           
                             <div class="form-group mt-2" style="text-align: right">
                                 <div class="submitBtnSCourse">
                                     <button type="submit" name="btn" data-bs-dismiss="modal"
@@ -123,6 +147,35 @@
                                 style="text-align: center;height: 100px;margin-top:20px !important">
                                 <h4 style="width:30%;float: left;text-align: left;">Icon : </h4>
                                 <div id="previmg" style="float: left;"></div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" name="meta_title" id="meta_title"
+                                       placeholder="Meta Title">
+                                <label for="floatingInput">Meta Title</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <textarea type="text" class="form-control" name="meta_desc" id="meta_desc"
+                                          placeholder="meta_desc"></textarea>
+                                <label for="meta_desc">Meta Description</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <textarea type="text" class="form-control" name="meta_keyword" id="meta_keyword"
+                                          placeholder="meta_keyword"></textarea>
+                                <label for="meta_keyword">Meta Keywords</label>
+                            </div>
+
+                            <div class="mt-4 mb-4">
+                                <input class="form-control form-control-lg bg-dark" name="meta_image"
+                                       id="meta_image" type="file">
+                            </div>
+                            <div class="m-3 ms-0 mb-0"
+                                 style="text-align: center;height: 100px;margin-top:20px !important">
+                                <h4 style="width:30%;float: left;text-align: left;">Meta Image</h4>
+                                <div id="previmg2" style="float: left;"></div>
                             </div>
                             <br>
                             <div class="form-group mt-2" style="text-align: right">
@@ -234,9 +287,18 @@
                         .brand_name);
                     $('#EditBrand').find('#brand_id').val(data.id);
 
+                    $('#EditBrand').find('#meta_desc').val(data.meta_desc);
+                    $('#EditBrand').find('#meta_title').val(data.meta_title);
+                    $('#EditBrand').find('#meta_keyword').val(data.meta_keyword);
+
                     $('#previmg').html('');
                     $('#previmg').append(`
                         <img  src="../` + data.brand_icon + `" alt = "" style="height: 80px" />
+                    `);
+
+                    $('#previmg2').html('');
+                    $('#previmg2').append(`
+                        <img  src="../` + data.meta_image + `" alt = "" style="height: 80px" />
                     `);
 
                     $('#EditBrand').attr('data-id', data.id);

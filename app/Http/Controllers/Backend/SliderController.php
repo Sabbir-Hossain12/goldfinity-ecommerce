@@ -37,6 +37,9 @@ class SliderController extends Controller
         $slider->slider_text =$request->slider_text;
         $slider->slider_btn_name =$request->slider_btn_name;
         $slider->slider_btn_link =$request->slider_btn_link;
+        
+        
+        
         $sliderimage = $request->file('slider_image');
         $name = time() . "_" . $sliderimage->getClientOriginalName();
         $uploadPath = ('public/images/slider/');

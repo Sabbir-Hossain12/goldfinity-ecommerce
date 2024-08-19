@@ -215,43 +215,43 @@
                             </div>
                             <h5 class="text-uppercase mt-0 mb-3 bg-light p-2">Product Variants</h5>
 
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group mb-3">
-                                        <label for="ProductRegularPrice">Colour
-                                            <span class="text-danger">*</span></label>
-                                        <br>
-                                        @php
-                                            $productColors = json_decode($product->color,true) ?? []; 
-                                        @endphp
-                                            @forelse ($colors as $color)
-                                            
-                                            <input type="checkbox" name="color[]"
-                                                   value="{{ $color->value }}" @if(in_array($color->value, $productColors)) checked @endif>
-                                            {{ $color->value }} &nbsp;
-                                        @empty
-                                        @endforelse
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group mb-3">
-                                        <label for="ProductSalePrice">Size <span
-                                                    class="text-danger">*</span></label>
-                                        <br>
-                                        @php
-                                            $productSizes = json_decode($product->size,true) ?? [];
-                                        @endphp
-                                        @forelse ($sizes as $size)
-                                            <input type="checkbox" name="size[]"
-                                                   value="{{ $size->value }}" @if(in_array($size->value, $productSizes)) checked @endif>
-                                            {{ $size->value }} &nbsp;
-                                        @empty
-                                        @endforelse
-                                    </div>
-                                </div>
+{{--                            <div class="row">--}}
+{{--                                <div class="col-12">--}}
+{{--                                    <div class="form-group mb-3">--}}
+{{--                                        <label for="ProductRegularPrice">Colour--}}
+{{--                                            <span class="text-danger">*</span></label>--}}
+{{--                                        <br>--}}
+{{--                                        @php--}}
+{{--                                            $productColors = json_decode($product->color,true) ?? []; --}}
+{{--                                        @endphp--}}
+{{--                                            @forelse ($colors as $color)--}}
+{{--                                            --}}
+{{--                                            <input type="checkbox" name="color[]"--}}
+{{--                                                   value="{{ $color->value }}" @if(in_array($color->value, $productColors)) checked @endif>--}}
+{{--                                            {{ $color->value }} &nbsp;--}}
+{{--                                        @empty--}}
+{{--                                        @endforelse--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-12">--}}
+{{--                                    <div class="form-group mb-3">--}}
+{{--                                        <label for="ProductSalePrice">Size <span--}}
+{{--                                                    class="text-danger">*</span></label>--}}
+{{--                                        <br>--}}
+{{--                                        @php--}}
+{{--                                            $productSizes = json_decode($product->size,true) ?? [];--}}
+{{--                                        @endphp--}}
+{{--                                        @forelse ($sizes as $size)--}}
+{{--                                            <input type="checkbox" name="size[]"--}}
+{{--                                                   value="{{ $size->value }}" @if(in_array($size->value, $productSizes)) checked @endif>--}}
+{{--                                            {{ $size->value }} &nbsp;--}}
+{{--                                        @empty--}}
+{{--                                        @endforelse--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
 
-                            </div>
+{{--                            </div>--}}
 
                         </div>
 
@@ -268,6 +268,9 @@
                                             <th>Weight</th>
                                             <th>Regular Price</th>
                                             <th>Discount (%)</th>
+                                            <th>Total Quantity</th>
+                                            <th>Available Quantity</th>
+                                            <th>Sold Quantity</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
@@ -280,6 +283,9 @@
                                                     <td><span class="productWeight">{{$weight->weight_name}} </span></td>
                                                     <td><input type="number" class="productRegularPrice form-control" style="width:80px;" value="{{$weight->productRegularPrice}}"></td>
                                                     <td><input type="number" class="productDiscount form-control" style="width:80px;" value="{{$weight->discount}}"></td>
+                                                    <td><input type="number" class="productDiscount form-control" style="width:80px;" value="{{$weight->total_qty}}" readonly></td>
+                                                    <td><input type="number" class="productDiscount form-control" style="width:80px;" value="{{$weight->available_qty}}" readonly></td>
+                                                    <td><input type="number" class="productDiscount form-control" style="width:80px;" value="{{$weight->sold_qty}}" readonly></td>
 
 
                                                     <td><button class="btn btn-sm btn-danger delete-btn"><i class="fa fa-trash"></i></button></td>
@@ -290,7 +296,7 @@
                                         </tbody>
                                         <tfoot>
                                         <tr>
-                                            <td colspan="5">
+                                            <td colspan="8">
                                                 <select id="productID" style="width: 100%;">
                                                     
                                                  
@@ -527,13 +533,16 @@
                     }
                 }
             }).trigger("change").on("select2:select", function (e) {
-                console.log(e.params.data)
+                
                 $("#productTable tbody").append(
                     "<tr>" +
                     '<td><span class="attrValueId">' + e.params.data.id + '</span></td>' +
                     '<td><span class="productWeight">' + e.params.data.text + '</span></td>' +
                     '<td><input type="number" class="productRegularPrice form-control" style="width:80px;" value="1"></td>' +
                     '<td><input type="number" class="productDiscount form-control" style="width:80px;" value="1"></td>' +
+                    '<td><input type="number" class="productDiscount form-control" style="width:60px;" value="{{$weight->total_qty}}" readonly></td>'+
+                '<td><input type="number" class="productDiscount form-control" style="width:60px;" value="{{$weight->available_qty}}" readonly></td>'+
+                '<td><input type="number" class="productDiscount form-control" style="width:60px;" value="{{$weight->sold_qty}}" readonly></td>' +
 
 
                     '<td><button class="btn btn-sm btn-danger delete-btn"><i class="fa fa-trash"></i></button></td>\n' +

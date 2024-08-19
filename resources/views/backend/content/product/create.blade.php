@@ -195,32 +195,32 @@
                                         <h5 class="text-uppercase mt-0 mb-3 bg-light p-2">Product Variants</h5>
 
                                         <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group mb-3">
-                                                    <label for="ProductRegularPrice">Colour
-                                                        <span class="text-danger">*</span></label>
-                                                    <br>
-                                                    @forelse ($colors as $color)
-                                                        <input type="checkbox" name="color[]"
-                                                               value="{{ $color->value }}">
-                                                        {{ $color->value }} &nbsp;
-                                                    @empty
-                                                    @endforelse
-                                                </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="form-group mb-3">
-                                                    <label for="ProductSalePrice">Size <span
-                                                                class="text-danger">*</span></label>
-                                                    <br>
-                                                    @forelse ($sizes as $size)
-                                                        <input type="checkbox" name="size[]"
-                                                               value="{{ $size->value }}">
-                                                        {{ $size->value }} &nbsp;
-                                                    @empty
-                                                    @endforelse
-                                                </div>
-                                            </div>
+{{--                                            <div class="col-12">--}}
+{{--                                                <div class="form-group mb-3">--}}
+{{--                                                    <label for="ProductRegularPrice">Colour--}}
+{{--                                                        <span class="text-danger">*</span></label>--}}
+{{--                                                    <br>--}}
+{{--                                                    @forelse ($colors as $color)--}}
+{{--                                                        <input type="checkbox" name="color[]"--}}
+{{--                                                               value="{{ $color->value }}">--}}
+{{--                                                        {{ $color->value }} &nbsp;--}}
+{{--                                                    @empty--}}
+{{--                                                    @endforelse--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="col-12">--}}
+{{--                                                <div class="form-group mb-3">--}}
+{{--                                                    <label for="ProductSalePrice">Size <span--}}
+{{--                                                                class="text-danger">*</span></label>--}}
+{{--                                                    <br>--}}
+{{--                                                    @forelse ($sizes as $size)--}}
+{{--                                                        <input type="checkbox" name="size[]"--}}
+{{--                                                               value="{{ $size->value }}">--}}
+{{--                                                        {{ $size->value }} &nbsp;--}}
+{{--                                                    @empty--}}
+{{--                                                    @endforelse--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
 
 
                                         </div>
