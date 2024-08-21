@@ -3,8 +3,22 @@
 @section('maincontent')
     @section('subcss')
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    @endsection
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/jquery-datatables-checkboxes@1.2.13/css/dataTables.checkboxes.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+
+    @endsection
+    <style>
+        .select2-container--open {
+            z-index: 9999 !important;
+        }
+
+        .select2-dropdown {
+            z-index: 9999;
+        }
+    </style>
 
     <main id="main" class="main">
 
@@ -13,13 +27,15 @@
                 <h1><a href="{{url('/admindashboard')}}">Dashboard</a></h1>
                 <nav>
                     <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{url('/admindashboard')}}">Home</a></li>
-                    <li class="breadcrumb-item active">Purchases</li>
+                        <li class="breadcrumb-item"><a href="{{url('/admindashboard')}}">Home</a></li>
+                        <li class="breadcrumb-item active">Purchases</li>
                     </ol>
                 </nav>
             </div>
             <div class="col-6" style="text-align: right">
-                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#mainPurchese"><span style="font-weight: bold;">+</span>  Add New Purchese</button>
+                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#mainPurchese"><span style="font-weight: bold;">+</span> Add New Purchese
+                </button>
             </div>
         </div><!-- End Page Title -->
 
@@ -29,51 +45,61 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Add New Purchese</h5>
+                        <h5 class="modal-title">Add New Purchase</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
 
                         <form name="form" id="AddPurchese" enctype="multipart/form-data">
                             @csrf
-                                <div class="form-group">
-                                    <label for="date">Date</label>
-                                    <input type="text" name="date" class="form-control" id="date">
-                                </div>
-                                <div class="form-group pb-2">
-                                    <label for="invoiceID">Invoice ID</label>
-                                    <input type="text" name="invoiceID" class="form-control" id="invoiceID">
-                                </div>
-                                <div class="form-group pb-2">
-                                    <label for="productID">Product Name</label>
-                                    <select name="product_id" id="product_id" class="form-control" style="width: 100%" >
-                                         <option value="">Select a Product</option>
-                                        @forelse ($products as $product)
-                                            <option value="{{$product->id}}" style="padding:10px">{{$product->productName}}</option>
-                                        @empty
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input type="text" name="date" class="form-control" id="date" value="{{date('d-m-Y')}}">
+                            </div>
+                            <div class="form-group pb-2">
+                                <label for="invoiceID">Invoice ID</label>
+                                <input type="text" name="invoiceID" class="form-control" id="invoiceID">
+                            </div>
+                            <div class="form-group pb-2">
+                                <label for="product_id">Product Name</label>
+                                <select name="product_id" id="product_id" class="js-example-basic-multiple form-select"
+                                        style="width: 100%;">
+                                    <option value="" disabled>Select a Product</option>
+                                    @forelse ($weights as $weight)
+                                        <option value="{{$weight->id}}" data-img-src="{{$weight->product->ProductImage }}"
+                                                style="padding:10px">{{$weight->product->ProductName}} ({{$weight->weight_name}})</option>
+                                    @empty
 
-                                        @endforelse
-                                    </select>
-                                </div>
-                                <div class="form-group pb-2">
-                                    <label for="productID">Supplier Name</label>
-                                    <select name="supplier_id" id="supplier_id" class="form-control" style="width: 100%" >
-                                         <option value="">Select a Supplier</option>
-                                        @forelse ($suppliers as $supplier)
-                                            <option value="{{$supplier->id}}" style="padding:10px">{{$supplier->supplierName}}</option>
-                                        @empty
+                                    @endforelse
+                                </select>
+                            </div>
+                            <div class="form-group pb-2">
+                                <label for="productID">Supplier Name</label>
+                                <select name="supplier_id" id="supplier_id" class="form-control" style="width: 100%">
+                                    <option value="">Select a Supplier</option>
+                                    @forelse ($suppliers as $supplier)
+                                        <option value="{{$supplier->id}}"
+                                                style="padding:10px">{{$supplier->supplierName}}</option>
+                                    @empty
 
-                                        @endforelse
-                                    </select>
-                                </div>
-                                <div class="form-group pb-2">
-                                    <label for="quantity">Quantity</label>
-                                    <input type="text" name="quantity" class="form-control" id="quantity">
-                                </div>
+                                    @endforelse
+                                </select>
+                            </div>
+                            <div class="form-group pb-2">
+                                <label for="quantity">Quantity</label>
+                                <input type="number" name="quantity" class="form-control" id="quantity">
+                            </div>
+
+                            <div class="form-group pb-2">
+                                <label for="totalAmount">Total Amount</label>
+                                <input type="number" name="totalAmount" class="form-control" id="totalAmount">
+                            </div>
 
                             <div class="form-group" style="text-align: right">
                                 <div class="submitBtnSCourse">
-                                    <button type="submit" name="btn" class="btn btn-primary AddPurcheseBtn btn-block">Save</button>
+                                    <button type="submit" name="btn" class="btn btn-primary AddPurcheseBtn btn-block">
+                                        Save
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -89,42 +115,45 @@
             <div class="row">
                 <div class="col-lg-12">
 
-                <div class="card">
-                    <div class="card-body pt-4">
-                    @if(\Session::has('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <i class="bi bi-check-circle me-1"></i>
-                            {{ \Session::get('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
-                    <!-- Table with stripped rows -->
-                    <div class="table-responsive">
-                        <table class="table table-centered table-borderless table-hover mb-0" id="purcheseinfotbl" width="100%">
-                            <thead class="thead-light">
-                            <tr>
-                                <th>ID</th>
-                                <th>Date</th>
-                                <th>Invoice ID</th>
-                                <th>Product Name</th>
-                                <th>Supplier Name</th>
-                                <th>Quantity</th>
-                                <th style="width: 55px">Action</th>
-                            </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                    <!-- End Table with stripped rows -->
+                    <div class="card">
+                        <div class="card-body pt-4">
+                            @if(\Session::has('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <i class="bi bi-check-circle me-1"></i>
+                                    {{ \Session::get('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                </div>
+                            @endif
+                            <!-- Table with stripped rows -->
+                            <div class="table-responsive">
+                                <table class="table table-centered table-borderless table-hover mb-0"
+                                       id="purcheseinfotbl" width="100%">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Date</th>
+                                        <th>Invoice ID</th>
+                                        <th>Product Name</th>
+                                        <th>Supplier Name</th>
+                                        <th>Quantity</th>
+                                        <th>Total Amount</th>
+                                        <th style="width: 55px">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <!-- End Table with stripped rows -->
 
+                        </div>
                     </div>
-                </div>
 
                 </div>
             </div>
         </section>
 
-          {{-- //popup modal for edit user --}}
+        {{-- //popup modal for edit user --}}
         <div class="modal fade" id="editmainPurchase" tabindex="-1" data-bs-backdrop="false">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -138,41 +167,49 @@
                             @csrf
                             <div class="successSMS"></div>
 
-                             <div class="form-group">
-                                    <label for="date">Date</label>
-                                    <input type="text" name="date" class="form-control" id="editdate">
-                                </div>
-                                <div class="form-group pb-2">
-                                    <label for="invoiceID">Invoice ID</label>
-                                    <input type="text" name="invoiceID" class="form-control" id="editinvoiceID">
-                                </div>
-                                <div class="form-group pb-2">
-                                    <label for="productID">Product Name</label>
-                                    <select name="product_id" id="editproduct_id" class="form-control" style="width: 100%" >
-                                         <option value="">Select a Product</option>
-                                        @forelse ($products as $product)
-                                            <option value="{{$product->id}}" style="padding:10px">{{$product->productName}}</option>
-                                        @empty
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input type="text" name="date" class="form-control" id="editdate">
+                            </div>
+                            <div class="form-group pb-2">
+                                <label for="invoiceID">Invoice ID</label>
+                                <input type="text" name="invoiceID" class="form-control" id="editinvoiceID">
+                            </div>
+                            <div class="form-group pb-2">
+                                <label for="productID">Product Name</label>
+                                <select name="product_id" id="editproduct_id" class="form-control" style="width: 100%">
+                                    <option value="">Select a Product</option>
+                                    @forelse ($weights as $weight)
+                                        <option value="{{$weight->id}}"
+                                                style="padding:10px">{{$weight->product->ProductName}}</option>
+                                    @empty
 
-                                        @endforelse
-                                    </select>
-                                </div>
-                                <div class="form-group pb-2">
-                                    <label for="productID">Supplier Name</label>
-                                    <select name="supplier_id" id="editsupplier_id" class="form-control" style="width: 100%" >
-                                         <option value="">Select a Supplier</option>
-                                        @forelse ($suppliers as $supplier)
-                                            <option value="{{$supplier->id}}" style="padding:10px">{{$supplier->supplierName}}</option>
-                                        @empty
+                                    @endforelse
+                                </select>
+                            </div>
+                            <div class="form-group pb-2">
+                                <label for="productID">Supplier Name</label>
+                                <select name="supplier_id" id="editsupplier_id" class="form-control"
+                                        style="width: 100%">
+                                    <option value="">Select a Supplier</option>
+                                    @forelse ($suppliers as $supplier)
+                                        <option value="{{$supplier->id}}"
+                                                style="padding:10px">{{$supplier->supplierName}}</option>
+                                    @empty
 
-                                        @endforelse
-                                    </select>
-                                </div>
-                                <div class="form-group pb-2">
-                                    <label for="quantity">Quantity</label>
-                                    <input type="text" name="quantity" class="form-control" id="editquantity">
-                                </div>
-                                <input type="text" name="id" id="idhidden" hidden>
+                                    @endforelse
+                                </select>
+                            </div>
+                            <div class="form-group pb-2">
+                                <label for="quantity">Quantity</label>
+                                <input type="text" name="quantity" class="form-control" id="editquantity">
+                            </div>
+
+                            <div class="form-group pb-2">
+                                <label for="totalAmount">Total Amount</label>
+                                <input type="number" name="totalAmount" class="form-control" id="totalAmount">
+                            </div>
+                            <input type="text" name="id" id="idhidden" hidden>
                             <div class="form-group" style="text-align: right">
                                 <div class="submitBtnSCourse">
                                     <button type="submit" name="btn" class="btn btn-primary btn-block">Update</button>
@@ -191,47 +228,122 @@
 
 
     <script>
-        $(document).ready(function() {
 
-           var purcheseinfotbl = $('#purcheseinfotbl').DataTable({
-                order: [ [0, 'desc'] ],
+        {{--   Dynamic Product List     --}}
+        $(document).ready(function () {
+            $('.js-example-basic-multiple').select2(
+                {
+                    templateResult: formatState,
+                    dropdownParent: $("#mainPurchese")
+
+                }
+            );
+
+        });
+
+        function formatState(state) {
+            if (!state.id) {
+                return state.text;
+            }
+            var $state = $(
+                '<span><img src="' + state.element.getAttribute('data-img-src') + '" style="width: 30px;" /> ' + state.text + '</span>'
+            );
+            return $state;
+        }
+
+
+        {{--({--}}
+        {{--    placeholder: "Select a Product",--}}
+        {{--    templateResult: function (state) {--}}
+        {{--        if (!state.id) {--}}
+        {{--            return state.text;--}}
+        {{--        }--}}
+        {{--        var $state = $(--}}
+        {{--            '<span><img width="20px" src="' +--}}
+        {{--            state.image +--}}
+        {{--            '" class="img-flag" /> ' +--}}
+        {{--            state.text +--}}
+        {{--            "</span>"--}}
+        {{--        );--}}
+        {{--        return $state;--}}
+        {{--    },--}}
+        {{--    ajax: {--}}
+        {{--        type: 'GET',--}}
+        {{--        url: '{{url('admin_order/products')}}',--}}
+        {{--        processResults: function (data) {--}}
+        {{--            var data = $.parseJSON(data);--}}
+        {{--            return {--}}
+        {{--                results: data.data--}}
+        {{--            };--}}
+        {{--        }--}}
+        {{--    }--}}
+        {{--}).trigger("change").on("select2:select", function (e) {--}}
+        {{--    $("#productTable tbody").append(--}}
+        {{--        '<option value="' + data.id + '">' + data.text + ' (Code: ' + data.productCode + ', Price: ' + data.productPrice + ')</option>'--}}
+        {{--    );--}}
+
+        {{--    // calculation();--}}
+        {{--});--}}
+
+
+
+
+        // Datatable
+
+        $(document).ready(function () {
+
+            var purcheseinfotbl = $('#purcheseinfotbl').DataTable({
+                order: [[0, 'desc']],
                 processing: true,
                 serverSide: true,
                 ajax: '{!! route('purchese.info') !!}',
                 columns: [
-                    { data: 'id' },
-                    { data: 'date' },
-                    { data: 'invoiceID' },
-                    { data: 'products.productName' },
-                    { data: 'suppliers.supplierName' },
-                    { data: 'quantity' },
-                    { data: 'action', name: 'action', orderable: false, searchable: false},
+                    {data: 'id'},
+                    {data: 'date'},
+                    {data: 'invoiceID'},
+                    {
+                        data: 'ProductName',
+                        // name: 'Product Name'
+
+                    },
+                    {
+                        data: 'suppliers.supplierName',
+                        name: "Supplier Name"
+                    },
+                    {data: 'quantity'}
+                    ,
+                    {
+                        data: 'totalAmount',
+                        name:'Total Amount',
+                    },
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
 
                 ]
             });
 
 
-            //add user
+            //add Purchase
 
-            $('#AddPurchese').submit(function(e){
+            $('#AddPurchese').submit(function (e) {
                 e.preventDefault();
 
+                console.log(new FormData(this));
                 $.ajax({
-                    type:'POST',
-                    uploadUrl:'{{route("purchases.store")}}',
+                    type: 'POST',
+                    uploadUrl: '{{route("purchases.store")}}',
                     processData: false,
                     contentType: false,
-                    data:new FormData(this),
+                    data: new FormData(this),
 
                     success: function (data) {
-                        $('#date').val('');
+                        // $('#date').val('');
                         $('#invoiceID').val('');
                         $('#product_id').val('');
                         $('#supplier_id').val('');
                         $('#quantity').val('');
 
                         swal({
-                            title: "Success!",
+                            title: "Success!",
                             icon: "success",
                             showCancelButton: true,
                             focusConfirm: false,
@@ -241,7 +353,7 @@
                         });
                         purcheseinfotbl.ajax.reload();
                     },
-                    error: function(error){
+                    error: function (error) {
                         console.log('error');
                     }
                 });
@@ -249,12 +361,14 @@
 
             //edit city
 
-            $(document).on('click', '#editPurchaseBtn', function(){
+            $(document).on('click', '#editPurchaseBtn', function () {
                 let purcheseId = $(this).data('id');
 
+                console.log()
+
                 $.ajax({
-                    type:'GET',
-                    url:'purchases/'+purcheseId+'/edit',
+                    type: 'GET',
+                    url: 'purchases/' + purcheseId + '/edit',
 
                     success: function (data) {
                         $('#EditPurchase').find('#editdate').val(data.date);
@@ -262,10 +376,13 @@
                         $('#EditPurchase').find('#editproduct_id').val(data.product_id);
                         $('#EditPurchase').find('#editsupplier_id').val(data.supplier_id);
                         $('#EditPurchase').find('#editquantity').val(data.quantity);
+                        $('#EditPurchase').find('#totalAmount').val(data.totalAmount);
                         $('#EditPurchase').find('#idhidden').val(data.id);
                         $('#EditPurchase').attr('data-id', data.id);
+
+                        // console.log(data);
                     },
-                    error: function(error){
+                    error: function (error) {
                         console.log('error');
                     }
 
@@ -273,16 +390,16 @@
             });
 
             //update city
-            $('#EditPurchase').submit(function(e){
+            $('#EditPurchase').submit(function (e) {
                 e.preventDefault();
                 let purcheseId = $('#idhidden').val();
 
                 $.ajax({
-                    type:'POST',
-                    url:'purchase/'+purcheseId,
+                    type: 'POST',
+                    url: 'purchase/' + purcheseId,
                     processData: false,
                     contentType: false,
-                    data:new FormData(this),
+                    data: new FormData(this),
 
                     success: function (data) {
                         $('#editdate').val('');
@@ -293,7 +410,7 @@
 
 
                         swal({
-                            title: "Purchase update successfully !",
+                            title: "Purchase update successfully !",
                             icon: "success",
                             showCancelButton: true,
                             focusConfirm: false,
@@ -301,9 +418,10 @@
                             confirmButtonText: "Yes",
                             cancelButtonText: "No",
                         });
+                        
                         purcheseinfotbl.ajax.reload();
                     },
-                    error: function(error){
+                    error: function (error) {
                         console.log('error');
                     }
                 });
@@ -311,7 +429,7 @@
 
             //deleteuser
 
-            $(document).on('click', '#deletePurchaseBtn', function(){
+            $(document).on('click', '#deletePurchaseBtn', function () {
                 let purcheseId = $(this).data('id');
                 swal({
                     title: "Are you sure?",
@@ -320,38 +438,31 @@
                     buttons: true,
                     dangerMode: true,
                 })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        $.ajax({
-                            type:'DELETE',
-                            url:'purchases/'+purcheseId,
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $.ajax({
+                                type: 'DELETE',
+                                url: 'purchases/' + purcheseId,
 
-                            success: function (data) {
-                                swal("Poof! Your purchase has been deleted!", {
-                                    icon: "success",
-                                });
-                                purcheseinfotbl.ajax.reload();
-                            },
-                            error: function(error){
-                                console.log('error');
-                            }
+                                success: function (data) {
+                                    swal("Poof! Your purchase has been deleted!", {
+                                        icon: "success",
+                                    });
+                                    purcheseinfotbl.ajax.reload();
+                                },
+                                error: function (error) {
+                                    console.log('error');
+                                }
 
-                        });
+                            });
 
 
-                    } else {
-                        swal("Your data is safe!");
-                    }
-                });
+                        } else {
+                            swal("Your data is safe!");
+                        }
+                    });
 
             });
-
-
-
-
-
-
-
 
 
         });
@@ -360,6 +471,13 @@
 
     @section('subscript')
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/select/1.3.4/js/dataTables.select.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-datatables-checkboxes@1.2.13/js/dataTables.checkboxes.min.js"></script>
+
+
+
         <script>
             flatpickr("#date", {});
             flatpickr("#editdate", {});

@@ -24,8 +24,14 @@ class Purchase extends Model
         return $this->belongsTo(Product::class, 'product_id');
     }
 
+    public function weights()
+    {
+        return $this->belongsTo(Weight::class, 'weight_id');
+    }
+
     public function suppliers()
     {
         return $this->belongsTo(Supplier::class, 'supplier_id');
     }
+    
 }

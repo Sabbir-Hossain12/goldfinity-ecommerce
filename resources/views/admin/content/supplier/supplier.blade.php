@@ -48,6 +48,59 @@
                                 </div>
                             </div>
 
+                            <div class="form-group pb-4">
+                                <label for="websiteTitle" class="control-label">Supplier Email</label>
+                                <div class="webtitle">
+                                    <input type="text" class="form-control" name="supplierEmail" id="supplierEmail" required>
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group pb-4">
+                                <label for="websiteTitle" class="control-label">Supplier Address</label>
+                                <div class="webtitle">
+                                    <textarea class="form-control" name="supplierAddress" id="supplierAddress"></textarea>
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group pb-4">
+                                <label for="websiteTitle" class="control-label">Supplier Company Name</label>
+                                <div class="webtitle">
+                                    <input type="text" class="form-control" name="supplierCompanyName" id="supplierCompanyName" required>
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group pb-4">
+                                <label for="websiteTitle" class="control-label">Supplier Initial Amount</label>
+                                <div class="webtitle">
+                                    <input type="number" class="form-control" name="supplierInitialAmount" value="0" id="supplierInitialAmount"  >
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div> 
+                            <div class="form-group pb-4">
+                                <label for="websiteTitle" class="control-label">Supplier Total Amount</label>
+                                <div class="webtitle">
+                                    <input type="number" class="form-control" name="supplierTotalAmount" value="0" id="supplierTotalAmount"  >
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group pb-4">
+                                <label for="websiteTitle" class="control-label">Supplier Paid Amount</label>
+                                <div class="webtitle">
+                                    <input type="number" class="form-control" name="supplierPaidAmount" value="0" id="supplierPaidAmount" >
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group pb-4">
+                                <label for="websiteTitle" class="control-label">Supplier Due Amount</label>
+                                <div class="webtitle">
+                                    <input type="number" class="form-control" name="supplierDueAmount" value="0" id="supplierDueAmount" >
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+
                             <div class="form-group" style="text-align: right">
                                 <div class="submitBtnSCourse">
                                     <button type="submit" name="btn" class="btn btn-primary AddSupplierBtn btn-block">Save</button>
@@ -84,6 +137,11 @@
                                 <th>ID</th>
                                 <th>Supplier Name</th>
                                 <th>Supplier Phone</th>
+                                <th>Supplier Email</th>
+                                <th>Supplier Initial Amount</th>
+                                <th>Supplier Total Amount</th>
+                                <th>Supplier Paid Amount</th>
+                                <th>Supplier Due Amount</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -130,6 +188,59 @@
                                 </div>
                             </div>
 
+                            <div class="form-group pb-4">
+                                <label for="websiteTitle" class="control-label">Supplier Email</label>
+                                <div class="webtitle">
+                                    <input type="text" class="form-control" name="supplierEmail" id="supplierEmail" required>
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group pb-4">
+                                <label for="websiteTitle" class="control-label">Supplier Address</label>
+                                <div class="webtitle">
+                                    <textarea class="form-control" name="supplierAddress" id="supplierAddress"></textarea>
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group pb-4">
+                                <label for="websiteTitle" class="control-label">Supplier Company Name</label>
+                                <div class="webtitle">
+                                    <input type="text" class="form-control" name="supplierCompanyName" id="supplierCompanyName" required>
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group pb-4">
+                                <label for="websiteTitle" class="control-label">Supplier Initial Amount</label>
+                                <div class="webtitle">
+                                    <input type="number" class="form-control" name="supplierInitialAmount" value="0" id="supplierInitialAmount"  >
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group pb-4">
+                                <label for="websiteTitle" class="control-label">Supplier Total Amount</label>
+                                <div class="webtitle">
+                                    <input type="number" class="form-control" name="supplierTotalAmount" value="0" id="supplierTotalAmount"  >
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group pb-4">
+                                <label for="websiteTitle" class="control-label">Supplier Paid Amount</label>
+                                <div class="webtitle">
+                                    <input type="number" class="form-control" name="supplierPaidAmount" value="0" id="supplierPaidAmount" >
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group pb-4">
+                                <label for="websiteTitle" class="control-label">Supplier Due Amount</label>
+                                <div class="webtitle">
+                                    <input type="number" class="form-control" name="supplierDueAmount" value="0" id="supplierDueAmount" >
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+
+
                             <input type="text" name="id" id="idhidden" hidden>
 
                             <div class="form-group" style="text-align: right">
@@ -161,6 +272,11 @@
                     { data: 'id' },
                     { data: 'supplierName' },
                     { data: 'supplierPhone' },
+                    { data: 'supplierEmail' },
+                    { data: 'supplierInitialAmount' },
+                    { data: 'supplierTotalAmount' },
+                    { data: 'supplierPaidAmount' },
+                    { data: 'supplierDueAmount' },
                     {
                         "data": null,
                         render: function (data) {
@@ -204,6 +320,9 @@
                             confirmButtonText: "Yes",
                             cancelButtonText: "No",
                         });
+
+                        $('#mainSupplier').modal('hide');
+                        $('#AddSupplier').form('reset');
                         supplierinfotbl.ajax.reload();
                     },
                     error: function(error){
@@ -213,7 +332,6 @@
             });
 
             //edit store
-
             $(document).on('click', '#editSupplierBtn', function(){
                 let supplierId = $(this).data('id');
 
@@ -224,8 +342,18 @@
                     success: function (data) {
                         $('#EditSupplier').find('#editsupplierName').val(data.supplierName);
                         $('#EditSupplier').find('#editsupplierPhone').val(data.supplierPhone);
+                        $('#EditSupplier').find('#supplierEmail').val(data.supplierEmail);
+                        $('#EditSupplier').find('#supplierAddress').val(data.supplierAddress);
+                        $('#EditSupplier').find('#supplierCompanyName').val(data.supplierCompanyName);
+                        $('#EditSupplier').find('#supplierInitialAmount').val(data.supplierInitialAmount);
+                        $('#EditSupplier').find('#supplierTotalAmount').val(data.supplierTotalAmount);
+                        $('#EditSupplier').find('#supplierPaidAmount').val(data.supplierPaidAmount);
+                        $('#EditSupplier').find('#supplierDueAmount').val(data.supplierDueAmount);
+                        
                         $('#EditSupplier').find('#idhidden').val(data.id);
                         $('#EditSupplier').attr('data-id', data.id);
+
+                       
                     },
                     error: function(error){
                         console.log('error');
@@ -247,8 +375,15 @@
                     data:new FormData(this),
 
                     success: function (data) {
-                        $('#editsupplierName').val('');
-                        $('#editsupplierPhone').val('');
+                        // $('#editsupplierName').val('');
+                        // $('#editsupplierPhone').val('');
+                        
+                       
+                       
+                        
+                        
+                        
+                        
 
                         swal({
                             title: "Supplier update successfully !",
@@ -259,6 +394,9 @@
                             confirmButtonText: "Yes",
                             cancelButtonText: "No",
                         });
+
+                        $('#editmainSupplier').modal('hide');
+                        $('#EditSupplier').form('reset');
                         supplierinfotbl.ajax.reload();
                     },
                     error: function(error){

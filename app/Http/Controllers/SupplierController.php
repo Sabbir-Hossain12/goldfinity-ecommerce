@@ -39,7 +39,22 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        $supplier = Supplier::create($request->all());
+//      $supplier = Supplier::create($request->all());
+        
+        $supplier = new Supplier();
+        $supplier->supplierName = $request->supplierName;
+        $supplier->supplierPhone = $request->supplierPhone;
+        $supplier->supplierEmail = $request->supplierEmail;
+        $supplier->supplierAddress = $request->supplierAddress;
+        $supplier->supplierCompanyName = $request->supplierCompanyName;
+        $supplier->supplierInitialAmount = $request->supplierInitialAmount;
+        $supplier->supplierTotalAmount = $request->supplierTotalAmount;
+        $supplier->supplierPaidAmount = $request->supplierPaidAmount;
+        $supplier->supplierDueAmount = $request->supplierDueAmount;
+        
+        $supplier->save();
+        
+        
         return response()->json($supplier, 200);
     }
 

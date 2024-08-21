@@ -125,7 +125,7 @@ class ProductController extends Controller
 
         $productImg = $request->file('ProductImage');
         if($productImg){
-            $imgname = $time . $productImg->getClientOriginalName();
+            $imgname = $time .uniqid(). $productImg->getClientOriginalExtension();
             $imguploadPath = ('public/images/product/image/');
             $productImg->move($imguploadPath, $imgname);
             $productImgUrl = $imguploadPath . $imgname;
@@ -162,6 +162,8 @@ class ProductController extends Controller
                 $weight->productRegularPrice = $weightAtrribute['productRegularPrice'];
                 $weight->discount = $weightAtrribute['productDiscount'];
                 $weight->productSalePrice = $weightAtrribute['productRegularPrice'] - ($weightAtrribute['productRegularPrice'] * $weightAtrribute['productDiscount'] / 100);
+                $weight->total_qty=$weightAtrribute['total_qty'];
+                $weight->available_qty=$weightAtrribute['total_qty'];
                 $weight->save();
             }
         }
@@ -284,9 +286,17 @@ class ProductController extends Controller
         $productImg = $request->file('ProductImage');
 
         if($productImg){
+            if (file_exists($product->ProductImage))
+            {
+                
              unlink($product->ProductImage);
+            }
+            if (file_exists($product->ViewProductImage))
+            {
+                
              unlink($product->ViewProductImage);
-            $imgname = $time . $productImg->getClientOriginalName();
+            }
+            $imgname = $time .uniqid(). $productImg->getClientOriginalExtension();
             $imguploadPath = ('public/images/product/image/');
             $productImg->move($imguploadPath, $imgname);
             $productImgUrl = $imguploadPath . $imgname;
@@ -345,6 +355,10 @@ class ProductController extends Controller
                     'productRegularPrice' => $weightAttribute['productRegularPrice'],
                     'discount' => $weightAttribute['productDiscount'],
                     'productSalePrice' => $weightAttribute['productRegularPrice'] - ($weightAttribute['productRegularPrice'] * $weightAttribute['productDiscount'] / 100),
+                    
+                    'total_qty'=>$weightAttribute['total_qty'],
+                    'available_qty'=>$weightAttribute['total_qty'],
+                    'sold_qty'=>$weightAttribute['sold_qty']
                 ];
 
                 // Use updateOrCreate to create or update the record

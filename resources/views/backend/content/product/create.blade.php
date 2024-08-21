@@ -49,33 +49,33 @@
                                                    required>
                                         </div>
 
+{{--                                        <div class="row">--}}
+{{--                                            <div class="col-6">--}}
+{{--                                                <div class="form-group mb-3">--}}
+{{--                                                    <label for="ProductSalePrice">Sale Price <span--}}
+{{--                                                                class="text-danger">*</span></label>--}}
+{{--                                                    <input type="number" id="ProductSalePrice"--}}
+{{--                                                           name="ProductSalePrice" class="form-control">--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="col-6">--}}
+{{--                                                <div class="form-group mb-3">--}}
+{{--                                                    <label for="ProductSalePrice">Regular Price <span--}}
+{{--                                                                class="text-danger">*</span></label>--}}
+{{--                                                    <input type="number" id="ProductRegularPrice" name="ProductRegularPrice"--}}
+{{--                                                           class="form-control" >--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
                                         <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-group mb-3">
-                                                    <label for="ProductSalePrice">Sale Price <span
-                                                                class="text-danger">*</span></label>
-                                                    <input type="number" id="ProductSalePrice"
-                                                           name="ProductSalePrice" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="form-group mb-3">
-                                                    <label for="ProductSalePrice">Regular Price <span
-                                                                class="text-danger">*</span></label>
-                                                    <input type="number" id="ProductRegularPrice" name="ProductRegularPrice"
-                                                           class="form-control" >
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-group mb-3">
-                                                    <label for="ProductSalePrice">Discount (%) </label>
-                                                    <input type="number" id="Discount" name="Discount"
-                                                           class="form-control" readonly >
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
+{{--                                            <div class="col-6">--}}
+{{--                                                <div class="form-group mb-3">--}}
+{{--                                                    <label for="ProductSalePrice">Discount (%) </label>--}}
+{{--                                                    <input type="number" id="Discount" name="Discount"--}}
+{{--                                                           class="form-control" readonly >--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+                                            <div class="col-12">
                                                 <div class="form-group mb-3">
                                                     <label for="ProductCategory" style="width: 100%;">Brand Name </label>
                                                     <select class="form-control" id="brand_id" style="background: black;" name="brand_id">
@@ -240,6 +240,9 @@
                                                         <th>Weight</th>
                                                         <th>Regular Price</th>
                                                         <th>Discount (%)</th>
+                                                        <th>Quantity</th>
+{{--                                                        <th>Available Quantity</th>--}}
+{{--                                                        <th>Sold Quantity</th>--}}
                                                         <th>Action</th>
                                                     </tr>
                                                     </thead>
@@ -247,7 +250,7 @@
                                                     </tbody>
                                                     <tfoot>
                                                     <tr>
-                                                        <td colspan="5">
+                                                        <td colspan="8">
                                                             <select id="productID" style="width: 100%;">
                                                                 <option value="">Select Weight</option>
                                                             </select>
@@ -315,6 +318,7 @@
                     obj.productWeight = currentRow.find(".productWeight").text();
                     obj.productRegularPrice = currentRow.find(".productRegularPrice").val();
                     obj.productDiscount = currentRow.find(".productDiscount").val();
+                    obj.total_qty=currentRow.find(".qty").val();
                     product.push(obj);
                     productCount++;
                 });
@@ -357,6 +361,8 @@
                             icon: "success",
                         });
                         
+                        window.location.href = "{{url('admin/products')}}";
+                        
                     },
                     error: function(error) {
                         console.log('error');
@@ -397,6 +403,8 @@
                     '<td><input type="number" class="productRegularPrice form-control" style="width:80px;" value="1"></td>' +
                     '<td><input type="number" class="productDiscount form-control" style="width:80px;" value="1"></td>' +
 
+                    '<td><input type="number" class="qty form-control" style="width:80px;" value="1" ></td>'+
+                    
 
                     '<td><button class="btn btn-sm btn-danger delete-btn"><i class="fa fa-trash"></i></button></td>\n' +
                     "</tr>"

@@ -87,18 +87,18 @@ class AuthenticatedSessionController extends Controller
 
     public function dashboard(){
         $admin=Admin::where('email',Auth::guard('admin')->user()->email)->first();
-//       overall Count
-        $visitorCountToday= Visitor::count();
+//       Today Count
+        $visitorCountToday= Visitor::where('visited_date',Carbon::today())->count();
 //       This Month Count
-        $lastMonth = Carbon::now()->subMonth()->month;
-        $lastYear = Carbon::now()->subMonth()->year;
+        $thisMonth = Carbon::now()->month;
+        $thisYear = Carbon::now()->year;
 
-        $visitorCountLastMonth = Visitor::whereMonth('visited_date', $lastMonth)
-            ->whereYear('visited_date', $lastYear)
+        $visitorCountThisMonth = Visitor::whereMonth('visited_date', $thisMonth)
+            ->whereYear('visited_date', $thisYear)
             ->count();
         
         if($admin->hasrole('superadmin')){
-            return view('backend.content.maincontent',compact(['visitorCountToday','visitorCountLastMonth']));
+            return view('backend.content.maincontent',compact(['visitorCountToday','visitorCountThisMonth']));
         }else{
             abort(403);
         }

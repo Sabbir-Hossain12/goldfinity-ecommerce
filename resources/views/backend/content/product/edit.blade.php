@@ -48,34 +48,10 @@
                                 <input type="text" name="ProductName" id="ProductName" class="form-control" value="{{$product->ProductName}}"
                                        required>
                             </div>
-
+                            
                             <div class="row">
-                                <div class="col-6">
-                                    <div class="form-group mb-3">
-                                        <label for="ProductSalePrice">Sale Price <span
-                                                    class="text-danger">*</span></label>
-                                        <input type="number" id="ProductSalePrice"
-                                               name="ProductSalePrice" class="form-control" value="{{$product->ProductSalePrice}}">
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group mb-3">
-                                        <label for="ProductSalePrice">Regular Price <span
-                                                    class="text-danger">*</span></label>
-                                        <input type="number" id="ProductRegularPrice" name="ProductRegularPrice"
-                                               class="form-control" value="{{$product->ProductRegularPrice}}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="form-group mb-3">
-                                        <label for="ProductSalePrice">Discount (%) </label>
-                                        <input type="number" id="Discount" name="Discount"
-                                               class="form-control" readonly  value="{{$product->Discount}}">
-                                    </div>
-                                </div>
-                                <div class="col-6">
+                              
+                                <div class="col-12">
                                     <div class="form-group mb-3">
                                         <label for="ProductCategory" style="width: 100%;">Brand Name </label>
                                         <select class="form-control" id="brand_id" style="background: black;" name="brand_id">
@@ -283,9 +259,9 @@
                                                     <td><span class="productWeight">{{$weight->weight_name}} </span></td>
                                                     <td><input type="number" class="productRegularPrice form-control" style="width:80px;" value="{{$weight->productRegularPrice}}"></td>
                                                     <td><input type="number" class="productDiscount form-control" style="width:80px;" value="{{$weight->discount}}"></td>
-                                                    <td><input type="number" class="productDiscount form-control" style="width:80px;" value="{{$weight->total_qty}}" readonly></td>
-                                                    <td><input type="number" class="productDiscount form-control" style="width:80px;" value="{{$weight->available_qty}}" readonly></td>
-                                                    <td><input type="number" class="productDiscount form-control" style="width:80px;" value="{{$weight->sold_qty}}" readonly></td>
+                                                    <td><input type="number" class="total_qty productDiscount form-control" style="width:80px;" value="{{$weight->total_qty}}" readonly></td>
+                                                    <td><input type="number" class="available_qty productDiscount form-control" style="width:80px;" value="{{$weight->available_qty}}" readonly></td>
+                                                    <td><input type="number" class="sold_qty form-control" style="width:80px;" value="{{$weight->sold_qty}}" readonly></td>
 
 
                                                     <td><button class="btn btn-sm btn-danger delete-btn"><i class="fa fa-trash"></i></button></td>
@@ -368,6 +344,10 @@
                     obj.productWeight = currentRow.find(".productWeight").text();
                     obj.productRegularPrice = currentRow.find(".productRegularPrice").val();
                     obj.productDiscount = currentRow.find(".productDiscount").val();
+                    obj.total_qty = currentRow.find(".total_qty").val();
+                    obj.available_qty = currentRow.find(".available_qty").val();
+                    obj.sold_qty = currentRow.find(".sold_qty").val();
+                    
                     product.push(obj);
                     productCount++;
                 });
@@ -403,6 +383,8 @@
                             title: "Success!",
                             icon: "success",
                         });
+                        
+                        window.location.reload();
 
                     },
                     error: function(error) {
@@ -411,102 +393,7 @@
                 });
             });
             
-            //Edit  Product
-            {{--$(document).ready (function() {--}}
-            {{--    $.ajax({--}}
-            {{--        type: 'GET',--}}
-            {{--        url: '{{url('admin/product/'.$product->id)}}/editdata',--}}
-            
-            {{--        success: function(data) {--}}
-            {{--            $('#product_id').val(data--}}
-            {{--                .id);--}}
-            {{--           $('#ProductName').val(data--}}
-            {{--                .ProductName);--}}
-            {{--            $('#youtube_embade').val(data.youtube_embade);--}}
-            {{--            $('#ProductSalePrice').val(data--}}
-            {{--                .ProductSalePrice);--}}
-            {{--            $('#Discount').val(data--}}
-            {{--                .Discount);--}}
-            {{--            $('#ProductRegularPrice').val(data--}}
-            {{--                .ProductRegularPrice);--}}
-            {{--            $('#editcategory_id').val(data--}}
-            {{--                .category_id);--}}
-            {{--            $('#brand_id').val(data--}}
-            {{--                .brand_id);--}}
-            {{--            $('#editProductBreaf').val(data--}}
-            {{--                .ProductBreaf);--}}
-            
-            {{--            $('#descriptionPro').html('');--}}
-            {{--            $('#descriptionPro').append(--}}
-            {{--                `<label for="ProductDetails">Product Description <span--}}
-            {{--                    class="text-danger">*</span></label>--}}
-            {{--            <textarea class="form-control" id="editProductDetails" name="ProductDetails" rows="5">` +--}}
-            {{--                data.ProductDetails + `</textarea>--}}
-            
-            {{--            <script type="text/javascript">--}}
-            {{--            $(document).ready(function() {--}}
-            {{--                $('#editProductDetails').summernote();--}}
-            {{--                }); `);--}}
-            {{--            $('#previmg').html('');--}}
-            {{--            $('#previmg').append(`--}}
-            {{--                <img src="../` + data.ProductImage + `" alt="" style="height: 80px" />--}}
-            {{--            `);--}}
-            
-            {{--            $('#EditProduct').attr('data-id', data.id);--}}
-            
-            {{--            var subcat = data.subcategory_id;--}}
-            {{--            $.ajax({--}}
-            {{--                type: 'GET',--}}
-            {{--                url: 'get/subcategory/' + data.category_id,--}}
-            
-            {{--                success: function(data) {--}}
-            
-            {{--                    $('#EditProduct').find('#editsub_category_id').html(--}}
-            {{--                        '');--}}
-            
-            {{--                    for (var i = 0; i < data.length; i++) {--}}
-            {{--                        if (data[i].id == subcat) {--}}
-            {{--                            $('#EditProduct').find(--}}
-            {{--                                '#editsub_category_id'--}}
-            {{--                            ).append(` <option selected value="` +--}}
-            {{--                                data[i].id + `">` + data[i]--}}
-            {{--                                    .sub_category_name + `</option>--}}
-            {{--                `)--}}
-            {{--                        } else {--}}
-            {{--                            $('#EditProduct').find(--}}
-            {{--                                '#editsub_category_id')--}}
-            {{--                                .append(`--}}
-            {{--                <option value="` + data[i].id + `">` + data[i].sub_category_name + `</option>--}}
-            {{--                `)--}}
-            {{--                        }--}}
-            {{--                    }--}}
-            {{--                },--}}
-            {{--                error: function(error) {--}}
-            {{--                    console.log('error');--}}
-            {{--                }--}}
-            {{--            });--}}
-            
-            {{--            var postImages = JSON.parse(data.PostImage);--}}
-            {{--            var postImage = "";--}}
-            {{--            $('#viewprevFile').html('');--}}
-            {{--            postImages.forEach((i) => {--}}
-            {{--                postImage += `<div class="postImg" style="width:25%;float:left;position:relative;">--}}
-            {{--            <img src="../public/images/product/slider/` + i + `" alt="" id="previewImage"--}}
-            {{--                style="border-radius: 10px;width:100%;padding:5px;">--}}
-            {{--        </div>`;--}}
-            {{--            });--}}
-            {{--            $('#viewprevFile').html(postImage);--}}
-            
-            
-            
-            {{--        },--}}
-            {{--        error: function(error) {--}}
-            {{--            console.log('error');--}}
-            {{--        }--}}
-            
-            
-            {{--    });--}}
-            {{--});--}}
+          
 
             // On click Select Weight
             $("#productID").select2({
@@ -540,9 +427,9 @@
                     '<td><span class="productWeight">' + e.params.data.text + '</span></td>' +
                     '<td><input type="number" class="productRegularPrice form-control" style="width:80px;" value="1"></td>' +
                     '<td><input type="number" class="productDiscount form-control" style="width:80px;" value="1"></td>' +
-                    '<td><input type="number" class="productDiscount form-control" style="width:60px;" value="{{$weight->total_qty}}" readonly></td>'+
-                '<td><input type="number" class="productDiscount form-control" style="width:60px;" value="{{$weight->available_qty}}" readonly></td>'+
-                '<td><input type="number" class="productDiscount form-control" style="width:60px;" value="{{$weight->sold_qty}}" readonly></td>' +
+                    '<td><input type="number" class="total_qty form-control" style="width:60px;" value="{{$weight->total_qty}}" readonly></td>'+
+                    '<td><input type="number" class="available_qty form-control" style="width:60px;" value="{{$weight->available_qty}}" readonly></td>'+
+                    '<td><input type="number" class="sold_qty form-control" style="width:60px;" value="{{$weight->sold_qty}}" readonly></td>' +
 
 
                     '<td><button class="btn btn-sm btn-danger delete-btn"><i class="fa fa-trash"></i></button></td>\n' +
