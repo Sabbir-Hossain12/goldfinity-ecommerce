@@ -42,6 +42,27 @@ class PurchaseController extends Controller
             ->make(true);
     }
 
+    public function create()
+    {
+    $purchaseInvoice=  $this->uniqueIDforPurchase();
+    $suppliers = Supplier::where('status', 'Active')->get();
+        
+        return view('admin.content.purchase.create',compact('purchaseInvoice','suppliers'));
+
+    }
+
+    public function uniqueIDforPurchase()
+    {
+        $lastPurchase = Purchase::latest('id')->first();
+        if ($lastPurchase) {
+            $orderID = $lastPurchase->id + 1;
+        } else {
+            $orderID = 1;
+        }
+
+        return 'PG77' . $orderID;
+    }
+
 
 
     /**
@@ -111,4 +132,6 @@ class PurchaseController extends Controller
         $purchase->delete();
         return response()->json('delete success');
     }
+
+   
 }

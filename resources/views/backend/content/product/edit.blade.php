@@ -264,7 +264,7 @@
                                                     <td><input type="number" class="sold_qty form-control" style="width:80px;" value="{{$weight->sold_qty}}" readonly></td>
 
 
-                                                    <td><button class="btn btn-sm btn-danger delete-btn"><i class="fa fa-trash"></i></button></td>
+                                                    <td><button type="button" class="btn btn-sm btn-danger changestatus-btn"><i class="fa fa-trash"></i></button></td>
                                                 </tr>
                                             @endforeach
                                         @else
@@ -427,9 +427,9 @@
                     '<td><span class="productWeight">' + e.params.data.text + '</span></td>' +
                     '<td><input type="number" class="productRegularPrice form-control" style="width:80px;" value="1"></td>' +
                     '<td><input type="number" class="productDiscount form-control" style="width:80px;" value="1"></td>' +
-                    '<td><input type="number" class="total_qty form-control" style="width:60px;" value="{{$weight->total_qty}}" readonly></td>'+
-                    '<td><input type="number" class="available_qty form-control" style="width:60px;" value="{{$weight->available_qty}}" readonly></td>'+
-                    '<td><input type="number" class="sold_qty form-control" style="width:60px;" value="{{$weight->sold_qty}}" readonly></td>' +
+                    '<td><input type="number" class="total_qty form-control" style="width:60px;" value="0" ></td>'+
+                    '<td><input type="number" class="available_qty form-control" style="width:60px;" value="0" ></td>'+
+                    '<td><input type="number" class="sold_qty form-control" style="width:60px;" value="0" ></td>' +
 
 
                     '<td><button class="btn btn-sm btn-danger delete-btn"><i class="fa fa-trash"></i></button></td>\n' +

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\WeightController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\RolesController;
 use App\Http\Controllers\Backend\AdminController;
@@ -160,6 +161,7 @@ Route::group(['prefix'=>'admin','middleware' => ['auth.admin:admin']], function 
     Route::get('product/{id}/editdata', [ProductController::class, 'editProductData']);
 //    Weight info
     Route::get('/weight-info',[ProductController::class,'weightInfo'])->name('admin.weightinfo');
+    Route::get('/weight-products-info',[WeightController::class,'weightWiseProduct'])->name('admin.weightproductsinfo');
 
     Route::get('information/{slug}', [InformationController::class, 'index']);
     Route::post('information/update/{slug}', [InformationController::class, 'update']);
@@ -276,6 +278,7 @@ Route::group(['middleware' => ['auth.admin:admin']], function () {
     Route::post('supplier/{id}', [SupplierController::class, 'update']);
     Route::put('supplier/status', [SupplierController::class, 'updatestatus']);
     Route::get('admin/supplier', [SupplierController::class, 'supplierdata'])->name('supplier.info');
+    Route::get('admin/supllier-list', [SupplierController::class, 'supplierlist'])->name('supplier.list');
     //payment method
     Route::resource('paymenttypes', PaymenttypeController::class);
     Route::post('paymenttype/{id}', [PaymenttypeController::class, 'update']);

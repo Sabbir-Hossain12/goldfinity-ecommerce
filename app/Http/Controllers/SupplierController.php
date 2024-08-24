@@ -22,6 +22,8 @@ class SupplierController extends Controller
     public function supplierdata()
     {
         $suppliers = Supplier::all();
+        
+        
         return Datatables::of($suppliers)
             ->addColumn('action', function ($suppliers) {
                 return '<a href="#" type="button" id="editSupplierBtn" data-id="' . $suppliers->id . '" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editmainSupplier" ><i class="bi bi-pencil-square" ></i></a>
@@ -30,13 +32,17 @@ class SupplierController extends Controller
 
             ->make(true);
     }
+   public function supplierlist()
+    {
+        $suppliers = Supplier::all();
+        
+        return response()->json($suppliers, 200);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    }
+    
+
+    
+     
     public function store(Request $request)
     {
 //      $supplier = Supplier::create($request->all());

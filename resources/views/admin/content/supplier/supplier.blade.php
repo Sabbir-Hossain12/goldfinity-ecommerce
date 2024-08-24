@@ -320,10 +320,10 @@
                             confirmButtonText: "Yes",
                             cancelButtonText: "No",
                         });
-
+                        supplierinfotbl.ajax.reload();
                         $('#mainSupplier').modal('hide');
                         $('#AddSupplier').form('reset');
-                        supplierinfotbl.ajax.reload();
+                      
                     },
                     error: function(error){
                         console.log('error');
@@ -394,10 +394,10 @@
                             confirmButtonText: "Yes",
                             cancelButtonText: "No",
                         });
-
+                        supplierinfotbl.ajax.reload();
                         $('#editmainSupplier').modal('hide');
                         $('#EditSupplier').form('reset');
-                        supplierinfotbl.ajax.reload();
+                       
                     },
                     error: function(error){
                         console.log('error');

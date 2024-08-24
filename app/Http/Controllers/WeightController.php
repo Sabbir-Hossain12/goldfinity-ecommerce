@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Weight;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class WeightController extends Controller
 {
@@ -81,5 +82,36 @@ class WeightController extends Controller
     public function destroy(Weight $weight)
     {
         //
+    }
+
+    public function weightWiseProduct()
+    {
+        if (isset($request['q'])) {
+            $weightProducts = Weight::query()->where('ProductName', 'like', '%' . $request['q'] . '%')->get();
+        } else {
+            $weightProducts = Weight::with('product')->get();
+        }
+
+        $product = array();
+        foreach ($weightProducts as $item) {
+            if (App::environment('local')) {
+                $item['ProductImage'] = url($item['product']['ProductImage']);
+            } else {
+                $item['ProductImage'] = url($item['product']['ProductImage']);
+            }
+
+            $product[] = array(
+                "id" => $item['id'],
+                "text" => $item['product']['ProductName'],
+                "image" => $item['ProductImage'],
+                "productCode" => $item['product']['ProductSku'],
+                "productPrice" => $item['productSalePrice'],
+                'weight'=> $item['weight_name']
+                
+            );
+        }
+        $data['data'] = $product;
+        return json_encode($data);
+       
     }
 }

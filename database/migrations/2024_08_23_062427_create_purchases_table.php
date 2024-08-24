@@ -15,11 +15,14 @@ class CreatePurchasesTable extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
+            $table->integer('supplier_id');
             $table->string('invoiceID');
             $table->date('date');
-            $table->bigInteger('product_id');
-            $table->bigInteger('supplier_id');
-            $table->integer('quantity');
+            $table->string('totalAmount');
+            $table->integer('payment_type_id')->nullable();
+            $table->integer('payments_id')->nullable();
+            $table->integer('paymentAgentNumber')->nullable();
+            
             $table->string('status')->default('Active');
             $table->timestamps();
         });

@@ -33,9 +33,8 @@
                 </nav>
             </div>
             <div class="col-6" style="text-align: right">
-                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#mainPurchese"><span style="font-weight: bold;">+</span> Add New Purchese
-                </button>
+                <a href="{{route('purchases.create')}}" class="btn btn-primary btn-sm" ><span style="font-weight: bold;">+</span> Add New Purchese
+                </a>
             </div>
         </div><!-- End Page Title -->
 
@@ -85,6 +84,7 @@
                                     @endforelse
                                 </select>
                             </div>
+                            
                             <div class="form-group pb-2">
                                 <label for="quantity">Quantity</label>
                                 <input type="number" name="quantity" class="form-control" id="quantity">
