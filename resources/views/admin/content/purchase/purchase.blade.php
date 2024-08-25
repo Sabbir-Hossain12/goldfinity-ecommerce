@@ -18,6 +18,13 @@
         .select2-dropdown {
             z-index: 9999;
         }
+        
+        ul
+        {
+            list-style-type: none;  /* Removes the bullet points */
+            padding-left: 0;        /* Removes the left padding */
+            margin: 0;
+        }
     </style>
 
     <main id="main" class="main">
@@ -132,12 +139,14 @@
                                     <thead class="thead-light">
                                     <tr>
                                         <th>ID</th>
-                                        <th>Date</th>
+                                        <th>Purchase Date</th>
                                         <th>Invoice ID</th>
-                                        <th>Product Name</th>
                                         <th>Supplier Name</th>
+                                        <th>Product Name</th>
                                         <th>Quantity</th>
                                         <th>Total Amount</th>
+                                        <th>Payed Amount</th>
+                                        <th>Note</th>
                                         <th style="width: 55px">Action</th>
                                     </tr>
                                     </thead>
@@ -302,19 +311,48 @@
                     {data: 'date'},
                     {data: 'invoiceID'},
                     {
-                        data: 'ProductName',
-                        // name: 'Product Name'
-
-                    },
-                    {
                         data: 'suppliers.supplierName',
                         name: "Supplier Name"
                     },
-                    {data: 'quantity'}
-                    ,
+                    
+                    {
+                        data: 'productsData',
+                        render: function(data) {
+                            var productList = '<ul>';
+                            data.forEach(function(product) {
+                                productList += '<li>' + product + '</li>';
+                            });
+                            productList += '</ul>';
+                            return productList;
+                        },
+                        orderable: false,
+                        searchable: false
+
+                    },
+                  
+                    { 
+                        data: 'productsQty',
+                        render: function (data) {
+
+                            var productList = '<ul>';
+                            data.forEach(function(qty) {
+                                productList += '<li>' + qty + '</li>';
+                            });
+                            productList += '</ul>';
+                            return productList;
+                        }
+                    
+                    },
                     {
                         data: 'totalAmount',
                         name:'Total Amount',
+                    },
+                    {
+                        data: 'payed_amount',
+                        
+                    },
+                    {
+                        data:'note'
                     },
                     {data: 'action', name: 'action', orderable: false, searchable: false},
 
@@ -322,42 +360,9 @@
             });
 
 
-            //add Purchase
+           
 
-            $('#AddPurchese').submit(function (e) {
-                e.preventDefault();
-
-                console.log(new FormData(this));
-                $.ajax({
-                    type: 'POST',
-                    uploadUrl: '{{route("purchases.store")}}',
-                    processData: false,
-                    contentType: false,
-                    data: new FormData(this),
-
-                    success: function (data) {
-                        // $('#date').val('');
-                        $('#invoiceID').val('');
-                        $('#product_id').val('');
-                        $('#supplier_id').val('');
-                        $('#quantity').val('');
-
-                        swal({
-                            title: "Success!",
-                            icon: "success",
-                            showCancelButton: true,
-                            focusConfirm: false,
-                            confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "Yes",
-                            cancelButtonText: "No",
-                        });
-                        purcheseinfotbl.ajax.reload();
-                    },
-                    error: function (error) {
-                        console.log('error');
-                    }
-                });
-            });
+           
 
             //edit city
 

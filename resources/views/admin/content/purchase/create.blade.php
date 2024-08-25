@@ -2,11 +2,13 @@
 
 @section('maincontent')
     @section('subcss')
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-datatables-checkboxes@1.2.13/css/dataTables.checkboxes.css">
+        <link rel="stylesheet" type="text/css"
+              href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/jquery-datatables-checkboxes@1.2.13/css/dataTables.checkboxes.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     @endsection
 
     <main id="main" class="main">
@@ -34,10 +36,10 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="supplierList">Supplier Name</label>
-                                    <select id="supplierList"  class="form-control" required>
-                                        <option selected disabled >Select Supplier </option>
-                                        @foreach($suppliers as $supplier) 
-                                        <option value="1" selected >{{$supplier->supplierName}}</option>
+                                    <select id="supplierList" class="form-control" required>
+                                        <option selected disabled>Select Supplier</option>
+                                        @foreach($suppliers as $supplier)
+                                            <option value="{{$supplier->id}}">{{$supplier->supplierName}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -45,7 +47,8 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="invoiceID">Invoice Number</label>
-                                    <input type="text" readonly class="form-control" style="cursor: not-allowed;" id="invoiceID" value="{{$purchaseInvoice}}">
+                                    <input type="text" readonly class="form-control" style="cursor: not-allowed;"
+                                           id="invoiceID" value="{{$purchaseInvoice}}">
                                 </div>
                             </div>
                         </div>
@@ -59,41 +62,44 @@
                                         <option value="">Select payment Type</option>
                                     </select>
                                 </div>
-                              
+
                                 <div class="form-group mb-2 paymentAgentNumber">
-                                    <input type="text" class="form-control" id="paymentAgentNumber" placeholder="Enter Bkash Agent Number">
+                                    <input type="text" class="form-control" id="paymentAgentNumber"
+                                           placeholder="Enter Bkash Agent Number">
                                 </div>
                                 <div class="form-group mb-2 hide">
                                     <label>Note (if any)</label>
-                                    <textarea type="text" class="form-control" id="memoNumber"> </textarea>
+                                    <textarea type="text" class="form-control" id="note"> </textarea>
                                 </div>
 
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label for="fname" class="col-sm-4 text-right control-label col-form-label">Sub Total</label>
+                                    <label for="fname" class="col-sm-4 text-right control-label col-form-label">Sub
+                                        Total</label>
                                     <div class="col-sm-8">
                                         <span class="form-control" id="subtotal" style="cursor: not-allowed;"></span>
                                     </div>
                                 </div>
-                               
-                               
+
 
                                 <div class="form-group row paymentAmount">
-                                    <label for="fname" class="col-sm-4 text-right control-label col-form-label">Payment</label>
+                                    <label for="fname"
+                                           class="col-sm-4 text-right control-label col-form-label">Payment</label>
                                     <div class="col-sm-8">
                                         <input type="number" value="0" min="0" class="form-control" id="paymentAmount">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="fname" class="col-sm-4 text-right control-label col-form-label">Total</label>
+                                    <label for="fname"
+                                           class="col-sm-4 text-right control-label col-form-label">Total</label>
                                     <div class="col-sm-8">
-                                        <span class="form-control" id="total" style="cursor: not-allowed;"   >100</span>
+                                        <span class="form-control" id="total" style="cursor: not-allowed;">100</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                     
+
                     </div>
                 </div>
             </div>
@@ -103,7 +109,8 @@
                         <strong>Product Info</strong>
                     </div>
                     <div class="card-body">
-                        <table id="productTable" style="width: 100% !important;" class="table table-bordered table-striped">
+                        <table id="productTable" style="width: 100% !important;"
+                               class="table table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th>Weight</th>
@@ -127,10 +134,12 @@
                             </tfoot>
 
                         </table>
-                      
+
                     </div>
                     <div class="card-footer">
-                        <button type="button" id="submit" class="btn btn-primary btn-block" data-style="expand-left">Save</button>
+                        <button type="button" id="submit" class="btn btn-primary btn-block" data-style="expand-left">
+                            Save
+                        </button>
                     </div>
                 </div>
             </div>
@@ -150,7 +159,7 @@
 
     <script>
 
-        $(document).ready(function() {
+        $(document).ready(function () {
 
 
             $(".paymentID").hide();
@@ -161,23 +170,21 @@
             // Submit Purchase
             $(document).on("click", "#submit", function () {
 
+                let supplierId = $("#supplierList").val();
                 var invoiceID = $("#invoiceID");
-                var storeID = $("#storeID");
                 var total = +$("#total").text();
                 var paymentTypeID = $("#paymentTypeID").val();
-                var paymentID = $("#paymentID").val();
-                var paymentAmount = +$("#paymentAmount").val();
+                var payedAmount = +$("#paymentAmount").val();
                 var paymentAgentNumber = $("#paymentAgentNumber").val();
-                var orderDate = $("#orderDate");
-              
+                let note = $('#note').val();
+
                 var product = [];
-                var productCount = 0 ;
+                var productCount = 0;
                 $("#productTable tbody tr").each(function (index, value) {
                     var currentRow = $(this);
                     var obj = {};
-                    obj.productColor = currentRow.find("#ProductColor").val();
-                    obj.productSize = currentRow.find("#ProductSize").val();
-                    obj.productID = currentRow.find(".productID").val();
+                    obj.productWeight = currentRow.find("#productWeight").val();
+                    obj.weightID = currentRow.find(".weightID").val();
                     obj.productCode = currentRow.find(".productCode").text();
                     obj.productName = currentRow.find(".productName").text();
                     obj.productQuantity = currentRow.find(".productQuantity").val();
@@ -186,49 +193,48 @@
                     productCount++;
                 });
 
-            
 
                 var data = {};
                 data["invoiceID"] = invoiceID.val();
-                data["storeID"] = storeID.val();
-                data["customerName"] = customerName.val();
-                data["customerPhone"] = customerPhone.val();
-                data["customerAddress"] = customerAddress.val();
+                data["supplierId"] = supplierId;
                 data["total"] = total;
-                data["deliveryCharge"] = deliveryCharge;
-                data["discountCharge"] = discountCharge;
                 data["paymentTypeID"] = paymentTypeID;
-                data["paymentID"] = paymentID;
-                data["paymentAmount"] = paymentAmount;
+                data["payedAmount"] = payedAmount;
                 data["paymentAgentNumber"] = paymentAgentNumber;
-                data["orderDate"] = orderDate.val();
-                data["courierID"] = +courierID.val();
-                data["cityID"] = cityID;
-                data["zoneID"] = zoneID;
-                data["userID"] = $('#user_id').val();
+                data["note"] = note;
+
                 data["products"] = product;
-                $.ajax({
-                    type: "POST",
-                    url: '{{url('admin/order/store')}}',
-                    data: {
-                        'data': data,
-                        '_token': token
-                    },
-                    success: function (response) {
-                        var data = JSON.parse(response);
-                        if (data["status"] === "success") {
-                            toastr.success(data["message"]);
-                            window.location.href = "{{ url('admin_order/Processing') }}";
+                
+                if ( data["invoiceID"]=='' || data["supplierId"]== '' || data["total"] =='') {
+                    
+                    toastr.error("Please fill all required fields");
+                }
+                else {
 
-                        } else {
-                            toastr.error(data["message"])
+
+                    $.ajax({
+                        type: "POST",
+                        url: '{{route("purchases.store")}}',
+                        data: {
+                            'data': data,
+                            '_token': token
+                        },
+                        success: function (response) {
+
+                            toastr.success(response.message);
+                            setTimeout(function () {
+                                window.location.href = "{{ url('purchases') }}";
+                            }, 1000);
+
+                        },
+                        error: function (error) {
+                            console.log(error);
                         }
-                    }
-                });
+                    });
+                }
 
 
-
-            });
+            })
 
 
             // Show Available Products
@@ -248,7 +254,7 @@
                     return $state;
                 },
                 ajax: {
-                    type:'GET',
+                    type: 'GET',
                     url: '{{url('admin/weight-products-info')}}',
                     processResults: function (data) {
                         var data = $.parseJSON(data);
@@ -260,11 +266,11 @@
             }).trigger("change").on("select2:select", function (e) {
                 $("#productTable tbody").append(
                     "<tr>" +
-                    '<td  style="display: none"><input type="text" class="productID" style="width:80px;" value="' + e.params.data.id + '"></td>' +
+                    '<td  style="display: none"><input type="text" class="weightID" style="width:80px;" value="' + e.params.data.id + '"></td>' +
                     '<td><input type="text" name="weight" id="productWeight" value=" ' + e.params.data.weight + ' " style="    max-width: 40px;" readonly></td>' +
                     '<td><span class="productCode">' + e.params.data.productCode + '</span></td>' +
                     '<td><span class="productName">' + e.params.data.text + ' ( Weight: ' + e.params.data.weight + ')</span></td>' +
-                    '<td><input type="number" class="productQuantity form-control" style="width:80px;" value="1"></td>' +
+                    '<td><input type="number" class="productQuantity form-control" style="width:80px;" value="1" min="1"></td>' +
                     '<td><span class="productPrice">' + e.params.data.productPrice + '</span></td>' +
                     '<td><button class="btn btn-sm btn-danger delete-btn"><i class="fa fa-trash"></i></button></td>\n' +
                     "</tr>"
@@ -272,19 +278,12 @@
                 calculation();
             });
 
-           //Supplier List
-            
+            //Supplier List
+
             $('#supplierList').select2({
                 placeholder: "Select a Supplier",
             });
-            
-        
 
-
-      
-
-            
-            
 
             $("#paymentTypeID").select2({
                 placeholder: "Select a payment Type",
@@ -332,7 +331,7 @@
                             paymentTypeID: $("#paymentTypeID").val(),
                         };
                     },
-                    type:'GET',
+                    type: 'GET',
                     url: '{{url('admin_order/paymentnumber')}}',
 
                     processResults: function (data) {
@@ -357,6 +356,7 @@
                 calculation();
             });
             calculation();
+
             //calculation part
             function calculation() {
                 var subtotal = 0;
@@ -365,8 +365,9 @@
                     subtotal = subtotal + +$(this).find(".productPrice").text() * +$(this).find(".productQuantity").val();
                 });
                 $("#subtotal").text(subtotal);
-                $("#total").text(subtotal - paymentAmount );
+                $("#total").text(subtotal - paymentAmount);
             }
+
             //delete select order
             $(document).on("click", ".delete-btn", function () {
                 $(this).closest("tr").remove();
@@ -376,7 +377,7 @@
             //end js
 
 
-            function countorder(){
+            function countorder() {
                 $.ajax({
                     type: "get",
                     url: "{{url('admin_order/count')}}",
@@ -414,8 +415,6 @@
             }
 
 
-
-
             //change order status
             var token = $("input[name='_token']").val();
 
@@ -427,7 +426,7 @@
                 var id = $(this).attr('data-id');
                 $.ajax({
                     type: "get",
-                    url: "{{url('admin_orders')}}/"+id+"/edit",
+                    url: "{{url('admin_orders')}}/" + id + "/edit",
                     success: function (response) {
 
                         $('.modal .modal-body').empty().append(response);
@@ -452,7 +451,7 @@
                                 return $state;
                             },
                             ajax: {
-                                type:'GET',
+                                type: 'GET',
                                 url: '{{url('admin_order/products')}}',
                                 processResults: function (data) {
                                     var data = $.parseJSON(data);
@@ -480,7 +479,7 @@
                         $("#storeID").select2({
                             placeholder: "Select a Store",
                             ajax: {
-                                type:'GET',
+                                type: 'GET',
                                 url: '{{url('admin_order/stores')}}',
                                 processResults: function (data) {
                                     var data = $.parseJSON(data);
@@ -559,7 +558,7 @@
                                     };
                                     return query;
                                 },
-                                type:'GET',
+                                type: 'GET',
                                 url: '{{url('admin_order/cities')}}',
                                 processResults: function (data) {
                                     var data = $.parseJSON(data);
@@ -581,7 +580,7 @@
                                     };
                                     return query;
                                 },
-                                type:'GET',
+                                type: 'GET',
                                 url: '{{url('admin_order/zones')}}',
                                 processResults: function (data) {
                                     var data = $.parseJSON(data);
@@ -598,9 +597,9 @@
                             ajax: "{{url('admin_order/getComment')}}?id=" + $('#orderCommentTable').attr('data-id'),
                             ordering: false,
                             lengthChange: false,
-                            bFilter:false,
-                            search:false,
-                            info:false,
+                            bFilter: false,
+                            search: false,
+                            info: false,
                             columns: [
                                 {data: "date"},
                                 {data: "comment"},
@@ -612,16 +611,16 @@
                             ajax: "{{url('admin_order/previous_orders')}}?id=" + $('#oldOrderTable').attr('data-id'),
                             ordering: false,
                             lengthChange: false,
-                            bFilter:false,
-                            search:false,
-                            info:false,
+                            bFilter: false,
+                            search: false,
+                            info: false,
                             columns: [
                                 {data: "invoiceID"},
                                 {
                                     data: null,
                                     width: "15%",
                                     render: function (data) {
-                                        return '<i class="fas fa-user mr-2 text-grey-dark"></i>'+data.customerName +'<br> <i class="fas fa-phone  mr-2 text-grey-dark"></i>'+data.customerPhone+'<br><i class="fas fa-map-marker mr-2 text-grey-dark"></i>' + data.customerAddress;
+                                        return '<i class="fas fa-user mr-2 text-grey-dark"></i>' + data.customerName + '<br> <i class="fas fa-phone  mr-2 text-grey-dark"></i>' + data.customerPhone + '<br><i class="fas fa-map-marker mr-2 text-grey-dark"></i>' + data.customerAddress;
                                     }
                                 },
                                 {data: "products"},
@@ -633,13 +632,13 @@
                         $(document).on("click", "#updateComment", function () {
                             var note = $('#comment');
                             var id = $('#btn-update').val();
-                            if(note.val() == ''){
-                                note.css('border','1px solid red');
+                            if (note.val() == '') {
+                                note.css('border', '1px solid red');
                                 return;
-                            }else if( id == ''){
+                            } else if (id == '') {
                                 toastr.success('Something Wrong , Try again ! ');
                                 return;
-                            }else{
+                            } else {
                                 $.ajax({
                                     type: "GET",
                                     url: "{{url('admin_order/updateComment')}}",
@@ -728,7 +727,7 @@
                                         paymentTypeID: $("#paymentTypeID").val(),
                                     };
                                 },
-                                type:'GET',
+                                type: 'GET',
                                 url: '{{url('admin_order/paymentnumber')}}',
 
                                 processResults: function (data) {
@@ -755,14 +754,13 @@
                         calculation();
 
 
-
                     }
                 });
             });
 
 
             $(document).on("click", "#btn-update", function () {
-                var id =  $(this).val();
+                var id = $(this).val();
                 var invoiceID = $("#invoiceID");
                 var customerName = $("#customerName");
                 var customerPhone = $("#customerPhone");
@@ -781,7 +779,7 @@
                 var zoneID = +$("#zoneID").val();
                 var memo = +$("#memo").val();
                 var product = [];
-                var productCount = 0 ;
+                var productCount = 0;
 
                 $("#productTable tbody tr").each(function (index, value) {
                     var currentRow = $(this);
@@ -797,56 +795,56 @@
                     productCount++;
                 });
 
-                if(storeID.val() == ''){
+                if (storeID.val() == '') {
                     toastr.error('Store Should Not Be Empty');
-                    storeID.closest('.form-group').find('.select2-selection').css('border','1px solid red');
+                    storeID.closest('.form-group').find('.select2-selection').css('border', '1px solid red');
                     return;
                 }
-                storeID.closest('.form-group').find('.select2-selection').css('border','1px solid #ced4da');
+                storeID.closest('.form-group').find('.select2-selection').css('border', '1px solid #ced4da');
 
-                if(invoiceID.val() == ''){
+                if (invoiceID.val() == '') {
                     toastr.error('Invoice ID Should Not Be Empty');
-                    invoiceID.css('border','1px solid red');
+                    invoiceID.css('border', '1px solid red');
                     return;
                 }
-                invoiceID.css('border','1px solid #ced4da');
+                invoiceID.css('border', '1px solid #ced4da');
 
-                if(customerName.val() == ''){
+                if (customerName.val() == '') {
                     toastr.error('Customer Name Should Not Be Empty');
-                    customerName.css('border','1px solid red');
+                    customerName.css('border', '1px solid red');
                     return;
                 }
-                customerName.css('border','1px solid #ced4da');
+                customerName.css('border', '1px solid #ced4da');
 
-                if(customerPhone.val() == ''){
+                if (customerPhone.val() == '') {
                     toastr.error('Customer Phone Should Not Be Empty');
-                    customerPhone.css('border','1px solid red');
+                    customerPhone.css('border', '1px solid red');
                     return;
                 }
-                customerPhone.css('border','1px solid #ced4da');
+                customerPhone.css('border', '1px solid #ced4da');
 
-                if(customerAddress.val() == ''){
+                if (customerAddress.val() == '') {
                     toastr.error('Customer Address Should Not Be Empty');
-                    customerAddress.css('border','1px solid red');
+                    customerAddress.css('border', '1px solid red');
                     return;
                 }
-                customerAddress.css('border','1px solid #ced4da');
+                customerAddress.css('border', '1px solid #ced4da');
 
-                if(orderDate.val() == ''){
+                if (orderDate.val() == '') {
                     toastr.error('Order Date Should Not Be Empty');
-                    orderDate.css('border','1px solid red');
+                    orderDate.css('border', '1px solid red');
                     return;
                 }
-                orderDate.css('border','1px solid #ced4da');
+                orderDate.css('border', '1px solid #ced4da');
 
-                if(courierID.val() == ''){
+                if (courierID.val() == '') {
                     toastr.error('Courier Should Not Be Empty');
-                    courierID.closest('.form-group').find('.select2-selection').css('border','1px solid red');
+                    courierID.closest('.form-group').find('.select2-selection').css('border', '1px solid red');
                     return;
                 }
-                courierID.css('border','1px solid #ced4da');
+                courierID.css('border', '1px solid #ced4da');
 
-                if(productCount == 0){
+                if (productCount == 0) {
                     toastr.error('Product Should Not Be Empty');
                     return;
                 }
@@ -897,10 +895,7 @@
             $(".datepicker").flatpickr();
 
 
-
-
         });
-
 
 
     </script>
@@ -916,10 +911,10 @@
             margin-bottom: 24px;
             border-radius: 0.25rem;
         }
+
         a {
             text-decoration: none;
         }
     </style>
-
 
 @endsection

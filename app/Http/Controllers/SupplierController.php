@@ -53,7 +53,7 @@ class SupplierController extends Controller
         $supplier->supplierEmail = $request->supplierEmail;
         $supplier->supplierAddress = $request->supplierAddress;
         $supplier->supplierCompanyName = $request->supplierCompanyName;
-        $supplier->supplierInitialAmount = $request->supplierInitialAmount;
+//        $supplier->supplierInitialAmount = $request->supplierInitialAmount;
         $supplier->supplierTotalAmount = $request->supplierTotalAmount;
         $supplier->supplierPaidAmount = $request->supplierPaidAmount;
         $supplier->supplierDueAmount = $request->supplierDueAmount;
@@ -88,6 +88,14 @@ class SupplierController extends Controller
         $supplier = Supplier::where('id', $id)->first();
         $supplier->supplierName = $request->supplierName;
         $supplier->supplierPhone = $request->supplierPhone;
+
+        $supplier->supplierEmail = $request->supplierEmail;
+        $supplier->supplierAddress = $request->supplierAddress;
+        $supplier->supplierCompanyName = $request->supplierCompanyName;
+//        $supplier->supplierInitialAmount = $request->supplierInitialAmount;
+//        $supplier->supplierTotalAmount = $request->supplierTotalAmount;
+//        $supplier->supplierPaidAmount = $request->supplierPaidAmount;
+//        $supplier->supplierDueAmount = $request->supplierDueAmount;
         $supplier->save();
         return response()->json($supplier, 200);
     }

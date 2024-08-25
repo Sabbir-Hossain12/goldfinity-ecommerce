@@ -33,5 +33,10 @@ class Purchase extends Model
     {
         return $this->belongsTo(Supplier::class, 'supplier_id');
     }
+
+    public function purchaseProducts()
+    {
+        return $this->hasMany(PurchaseProduct::class);
+    }
     
 }

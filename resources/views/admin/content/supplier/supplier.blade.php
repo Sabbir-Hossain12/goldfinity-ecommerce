@@ -71,13 +71,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group pb-4">
-                                <label for="websiteTitle" class="control-label">Supplier Initial Amount</label>
-                                <div class="webtitle">
-                                    <input type="number" class="form-control" name="supplierInitialAmount" value="0" id="supplierInitialAmount"  >
-                                    <span class="text-danger"></span>
-                                </div>
-                            </div> 
+                            
                             <div class="form-group pb-4">
                                 <label for="websiteTitle" class="control-label">Supplier Total Amount</label>
                                 <div class="webtitle">
@@ -138,7 +132,6 @@
                                 <th>Supplier Name</th>
                                 <th>Supplier Phone</th>
                                 <th>Supplier Email</th>
-                                <th>Supplier Initial Amount</th>
                                 <th>Supplier Total Amount</th>
                                 <th>Supplier Paid Amount</th>
                                 <th>Supplier Due Amount</th>
@@ -211,31 +204,31 @@
                                 </div>
                             </div>
 
-                            <div class="form-group pb-4">
-                                <label for="websiteTitle" class="control-label">Supplier Initial Amount</label>
-                                <div class="webtitle">
-                                    <input type="number" class="form-control" name="supplierInitialAmount" value="0" id="supplierInitialAmount"  >
-                                    <span class="text-danger"></span>
-                                </div>
-                            </div>
+{{--                            <div class="form-group pb-4">--}}
+{{--                                <label for="websiteTitle" class="control-label">Supplier Initial Amount</label>--}}
+{{--                                <div class="webtitle">--}}
+{{--                                    <input type="number" class="form-control" name="supplierInitialAmount" value="0" id="supplierInitialAmount"  >--}}
+{{--                                    <span class="text-danger"></span>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <div class="form-group pb-4">
                                 <label for="websiteTitle" class="control-label">Supplier Total Amount</label>
                                 <div class="webtitle">
-                                    <input type="number" class="form-control" name="supplierTotalAmount" value="0" id="supplierTotalAmount"  >
+                                    <input type="number" class="form-control" name="supplierTotalAmount" value="0" id="supplierTotalAmount" readonly >
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="form-group pb-4">
                                 <label for="websiteTitle" class="control-label">Supplier Paid Amount</label>
                                 <div class="webtitle">
-                                    <input type="number" class="form-control" name="supplierPaidAmount" value="0" id="supplierPaidAmount" >
+                                    <input type="number" class="form-control" name="supplierPaidAmount" value="0" id="supplierPaidAmount" readonly >
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="form-group pb-4">
                                 <label for="websiteTitle" class="control-label">Supplier Due Amount</label>
                                 <div class="webtitle">
-                                    <input type="number" class="form-control" name="supplierDueAmount" value="0" id="supplierDueAmount" >
+                                    <input type="number" class="form-control" name="supplierDueAmount" value="0" id="supplierDueAmount" readonly>
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
@@ -273,7 +266,7 @@
                     { data: 'supplierName' },
                     { data: 'supplierPhone' },
                     { data: 'supplierEmail' },
-                    { data: 'supplierInitialAmount' },
+                 
                     { data: 'supplierTotalAmount' },
                     { data: 'supplierPaidAmount' },
                     { data: 'supplierDueAmount' },
