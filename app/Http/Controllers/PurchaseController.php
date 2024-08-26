@@ -6,6 +6,7 @@ use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\PurchaseProduct;
+use App\Models\Stock;
 use App\Models\Supplier;
 use App\Models\Weight;
 use Illuminate\Http\JsonResponse;
@@ -90,8 +91,6 @@ class PurchaseController extends Controller
      */
     public function store(Request $request):JsonResponse
     {
-//        $purchase = Purchase::create($request->all());
-
         $purchase = new Purchase();
         $purchase->invoiceID = $this->uniqueIDforPurchase();
         $purchase->supplier_id= $request['data']['supplierId'];
@@ -110,7 +109,7 @@ class PurchaseController extends Controller
         if ($purchase) {
             
             foreach ($products as $product) {
-
+//              Save Purchase Product       
                 $purchaseProduct = new PurchaseProduct();
                 $purchaseProduct->purchase_id = $purchase->id;
                 $purchaseProduct->weight_id = $product['weightID'];
@@ -121,16 +120,47 @@ class PurchaseController extends Controller
                 $purchaseProduct->quantity = $product['productQuantity'];
                
                 $purchaseProduct->save();
+
+                
+                $weightProduct = Weight::find($product['weightID']);
+
+                if ($weightProduct) {  
+                    // Update the Weight Product Quantity
+                    $weightProduct->total_qty += $product['productQuantity'];
+                    $weightProduct->available_qty += $product['productQuantity'];
+                    $weightProduct->save();
+                }
                 
 
+
             }
-            
+//          Update Supplier  
             $supplier = Supplier::where('id', $purchase->supplier_id)->first();
             $supplier->supplierTotalAmount += $request['data']['total'];
             $supplier->supplierPaidAmount += $request['data']['payedAmount'];
             $supplier->supplierDueAmount += $supplier->supplierTotalAmount - $supplier->supplierPaidAmount;
             
             $supplier->save();
+            
+            
+            
+//          Update Stock
+            foreach ($products as $product) {
+
+                $weightPro = Weight::find($product['weightID']);
+                
+                $stock= new Stock();
+                $stock->purchase_id = $purchase->id;
+                $stock->weight_id = $product['weightID'];
+                $stock->supplier_id = $supplier->id;
+                $stock->product_name = $product['productName'];
+                $stock->supplier_name = $supplier->supplierName;
+                $stock->purchase_qty = $product['productQuantity'];
+                $stock->new_stock = $weightPro->available_qty + $product['productQuantity'];
+                $stock->old_stock = $weightPro->available_qty;
+
+                $stock->save();
+            }
 
             if (!empty($request['data']['paymentTypeID'])) {
                 $payment = new Payment();
@@ -141,11 +171,20 @@ class PurchaseController extends Controller
                 $payment->save();
             }
             
-   
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         }
-        
-        
         return response()->json(['message'=> 'Purchase Created Successfully'] , 200);
+        
+        
     }
 
 

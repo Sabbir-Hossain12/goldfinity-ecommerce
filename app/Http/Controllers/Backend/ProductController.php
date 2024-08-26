@@ -168,20 +168,20 @@ class ProductController extends Controller
             }
         }
 
-        if ($result) {
-            $latestStock = new Stock();
-            $latestStock->product_id = $product->id;
-            $latestStock->purchase = 0;
-            $latestStock->stock = 100;
-            $latestStock->save();
-            $purchase = new Purchase();
-            $purchase->date = date('Y-m-d');
-            $purchase->invoiceID = date('Y-m-d');
-            $purchase->product_id = $product->id;
-            $purchase->supplier_id = 1;
-            $purchase->quantity = 100;
-            $purchase->save();
-        }
+//        if ($result) {
+//            $latestStock = new Stock();
+//            $latestStock->product_id = $product->id;
+//            $latestStock->purchase = 0;
+//            $latestStock->stock = 100;
+//            $latestStock->save();
+//            $purchase = new Purchase();
+//            $purchase->date = date('Y-m-d');
+//            $purchase->invoiceID = date('Y-m-d');
+//            $purchase->product_id = $product->id;
+//            $purchase->supplier_id = 1;
+//            $purchase->quantity = 100;
+//            $purchase->save();
+//        }
 
         return response()->json($product, 200);
     }

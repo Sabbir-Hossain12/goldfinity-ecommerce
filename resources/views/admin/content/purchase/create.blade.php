@@ -172,7 +172,8 @@
 
                 let supplierId = $("#supplierList").val();
                 var invoiceID = $("#invoiceID");
-                var total = +$("#total").text();
+                // var total = +$("#total").text();
+                let subtotal = +$("#subtotal").text();
                 var paymentTypeID = $("#paymentTypeID").val();
                 var payedAmount = +$("#paymentAmount").val();
                 var paymentAgentNumber = $("#paymentAgentNumber").val();
@@ -197,7 +198,7 @@
                 var data = {};
                 data["invoiceID"] = invoiceID.val();
                 data["supplierId"] = supplierId;
-                data["total"] = total;
+                data["total"] = subtotal;
                 data["paymentTypeID"] = paymentTypeID;
                 data["payedAmount"] = payedAmount;
                 data["paymentAgentNumber"] = paymentAgentNumber;

@@ -19,65 +19,7 @@
         </div><!-- End Page Title -->
 
 
-        {{-- //popup modal for create user --}}
-        {{-- <div class="modal fade" id="mainStock" tabindex="-1" data-bs-backdrop="false">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Add New Stock</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                        <form name="form" id="AddStock" enctype="multipart/form-data">
-                            @csrf
-                                <div class="form-group">
-                                    <label for="date">Date</label>
-                                    <input type="text" name="date" class="form-control" id="date">
-                                </div>
-                                <div class="form-group pb-2">
-                                    <label for="invoiceID">Invoice ID</label>
-                                    <input type="text" name="invoiceID" class="form-control" id="invoiceID">
-                                </div>
-                                <div class="form-group pb-2">
-                                    <label for="productID">Product Name</label>
-                                    <select name="product_id" id="product_id" class="form-control" style="width: 100%" >
-                                         <option value="">Select a Product</option>
-                                        @forelse ($products as $product)
-                                            <option value="{{$product->id}}" style="padding:10px">{{$product->productName}}</option>
-                                        @empty
-
-                                        @endforelse
-                                    </select>
-                                </div>
-                                <div class="form-group pb-2">
-                                    <label for="productID">Supplier Name</label>
-                                    <select name="supplier_id" id="supplier_id" class="form-control" style="width: 100%" >
-                                         <option value="">Select a Supplier</option>
-                                        @forelse ($suppliers as $supplier)
-                                            <option value="{{$supplier->id}}" style="padding:10px">{{$supplier->supplierName}}</option>
-                                        @empty
-
-                                        @endforelse
-                                    </select>
-                                </div>
-                                <div class="form-group pb-2">
-                                    <label for="quantity">Quantity</label>
-                                    <input type="text" name="quantity" class="form-control" id="quantity">
-                                </div>
-
-                            <div class="form-group" style="text-align: right">
-                                <div class="submitBtnSCourse">
-                                    <button type="submit" name="btn" class="btn btn-primary AddPurcheseBtn btn-block">Save</button>
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-
-                </div>
-            </div>
-        </div><!-- End popup Modal--> --}}
+     
 
         {{-- //table section for category --}}
         <section class="section">
@@ -98,10 +40,13 @@
                         <table class="table table-centered table-borderless table-hover mb-0" id="stocksinfotbl" width="100%">
                             <thead class="thead-light">
                             <tr>
-                                <th>ID</th>
+                                <th>Invoice ID</th>
+                                <th>Date</th>
+                                <th>Supplier Name</th>
                                 <th>Product Name</th>
-                                <th>Purchase</th>
-                                <th>Stock</th>
+                                <th>Purchase Quantity</th>
+                                <th>New Stock</th>
+                                <th>Old Stock</th>
                             </tr>
                             </thead>
                             <tbody></tbody>
@@ -116,67 +61,6 @@
             </div>
         </section>
 
-          {{-- //popup modal for edit user --}}
-        {{-- <div class="modal fade" id="editmainPurchase" tabindex="-1" data-bs-backdrop="false">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit Purchase</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                        <form name="form" id="EditPurchase" enctype="multipart/form-data">
-                            @csrf
-                            <div class="successSMS"></div>
-
-                             <div class="form-group">
-                                    <label for="date">Date</label>
-                                    <input type="text" name="date" class="form-control" id="editdate">
-                                </div>
-                                <div class="form-group pb-2">
-                                    <label for="invoiceID">Invoice ID</label>
-                                    <input type="text" name="invoiceID" class="form-control" id="editinvoiceID">
-                                </div>
-                                <div class="form-group pb-2">
-                                    <label for="productID">Product Name</label>
-                                    <select name="product_id" id="editproduct_id" class="form-control" style="width: 100%" >
-                                         <option value="">Select a Product</option>
-                                        @forelse ($products as $product)
-                                            <option value="{{$product->id}}" style="padding:10px">{{$product->productName}}</option>
-                                        @empty
-
-                                        @endforelse
-                                    </select>
-                                </div>
-                                <div class="form-group pb-2">
-                                    <label for="productID">Supplier Name</label>
-                                    <select name="supplier_id" id="editsupplier_id" class="form-control" style="width: 100%" >
-                                         <option value="">Select a Supplier</option>
-                                        @forelse ($suppliers as $supplier)
-                                            <option value="{{$supplier->id}}" style="padding:10px">{{$supplier->supplierName}}</option>
-                                        @empty
-
-                                        @endforelse
-                                    </select>
-                                </div>
-                                <div class="form-group pb-2">
-                                    <label for="quantity">Quantity</label>
-                                    <input type="text" name="quantity" class="form-control" id="editquantity">
-                                </div>
-                                <input type="text" name="id" id="idhidden" hidden>
-                            <div class="form-group" style="text-align: right">
-                                <div class="submitBtnSCourse">
-                                    <button type="submit" name="btn" class="btn btn-primary btn-block">Update</button>
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-
-                </div>
-            </div>
-        </div><!-- End popup Modal--> --}}
 
     </main>
 
@@ -192,9 +76,13 @@
                 ajax: '{!! route('stock.info') !!}',
                 columns: [
                     { data: 'id' },
-                    { data: 'products.productName' },
-                    { data: 'purchase' },
-                    { data: 'stock' },
+                    { data: 'created_at' },
+                    
+                    { data: 'supplier_name' },
+                    { data: 'product_name' },
+                    { data: 'purchase_qty' },
+                    { data: 'new_stock' },
+                    { data: 'old_stock' },
 
                 ]
             });
