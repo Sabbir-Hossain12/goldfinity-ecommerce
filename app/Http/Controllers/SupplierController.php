@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Supplier;
+use App\Models\SupplierPayment;
 use Illuminate\Http\Request;
 use DataTables;
 
@@ -26,8 +27,9 @@ class SupplierController extends Controller
         
         return Datatables::of($suppliers)
             ->addColumn('action', function ($suppliers) {
-                return '<a href="#" type="button" id="editSupplierBtn" data-id="' . $suppliers->id . '" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editmainSupplier" ><i class="bi bi-pencil-square" ></i></a>
-                <a href="#" type="button" id="deleteSupplierBtn" data-id="' . $suppliers->id . '" class="btn btn-danger btn-sm"><i class="bi bi-archive"></i></a>';
+                return '<a href="'. route('supply.ledger', $suppliers->id).'" type="button" id="editSupplierBtn"  class="btn btn-primary btn-sm mx-2"><i class="bi bi-cash-coin" ></i>
+                        <a href="#" type="button" id="editSupplierBtn" data-id="' . $suppliers->id . '" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editmainSupplier" ><i class="bi bi-pencil-square" ></i></a>
+                        <a href="#" type="button" id="deleteSupplierBtn" data-id="' . $suppliers->id . '" class="btn btn-danger btn-sm"><i class="bi bi-archive"></i></a>';
             })
 
             ->make(true);
@@ -121,6 +123,15 @@ class SupplierController extends Controller
         $supplier->save();
 
         return response()->json($supplier, 200);
+    }
+
+
+    public function supplierLedger(string $id)
+    {
+        $supplier=Supplier::findOrfail($id);
+        $supplierPayments=SupplierPayment::where('supplier_id',$id)->get();
+        
+        return view('admin.content.supplier.ledger',compact('supplier','supplierPayments'));
     }
 
 

@@ -37,7 +37,6 @@
                                 <div class="form-group">
                                     <label for="supplierList">Supplier Name</label>
                                     <select id="supplierList" class="form-control" required>
-                                        <option selected disabled>Select Supplier</option>
                                         @foreach($suppliers as $supplier)
                                             <option value="{{$supplier->id}}">{{$supplier->supplierName}}</option>
                                         @endforeach
@@ -51,6 +50,7 @@
                                            id="invoiceID" value="{{$purchaseInvoice}}">
                                 </div>
                             </div>
+                            
                         </div>
                         <br>
                         <br>

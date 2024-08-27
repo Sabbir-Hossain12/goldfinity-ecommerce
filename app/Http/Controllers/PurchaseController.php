@@ -8,6 +8,7 @@ use App\Models\Purchase;
 use App\Models\PurchaseProduct;
 use App\Models\Stock;
 use App\Models\Supplier;
+use App\Models\SupplierPayment;
 use App\Models\Weight;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,49 +25,43 @@ class PurchaseController extends Controller
     {
         $weights = Weight::with('product')->get();
         $suppliers = Supplier::where('status', 'Active')->get();
-        return view('admin.content.purchase.purchase',['weights'=>$weights, 'suppliers'=> $suppliers]);
+        return view('admin.content.purchase.purchase', ['weights' => $weights, 'suppliers' => $suppliers]);
     }
 
 
     public function purchasedata()
     {
-        $purchases = Purchase::with(['purchaseProducts','weights', 'suppliers'])->get();
+        $purchases = Purchase::with(['purchaseProducts', 'weights', 'suppliers'])->get();
         return Datatables::of($purchases)
             ->addIndexColumn()
             ->addColumn('productsData', function ($purchases) {
-                $products=[];
+                $products = [];
                 foreach ($purchases->purchaseProducts as $key => $value) {
-                    $products[] = $value->product_name.'<br>' ;
+                    $products[] = $value->product_name.'<br>';
                 }
                 return $products;
-                
             })
-
             ->addColumn('productsQty', function ($purchases) {
-                $products=[];
+                $products = [];
                 foreach ($purchases->purchaseProducts as $key => $value) {
-                    $products[] = $value->quantity.'<br>' ;
+                    $products[] = $value->quantity.'<br>';
                 }
                 return $products;
-
             })
-
             ->addColumn('action', function ($purchases) {
-                return '<a href="#" type="button" id="editPurchaseBtn" data-id="' . $purchases->id . '" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editmainPurchase" ><i class="bi bi-pencil-square" ></i></a>
-                <a href="#" type="button" id="deletePurchaseBtn" data-id="' . $purchases->id . '" class="btn btn-danger btn-sm"><i class="bi bi-archive"></i></a>';
+                return '<a href="#" type="button" id="editPurchaseBtn" data-id="'.$purchases->id.'" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editmainPurchase" ><i class="bi bi-pencil-square" ></i></a>
+                <a href="#" type="button" id="deletePurchaseBtn" data-id="'.$purchases->id.'" class="btn btn-danger btn-sm"><i class="bi bi-archive"></i></a>';
             })
-            
             ->escapeColumns([])
             ->make(true);
     }
 
     public function create()
     {
-    $purchaseInvoice=  $this->uniqueIDforPurchase();
-    $suppliers = Supplier::where('status', 'Active')->get();
-        
-        return view('admin.content.purchase.create',compact('purchaseInvoice','suppliers'));
+        $purchaseInvoice = $this->uniqueIDforPurchase();
+        $suppliers = Supplier::where('status', 'Active')->get();
 
+        return view('admin.content.purchase.create', compact('purchaseInvoice', 'suppliers'));
     }
 
     public function uniqueIDforPurchase()
@@ -78,9 +73,8 @@ class PurchaseController extends Controller
             $orderID = 1;
         }
 
-        return 'PG77' . $orderID;
+        return 'PG77'.$orderID;
     }
-
 
 
     /**
@@ -89,67 +83,52 @@ class PurchaseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request):JsonResponse
+    public function store(Request $request): JsonResponse
     {
         $purchase = new Purchase();
         $purchase->invoiceID = $this->uniqueIDforPurchase();
-        $purchase->supplier_id= $request['data']['supplierId'];
-        $purchase->totalAmount= $request['data']['total'];
-        $purchase->payed_amount= $request['data']['payedAmount'];
-        $purchase->payment_type_id= $request['data']['paymentTypeID'];
+        $purchase->supplier_id = $request['data']['supplierId'];
+        $purchase->totalAmount = $request['data']['total'];
+        $purchase->payed_amount = $request['data']['payedAmount'];
+        $purchase->payment_type_id = $request['data']['paymentTypeID'];
         $purchase->date = today();
-        
+
         $purchase->paymentAgentNumber = $request['data']['paymentAgentNumber'];
         $purchase->note = $request['data']['note'];
-        
+
         $purchase->save();
-        
-        $products= $request['data']['products'];
-        
+
+        $products = $request['data']['products'];
+
         if ($purchase) {
-            
             foreach ($products as $product) {
 //              Save Purchase Product       
                 $purchaseProduct = new PurchaseProduct();
                 $purchaseProduct->purchase_id = $purchase->id;
                 $purchaseProduct->weight_id = $product['weightID'];
                 $purchaseProduct->weight = $product['productWeight'];
-                
+
                 $purchaseProduct->product_name = $product['productName'];
                 $purchaseProduct->product_price = $product['productPrice'];
                 $purchaseProduct->quantity = $product['productQuantity'];
-               
+
                 $purchaseProduct->save();
-
-                
-                $weightProduct = Weight::find($product['weightID']);
-
-                if ($weightProduct) {  
-                    // Update the Weight Product Quantity
-                    $weightProduct->total_qty += $product['productQuantity'];
-                    $weightProduct->available_qty += $product['productQuantity'];
-                    $weightProduct->save();
-                }
-                
-
-
             }
+            
 //          Update Supplier  
             $supplier = Supplier::where('id', $purchase->supplier_id)->first();
             $supplier->supplierTotalAmount += $request['data']['total'];
             $supplier->supplierPaidAmount += $request['data']['payedAmount'];
-            $supplier->supplierDueAmount += $supplier->supplierTotalAmount - $supplier->supplierPaidAmount;
-            
+            $supplier->supplierDueAmount += ($request['data']['total'] - $request['data']['payedAmount']);
+
             $supplier->save();
-            
-            
-            
+
+
 //          Update Stock
             foreach ($products as $product) {
-
                 $weightPro = Weight::find($product['weightID']);
-                
-                $stock= new Stock();
+
+                $stock = new Stock();
                 $stock->purchase_id = $purchase->id;
                 $stock->weight_id = $product['weightID'];
                 $stock->supplier_id = $supplier->id;
@@ -160,31 +139,43 @@ class PurchaseController extends Controller
                 $stock->old_stock = $weightPro->available_qty;
 
                 $stock->save();
+
+
+//              $weightProduct = Weight::find($product['weightID']);
+
+                if ($weightPro) {
+                    // Update the Weight Product Quantity
+                    $weightPro->total_qty += $product['productQuantity'];
+                    $weightPro->available_qty += $product['productQuantity'];
+                    $weightPro->update();
+                }
             }
 
-            if (!empty($request['data']['paymentTypeID'])) {
+            if (!empty($request['data']['paymentTypeID']) && $request['data']['payedAmount'] > 0) {
                 $payment = new Payment();
                 $payment->payment_type_id = $request['data']['paymentTypeID'];
                 $payment->paymentNumber = $request['data']['paymentAgentNumber'] ?? null;
 
                 // Save the payment to the database if needed
                 $payment->save();
+                
+                $supplyPayment=new SupplierPayment();
+                $supplyPayment->supplier_id=$purchase->supplier_id;
+                $supplyPayment->payment_id=$payment->id;
+                $supplyPayment->payment_type_id=$request['data']['paymentTypeID'];
+                $supplyPayment->paid_amount=$request['data']['payedAmount'];
+                $supplyPayment->old_due_amount=$supplier->supplierDueAmount - $request['data']['payedAmount'];
+                $supplyPayment->new_due_amount	= $supplier->supplierDueAmount ;
+                
+                $supplyPayment->trx_id= uniqid();
+                $supplyPayment->date=today();
+                $supplyPayment->comments=$request['data']['note'];
+                
+                $supplyPayment->save();
             }
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
         }
-        return response()->json(['message'=> 'Purchase Created Successfully'] , 200);
-        
-        
+
+        return response()->json(['message' => 'Purchase Created Successfully'], 200);
     }
 
 
@@ -217,7 +208,7 @@ class PurchaseController extends Controller
         $purchase->quantity = $request->quantity;
         $purchase->totalAmount = $request->totalAmount;
         $purchase->save();
-        
+
         return response()->json($purchase, 200);
     }
 
@@ -230,10 +221,10 @@ class PurchaseController extends Controller
     public function destroy($id)
     {
         $purchase = Purchase::where('id', $id)->first();
-        
+
         $purchase->delete();
         return response()->json('delete success');
     }
 
-   
+
 }

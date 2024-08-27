@@ -279,6 +279,10 @@ Route::group(['middleware' => ['auth.admin:admin']], function () {
     Route::put('supplier/status', [SupplierController::class, 'updatestatus']);
     Route::get('admin/supplier', [SupplierController::class, 'supplierdata'])->name('supplier.info');
     Route::get('admin/supllier-list', [SupplierController::class, 'supplierlist'])->name('supplier.list');
+    
+//   Supply Ledger
+    Route::get('supply/ledger/{id}', [SupplierController::class, 'supplierLedger'])->name('supply.ledger');
+    
     //payment method
     Route::resource('paymenttypes', PaymenttypeController::class);
     Route::post('paymenttype/{id}', [PaymenttypeController::class, 'update']);

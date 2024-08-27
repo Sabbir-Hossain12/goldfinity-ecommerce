@@ -81,7 +81,7 @@
                             </div>
                             <div class="form-group pb-2">
                                 <label for="productID">Supplier Name</label>
-                                <select name="supplier_id" id="supplier_id" class="form-control" style="width: 100%">
+                                <select name="supplier_id" id="supplier_id" class="form-control" style="width: 100%" required>
                                     <option value="">Select a Supplier</option>
                                     @forelse ($suppliers as $supplier)
                                         <option value="{{$supplier->id}}"
@@ -259,44 +259,7 @@
             );
             return $state;
         }
-
-
-        {{--({--}}
-        {{--    placeholder: "Select a Product",--}}
-        {{--    templateResult: function (state) {--}}
-        {{--        if (!state.id) {--}}
-        {{--            return state.text;--}}
-        {{--        }--}}
-        {{--        var $state = $(--}}
-        {{--            '<span><img width="20px" src="' +--}}
-        {{--            state.image +--}}
-        {{--            '" class="img-flag" /> ' +--}}
-        {{--            state.text +--}}
-        {{--            "</span>"--}}
-        {{--        );--}}
-        {{--        return $state;--}}
-        {{--    },--}}
-        {{--    ajax: {--}}
-        {{--        type: 'GET',--}}
-        {{--        url: '{{url('admin_order/products')}}',--}}
-        {{--        processResults: function (data) {--}}
-        {{--            var data = $.parseJSON(data);--}}
-        {{--            return {--}}
-        {{--                results: data.data--}}
-        {{--            };--}}
-        {{--        }--}}
-        {{--    }--}}
-        {{--}).trigger("change").on("select2:select", function (e) {--}}
-        {{--    $("#productTable tbody").append(--}}
-        {{--        '<option value="' + data.id + '">' + data.text + ' (Code: ' + data.productCode + ', Price: ' + data.productPrice + ')</option>'--}}
-        {{--    );--}}
-
-        {{--    // calculation();--}}
-        {{--});--}}
-
-
-
-
+        
         // Datatable
 
         $(document).ready(function () {
