@@ -50,23 +50,23 @@
                                            id="invoiceID" value="{{$purchaseInvoice}}">
                                 </div>
                             </div>
-                            
+
                         </div>
                         <br>
                         <br>
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group mb-2">
-                                    <label>Payment</label>
-                                    <select id="paymentTypeID" class="form-control select2">
-                                        <option value="">Select payment Type</option>
-                                    </select>
-                                </div>
+                                {{--                                <div class="form-group mb-2">--}}
+                                {{--                                    <label>Payment</label>--}}
+                                {{--                                    <select id="paymentTypeID" class="form-control select2">--}}
+                                {{--                                        <option value="">Select payment Type</option>--}}
+                                {{--                                    </select>--}}
+                                {{--                                </div>--}}
 
-                                <div class="form-group mb-2 paymentAgentNumber">
-                                    <input type="text" class="form-control" id="paymentAgentNumber"
-                                           placeholder="Enter Bkash Agent Number">
-                                </div>
+                                {{--                                <div class="form-group mb-2 paymentAgentNumber">--}}
+                                {{--                                    <input type="text" class="form-control" id="paymentAgentNumber"--}}
+                                {{--                                           placeholder="Enter Bkash Agent Number">--}}
+                                {{--                                </div>--}}
                                 <div class="form-group mb-2 hide">
                                     <label>Note (if any)</label>
                                     <textarea type="text" class="form-control" id="note"> </textarea>
@@ -83,13 +83,23 @@
                                 </div>
 
 
-                                <div class="form-group row paymentAmount">
+                                {{--                                <div class="form-group row paymentAmount">--}}
+                                {{--                                    <label for="fname"--}}
+                                {{--                                           class="col-sm-4 text-right control-label col-form-label">Payment</label>--}}
+                                {{--                                    <div class="col-sm-8">--}}
+                                {{--                                        <input type="number" value="0" min="0" class="form-control" id="paymentAmount">--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
+
+                                <div class="form-group row DiscountAmount">
                                     <label for="fname"
-                                           class="col-sm-4 text-right control-label col-form-label">Payment</label>
+                                           class="col-sm-4 text-right control-label col-form-label">Discount Amount</label>
                                     <div class="col-sm-8">
-                                        <input type="number" value="0" min="0" class="form-control" id="paymentAmount">
+                                        <input type="number" value="0" min="0" class="form-control" id="discountAmount">
                                     </div>
                                 </div>
+
+
                                 <div class="form-group row">
                                     <label for="fname"
                                            class="col-sm-4 text-right control-label col-form-label">Total</label>
@@ -205,12 +215,11 @@
                 data["note"] = note;
 
                 data["products"] = product;
-                
-                if ( data["invoiceID"]=='' || data["supplierId"]== '' || data["total"] =='') {
-                    
+
+                if (data["invoiceID"] == '' || data["supplierId"] == '' || data["total"] == '') {
+
                     toastr.error("Please fill all required fields");
-                }
-                else {
+                } else {
 
 
                     $.ajax({
@@ -356,17 +365,24 @@
             $(document).on("input", "#discountCharge", function () {
                 calculation();
             });
+
+            $(document).on("input", "#discountAmount", function () {
+                calculation();
+            });
+            
+            
             calculation();
 
             //calculation part
             function calculation() {
                 var subtotal = 0;
-                var paymentAmount = +$("#paymentAmount").val();
+                // var paymentAmount = +$("#paymentAmount").val();
+                var discountAmount = +$("#discountAmount").val();
                 $("#productTable tbody tr").each(function (index) {
                     subtotal = subtotal + +$(this).find(".productPrice").text() * +$(this).find(".productQuantity").val();
                 });
                 $("#subtotal").text(subtotal);
-                $("#total").text(subtotal - paymentAmount);
+                $("#total").text(subtotal - discountAmount);
             }
 
             //delete select order

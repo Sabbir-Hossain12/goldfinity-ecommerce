@@ -179,29 +179,33 @@
                                        id="supplierLedgerTable" width="100%">
                                     <thead class="thead-light">
                                     <tr>
-                                        <th>ID</th>
+                                        <th>Invoice ID</th>
                                         <th>Date</th>
-                                        <th>trx</th>
-                                        <th>Paid Amount</th>
-{{--                                        <th>Old Due</th>--}}
-                                        <th>New Due</th>
-                                        <th>Comments</th>
+                                        <th>A/C Title</th>
+                                        <th>Debit</th>
+                                        <th>Credit</th>
+                                        <th>Due</th>
+                                        <th>Notes</th>
+                                        <th>Admin</th>
 
 
                                     </tr>
                                     
                                     </thead>
-
+{{----}}
                                     <tbody>
-                                    @foreach($supplierPayments as $supplierPayment)
+                                    @foreach($purchases as $purchase)
                                         <tr>
-                                            <td>{{$supplierPayment->id}}</td>
-                                            <td>{{\Carbon\Carbon::parse($supplierPayment->date)->format('d-m-Y') }}</td>
-                                            <td>{{$supplierPayment->trx_id}}</td>
-                                            <td>{{$supplierPayment->paid_amount}}</td>
-{{--                                            <td>{{$supplierPayment->old_due  }}</td>--}}
-                                            <td>{{$supplierPayment->new_due_amount	  }}</td>
-                                            <td>{{$supplierPayment->comments  }}</td>
+                                            <td>{{$purchase->invoiceID}}</td>
+                                            <td>{{\Carbon\Carbon::parse($purchase->date)->format('d-m-Y') }}</td>
+                                            <td>Sale</td>
+                                            <td>{{$purchase->totalAmount}}</td>
+                                            <td></td>
+                                            
+                                     
+                                            <td>{{$purchase->totalAmount  }}</td>
+                                            <td>{{$purchase->comments  }}</td>
+                                            <td>{{App\Models\Admin::where('id',$purchase->admin_id)->first()->name}}</td>
 
 
                                         </tr>

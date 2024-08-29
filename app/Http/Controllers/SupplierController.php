@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Purchase;
 use App\Models\Supplier;
 use App\Models\SupplierPayment;
 use Illuminate\Http\Request;
@@ -130,8 +131,9 @@ class SupplierController extends Controller
     {
         $supplier=Supplier::findOrfail($id);
         $supplierPayments=SupplierPayment::where('supplier_id',$id)->get();
+        $purchases=Purchase::where('supplier_id',$id)->get();
         
-        return view('admin.content.supplier.ledger',compact('supplier','supplierPayments'));
+        return view('admin.content.supplier.ledger',compact('supplier','supplierPayments','purchases'));
     }
 
 

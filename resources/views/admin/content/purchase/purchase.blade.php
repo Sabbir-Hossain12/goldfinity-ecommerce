@@ -146,7 +146,7 @@
                                         <th>Quantity</th>
                                         <th>Total Amount</th>
                                         <th>Payed Amount</th>
-                                        <th>Note</th>
+                                        <th>Status</th>
                                         <th style="width: 55px">Action</th>
                                     </tr>
                                     </thead>
@@ -315,7 +315,14 @@
                         
                     },
                     {
-                        data:'note'
+                        data:'status',
+                        render:function (data) {
+                            if (data === 'Due') {
+                             return '<button class="btn btn-warning btn-sm">Due</button>';   
+                            }
+                            else 
+                                return '<span class="badge bg-success badge-lg">Paid</span>';
+                        }
                     },
                     {data: 'action', name: 'action', orderable: false, searchable: false},
 

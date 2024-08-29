@@ -49,7 +49,7 @@ class PurchaseController extends Controller
                 return $products;
             })
             ->addColumn('action', function ($purchases) {
-                return '<a href="#" type="button" id="editPurchaseBtn" data-id="'.$purchases->id.'" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editmainPurchase" ><i class="bi bi-pencil-square" ></i></a>
+                return '<a href="#" type="button" id="editPurchaseBtn" data-id="'.$purchases->id.'" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editmainPurchase" ><i class="bi bi-eye" ></i></a>
                 <a href="#" type="button" id="deletePurchaseBtn" data-id="'.$purchases->id.'" class="btn btn-danger btn-sm"><i class="bi bi-archive"></i></a>';
             })
             ->escapeColumns([])
@@ -89,13 +89,12 @@ class PurchaseController extends Controller
         $purchase->invoiceID = $this->uniqueIDforPurchase();
         $purchase->supplier_id = $request['data']['supplierId'];
         $purchase->totalAmount = $request['data']['total'];
-        $purchase->payed_amount = $request['data']['payedAmount'];
-        $purchase->payment_type_id = $request['data']['paymentTypeID'];
+//        $purchase->payed_amount = $request['data']['payedAmount'];
+//        $purchase->payment_type_id = $request['data']['paymentTypeID'];
         $purchase->date = today();
 
-        $purchase->paymentAgentNumber = $request['data']['paymentAgentNumber'];
+//        $purchase->paymentAgentNumber = $request['data']['paymentAgentNumber'];
         $purchase->note = $request['data']['note'];
-
         $purchase->save();
 
         $products = $request['data']['products'];
@@ -124,8 +123,9 @@ class PurchaseController extends Controller
             $supplier->save();
 
 
-//          Update Stock
+//              Update Stock
             foreach ($products as $product) {
+                
                 $weightPro = Weight::find($product['weightID']);
 
                 $stock = new Stock();
@@ -144,35 +144,37 @@ class PurchaseController extends Controller
 //              $weightProduct = Weight::find($product['weightID']);
 
                 if ($weightPro) {
-                    // Update the Weight Product Quantity
-                    $weightPro->total_qty += $product['productQuantity'];
-                    $weightPro->available_qty += $product['productQuantity'];
-                    $weightPro->update();
+//              Update the Weight Product Quantity
+                $weightPro->total_qty += $product['productQuantity'];
+                $weightPro->available_qty += $product['productQuantity'];
+                $weightPro->update();
                 }
             }
 
-            if (!empty($request['data']['paymentTypeID']) && $request['data']['payedAmount'] > 0) {
-                $payment = new Payment();
-                $payment->payment_type_id = $request['data']['paymentTypeID'];
-                $payment->paymentNumber = $request['data']['paymentAgentNumber'] ?? null;
-
-                // Save the payment to the database if needed
-                $payment->save();
-                
-                $supplyPayment=new SupplierPayment();
-                $supplyPayment->supplier_id=$purchase->supplier_id;
-                $supplyPayment->payment_id=$payment->id;
-                $supplyPayment->payment_type_id=$request['data']['paymentTypeID'];
-                $supplyPayment->paid_amount=$request['data']['payedAmount'];
-                $supplyPayment->old_due_amount=$supplier->supplierDueAmount - $request['data']['payedAmount'];
-                $supplyPayment->new_due_amount	= $supplier->supplierDueAmount ;
-                
-                $supplyPayment->trx_id= uniqid();
-                $supplyPayment->date=today();
-                $supplyPayment->comments=$request['data']['note'];
-                
-                $supplyPayment->save();
-            }
+//            if (!empty($request['data']['paymentTypeID']) && $request['data']['payedAmount'] > 0) {
+//                $payment = new Payment();
+//                $payment->payment_type_id = $request['data']['paymentTypeID'];
+//                $payment->paymentNumber = $request['data']['paymentAgentNumber'] ?? null;
+//
+//                // Save the payment to the database if needed
+//                $payment->save();
+//                
+//                $supplyPayment=new SupplierPayment();
+//                $supplyPayment->supplier_id=$purchase->supplier_id;
+//                $supplyPayment->payment_id=$payment->id;
+//                $supplyPayment->payment_type_id=$request['data']['paymentTypeID'];
+//                $supplyPayment->paid_amount=$request['data']['payedAmount'];
+//                $supplyPayment->old_due_amount=$supplier->supplierDueAmount - $request['data']['payedAmount'];
+//                $supplyPayment->new_due_amount	= $supplier->supplierDueAmount ;
+//                
+//                $supplyPayment->trx_id= uniqid();
+//                $supplyPayment->date=today();
+//                $supplyPayment->comments=$request['data']['note'];
+//                
+//                $supplyPayment->save();
+//            }
+            
+            
         }
 
         return response()->json(['message' => 'Purchase Created Successfully'], 200);
