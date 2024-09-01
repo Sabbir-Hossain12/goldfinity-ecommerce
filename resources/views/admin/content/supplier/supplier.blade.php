@@ -274,10 +274,10 @@
                         "data": null,
                         render: function (data) {
 
-                            if (data.status === 'Active') {
-                                return '<button type="button" class="btn btn-success btn-sm btn-status" data-status="Inactive" id="statusBtnSupplier" data-id="'+data.id+'">Active</button>';
+                            if (data.status === 'Due') {
+                                return '<button type="button" class="btn btn-warning btn-sm btn-status" data-status="Due"  data-id="'+data.id+'">Due</button>';
                             } else {
-                                return '<button type="button" class="btn btn-warning btn-sm btn-status" data-status="Active" id="statusBtnSupplier" data-id="'+data.id+'" >Inactive</button>';
+                                return '<button type="button" class="btn btn-success btn-sm btn-status" data-status="Paid"  data-id="'+data.id+'" >Paid</button>';
                             }
 
 

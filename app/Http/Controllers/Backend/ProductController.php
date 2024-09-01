@@ -111,6 +111,20 @@ class ProductController extends Controller
         $product->brand_id= $request->brand_id;
         $product->subcategory_id= $request->subcategory_id;
 
+        $category->meta_title= $request->meta_title;
+        $category->meta_desc= $request->meta_desc;
+        $category->meta_keyword= $request->meta_keyword;
+
+
+        if ($request->hasFile('meta_image'))
+        {
+            $file = $request->file('meta_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() .uniqid() .'.' . $extension;
+            $file->move('public/images/products/meta/', $filename);
+            $category->meta_image = 'public/images/products/meta/'.$filename;
+        }
+
         if ($request->color) {
             $product->color = json_encode($request->color);
         }

@@ -287,6 +287,42 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h5 class="text-uppercase mt-3 mb-3 bg-light p-2">Meta Information</h5>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="meta_title" id="meta_title"
+                                           placeholder="Meta Title">
+                                    <label for="floatingInput">Meta Title</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <textarea type="text" class="form-control" name="meta_desc" id="meta_desc"
+                                              placeholder="meta_desc"></textarea>
+                                    <label for="meta_desc">Meta Description</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <textarea type="text" class="form-control" name="meta_keyword" id="meta_keyword"
+                                              placeholder="meta_keyword"></textarea>
+                                    <label for="meta_keyword">Meta Keywords</label>
+                                </div>
+
+                                <div class="mt-4 mb-4">
+                                    <input class="form-control form-control-lg bg-dark" name="meta_image"
+                                           id="meta_image" type="file">
+                                </div>
+                                <div class="m-3 ms-0 mb-0"
+                                     style="text-align: center;height: 100px;margin-top:20px !important">
+                                    <h4 style="width:30%;float: left;text-align: left;">Icon : </h4>
+                                    <div id="previmg2" style="float: left;"></div>
+                                </div>
+                                <br>
+
+                            </div>
+                        </div>
+
                     </div>
                     <br>
                     <div class="form-group mt-2" style="text-align: right">

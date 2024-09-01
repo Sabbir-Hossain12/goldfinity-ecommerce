@@ -13,6 +13,8 @@ use App\Models\Weight;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class PurchaseController extends Controller
 {
@@ -49,8 +51,9 @@ class PurchaseController extends Controller
                 return $products;
             })
             ->addColumn('action', function ($purchases) {
-                return '<a href="#" type="button" id="editPurchaseBtn" data-id="'.$purchases->id.'" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editmainPurchase" ><i class="bi bi-eye" ></i></a>
-                <a href="#" type="button" id="deletePurchaseBtn" data-id="'.$purchases->id.'" class="btn btn-danger btn-sm"><i class="bi bi-archive"></i></a>';
+                return '<a href="'.route('supply.ledger', $purchases->suppliers->id).'"  id="supplyLedgerBtn" class="btn btn-primary btn-sm"><i class="bi bi-cash-coin" ></i></a>
+                        <a href="'.route('purchases.edit', $purchases->id).'" type="button" id="editPurchaseBtn" class="btn btn-primary btn-sm" ><i class="bi bi-eye" ></i></a>';
+                
             })
             ->escapeColumns([])
             ->make(true);
@@ -59,7 +62,7 @@ class PurchaseController extends Controller
     public function create()
     {
         $purchaseInvoice = $this->uniqueIDforPurchase();
-        $suppliers = Supplier::where('status', 'Active')->get();
+        $suppliers = Supplier::get();
 
         return view('admin.content.purchase.create', compact('purchaseInvoice', 'suppliers'));
     }
@@ -89,12 +92,13 @@ class PurchaseController extends Controller
         $purchase->invoiceID = $this->uniqueIDforPurchase();
         $purchase->supplier_id = $request['data']['supplierId'];
         $purchase->totalAmount = $request['data']['total'];
-//        $purchase->payed_amount = $request['data']['payedAmount'];
-//        $purchase->payment_type_id = $request['data']['paymentTypeID'];
+        $purchase->discount_amount= $request['data']['discountAmount'];
+//      $purchase->payed_amount = $request['data']['payedAmount'];
+//      $purchase->payment_type_id = $request['data']['paymentTypeID'];
         $purchase->date = today();
-
-//        $purchase->paymentAgentNumber = $request['data']['paymentAgentNumber'];
+//      $purchase->paymentAgentNumber = $request['data']['paymentAgentNumber'];
         $purchase->note = $request['data']['note'];
+        $purchase->admin_id = Auth::guard('admin')->user()->id;
         $purchase->save();
 
         $products = $request['data']['products'];
@@ -117,8 +121,9 @@ class PurchaseController extends Controller
 //          Update Supplier  
             $supplier = Supplier::where('id', $purchase->supplier_id)->first();
             $supplier->supplierTotalAmount += $request['data']['total'];
-            $supplier->supplierPaidAmount += $request['data']['payedAmount'];
-            $supplier->supplierDueAmount += ($request['data']['total'] - $request['data']['payedAmount']);
+//            $supplier->supplierPaidAmount += $request['data']['payedAmount'];
+            $supplier->supplierDueAmount += $request['data']['total'] ;
+//                - $request['data']['payedAmount']);
 
             $supplier->save();
 
@@ -187,10 +192,15 @@ class PurchaseController extends Controller
      * @param  \App\Models\Purchase  $purchase
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id):View
     {
         $purchase = Purchase::findOrfail($id);
-        return response()->json($purchase, 200);
+        $products = PurchaseProduct::where('purchase_id', $id)->get();
+        
+        $supplier = Supplier::where('id', $purchase->supplier_id)->first();
+        
+        return view('admin.content.purchase.edit', compact('purchase','products','supplier'));
+        
     }
 
     /**

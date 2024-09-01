@@ -145,7 +145,8 @@
                                         <th>Product Name</th>
                                         <th>Quantity</th>
                                         <th>Total Amount</th>
-                                        <th>Payed Amount</th>
+                                        <th>Discount Amount</th>
+{{--                                        <th>Payed Amount</th>--}}
                                         <th>Status</th>
                                         <th style="width: 55px">Action</th>
                                     </tr>
@@ -309,11 +310,16 @@
                     {
                         data: 'totalAmount',
                         name:'Total Amount',
-                    },
+                    }, 
                     {
-                        data: 'payed_amount',
+                        data: 'discount_amount',
                         
                     },
+                    
+                    // {
+                    //     data: 'payed_amount',
+                    //    
+                    // },
                     {
                         data:'status',
                         render:function (data) {

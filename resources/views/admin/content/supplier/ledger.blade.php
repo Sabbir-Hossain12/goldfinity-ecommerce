@@ -47,41 +47,54 @@
                     </div>
                     <div class="modal-body">
 
-                        <form name="form" method="post" action="">
+                        <form name="form" method="post" action="{{route('supply.payment.store')}}">
                             @csrf
-                            <input type="text" name="supplier_id" value="" hidden>
+                            
+                            <input type="text" name="supplier_id" value="{{$supplier->id}}" hidden>
 
                             <div class="form-group">
                                 <label for="date">Date</label>
-                                <input type="text" name="date" class="form-control" id="date" value="{{date('d-m-Y')}}">
+                                <input type="text" name="date" class="form-control" id="date" value="{{today()}}">
                             </div>
+                            
                             <div class="form-group pb-2">
                                 <label for="trx_id">Trx ID</label>
-                                <input type="text" name="trx_id" class="form-control" id="trx_id">
+                                <input type="text" name="trx_id" class="form-control" id="trx_id" required>
                             </div>
 
                             <div class="form-group pb-2">
-                                <label for="quantity">Amount</label>
-                                <input type="text" name="amount" class="form-control" id="quantity">
+                                <label for="amount">Amount</label>
+                                <input type="number" name="amount" class="form-control" id="amount" min="1" max="{{$supplier->supplierDueAmount}}" required>
+                                <script>
+                                    document.getElementById('amount').addEventListener('input', function () {
+                                        let max = {{ $supplier->supplierDueAmount }};
+                                        if (this.value > max) {
+                                            this.value = max;
+                                        }
+                                    });
+                                </script>
                             </div>
+                            
+                            
 
                             <div class="form-group pb-2">
                                 <label for="payment_type_id">Payment Type</label>
 
-                                <select name="payment_type_id" class="form-control" id="payment_type_id">
+                                <select name="payment_type_id" class="form-control" id="payment_type_id" required>
+                                <option disabled selected>Select Payment Type</option>
+                                    @foreach($paymentTypes as $paymentType)
 
-{{--                                    @foreach($payment_types as $payment_type)--}}
+                                        <option value="{{$paymentType->id}}">{{$paymentType->paymentTypeName}}</option>
 
-{{--                                        <option value="{{$payment_type->id}}">{{$payment_type->paymentTypeName}}</option>--}}
-
-{{--                                    @endforeach--}}
+                                    @endforeach
 
                                 </select>
                             </div>
+                            
 
 
                             <div class="form-group pb-2">
-                                <label for="comments">Comments</label>
+                                <label for="comments">Comments (Optional)</label>
                                 <textarea name="comments" class="form-control" id="comments"></textarea>
                             </div>
 
@@ -92,6 +105,8 @@
                                     </button>
                                 </div>
                             </div>
+                            
+                            
                         </form>
 
                     </div>
@@ -192,32 +207,61 @@
                                     </tr>
                                     
                                     </thead>
-{{----}}
+
                                     <tbody>
-                                    @foreach($purchases as $purchase)
-                                        <tr>
-                                            <td>{{$purchase->invoiceID}}</td>
-                                            <td>{{\Carbon\Carbon::parse($purchase->date)->format('d-m-Y') }}</td>
+                                    @php
+                                        $balance=0;
+                                        $due=0;
+                                        $price=0;
+                                    @endphp
+                                    @forelse ($purchases as $purchase)
+                                        @php
+                                            $price=$balance+$purchase->totalAmount;
+                                        @endphp
+                                        <tr class="">
+                                            <td>{{ $purchase->invoiceID }}</td>
+                                            <td>{{ $purchase->date }}</td>
                                             <td>Sale</td>
-                                            <td>{{$purchase->totalAmount}}</td>
+                                            <td> </td>
+                                            <td>{{ $purchase->totalAmount }}</td>
+                                            <td>{{ $price }}</td>
                                             <td></td>
-                                            
-                                     
-                                            <td>{{$purchase->totalAmount  }}</td>
-                                            <td>{{$purchase->comments  }}</td>
-                                            <td>{{App\Models\Admin::where('id',$purchase->admin_id)->first()->name}}</td>
-
-
+                                            <td>
+                                                {{App\Models\Admin::where('id',$purchase->admin_id)->first()->name}}
+                                            </td>
                                         </tr>
-                                    @endforeach
+
+                                        @forelse(App\Models\SupplierPayment::where('purchase_id',$purchase->id)->get() as $payment)
+                                            @php
+                                                $balance=$price-$payment->paid_amount;
+                                                $due=$price-$payment->paid_amount;
+                                                $price=$due;
+                                            @endphp
+                                            <tr class="">
+                                                <td></td>
+                                                <td>{{ $payment->date }}</td>
+                                                <td>{{App\Models\Paymenttype::where('id',$payment->payment_type_id)->first()->paymentTypeName }} Receive For- #{{ $purchase->invoiceID }}</td>
+                                                <td>{{ $payment->paid_amount }}</td>
+                                                <td></td>
+                                                <td>{{ $due }}</td>
+                                                <td>{{$payment->comments}}</td>
+                                                <td>
+                                                    {{App\Models\Admin::where('id',$payment->admin_id)->first()->name}}
+                                                </td>
+                                            </tr>
+
+                                        @empty
+                                            @php
+                                                $balance=$price;
+                                            @endphp
+                                        @endforelse
+                                    @empty
+
+                                    @endforelse
                                     </tbody>
                                 </table>
                             </div>
-                            <!-- End Table with stripped rows -->
-
-                            {{--                            <div class="d-flex justify-content-center mt-3">--}}
-                            {{--                                {{$supplierPayments->links()}}--}}
-                            {{--                            </div>--}}
+                       
                         </div>
                     </div>
 

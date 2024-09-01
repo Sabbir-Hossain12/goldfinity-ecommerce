@@ -31,253 +31,289 @@
                 </div>
             </div>
 
-          
-
-         
-         
 
             <div class="container p-4">
-            <form name="form" id="AddProduct" enctype="multipart/form-data">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">General</h5>
+                <form name="form" id="AddProduct" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">General</h5>
 
-                                        <div class="form-group mb-3">
-                                            <label for="ProductName">Product Name <span class="text-danger">*</span></label>
-                                            <input type="text" name="ProductName" id="ProductName" class="form-control"
-                                                   required>
-                                        </div>
+                            <div class="form-group mb-3">
+                                <label for="ProductName">Product Name <span class="text-danger">*</span></label>
+                                <input type="text" name="ProductName" id="ProductName" class="form-control"
+                                       required>
+                            </div>
 
-{{--                                        <div class="row">--}}
-{{--                                            <div class="col-6">--}}
-{{--                                                <div class="form-group mb-3">--}}
-{{--                                                    <label for="ProductSalePrice">Sale Price <span--}}
-{{--                                                                class="text-danger">*</span></label>--}}
-{{--                                                    <input type="number" id="ProductSalePrice"--}}
-{{--                                                           name="ProductSalePrice" class="form-control">--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-6">--}}
-{{--                                                <div class="form-group mb-3">--}}
-{{--                                                    <label for="ProductSalePrice">Regular Price <span--}}
-{{--                                                                class="text-danger">*</span></label>--}}
-{{--                                                    <input type="number" id="ProductRegularPrice" name="ProductRegularPrice"--}}
-{{--                                                           class="form-control" >--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-                                        <div class="row">
-{{--                                            <div class="col-6">--}}
-{{--                                                <div class="form-group mb-3">--}}
-{{--                                                    <label for="ProductSalePrice">Discount (%) </label>--}}
-{{--                                                    <input type="number" id="Discount" name="Discount"--}}
-{{--                                                           class="form-control" readonly >--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-                                            <div class="col-12">
-                                                <div class="form-group mb-3">
-                                                    <label for="ProductCategory" style="width: 100%;">Brand Name </label>
-                                                    <select class="form-control" id="brand_id" style="background: black;" name="brand_id">
-                                                        <option>Select Brands</option>
-                                                        @forelse ($brands as $brand)
-                                                            <option value="{{ $brand->id }}">
-                                                                {{ $brand->brand_name }}
-                                                            </option>
-                                                        @empty
-                                                        @endforelse
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div class="form-group mb-3">
-                                                    <label for="ProductCategory" style="width: 100%;">Categories <span
-                                                                class="text-danger">*</span></label>
-                                                    <select class="form-control" id="category_id" style="background: black;"
-                                                            name="category_id" onchange="setsubcategory()" required>
-                                                        <option>Select Category</option>
-                                                        @forelse ($categories as $category)
-                                                            <option value="{{ $category->id }}">
-                                                                {{ $category->category_name }}
-                                                            </option>
-                                                        @empty
-                                                        @endforelse
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-6">
-                                                <div class="form-group mb-3">
-                                                    <label for="ProductCategory" style="width: 100%">Sub Category <span
-                                                                class="text-danger">*</span></label>
-                                                    <select class="form-control" id="sub_category_id"
-                                                            style="background: black;" name="subcategory_id" >
-                                                        <option>Select Sub-Category</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group mb-3">
-                                            <label for="ProductRegularPrice">Product Short Description <span
-                                                        class="text-danger">*</span></label>
-                                            <textarea class="form-control" name="ProductBreaf" rows="2"></textarea>
-                                        </div>
-
-                                        <div class="form-group mb-3">
-                                            <label for="ProductDetailsss">Product Description <span
-                                                        class="text-danger">*</span></label>
-                                            <textarea class="form-control" id="ProductDetails" name="ProductDetails" rows="5"></textarea>
-                                        </div>
-                                        <script type="text/javascript">
-                                            $(document).ready(function() {
-                                                $('#ProductDetails').summernote();
-                                            });
-                                        </script>
-
+                            {{--                                        <div class="row">--}}
+                            {{--                                            <div class="col-6">--}}
+                            {{--                                                <div class="form-group mb-3">--}}
+                            {{--                                                    <label for="ProductSalePrice">Sale Price <span--}}
+                            {{--                                                                class="text-danger">*</span></label>--}}
+                            {{--                                                    <input type="number" id="ProductSalePrice"--}}
+                            {{--                                                           name="ProductSalePrice" class="form-control">--}}
+                            {{--                                                </div>--}}
+                            {{--                                            </div>--}}
+                            {{--                                            <div class="col-6">--}}
+                            {{--                                                <div class="form-group mb-3">--}}
+                            {{--                                                    <label for="ProductSalePrice">Regular Price <span--}}
+                            {{--                                                                class="text-danger">*</span></label>--}}
+                            {{--                                                    <input type="number" id="ProductRegularPrice" name="ProductRegularPrice"--}}
+                            {{--                                                           class="form-control" >--}}
+                            {{--                                                </div>--}}
+                            {{--                                            </div>--}}
+                            {{--                                        </div>--}}
+                            <div class="row">
+                                {{--                                            <div class="col-6">--}}
+                                {{--                                                <div class="form-group mb-3">--}}
+                                {{--                                                    <label for="ProductSalePrice">Discount (%) </label>--}}
+                                {{--                                                    <input type="number" id="Discount" name="Discount"--}}
+                                {{--                                                           class="form-control" readonly >--}}
+                                {{--                                                </div>--}}
+                                {{--                                            </div>--}}
+                                <div class="col-12">
+                                    <div class="form-group mb-3">
+                                        <label for="ProductCategory" style="width: 100%;">Brand Name </label>
+                                        <select class="form-control" id="brand_id" style="background: black;"
+                                                name="brand_id">
+                                            <option>Select Brands</option>
+                                            @forelse ($brands as $brand)
+                                                <option value="{{ $brand->id }}">
+                                                    {{ $brand->brand_name }}
+                                                </option>
+                                            @empty
+                                            @endforelse
+                                        </select>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group mb-3">
+                                        <label for="ProductCategory" style="width: 100%;">Categories <span
+                                                    class="text-danger">*</span></label>
+                                        <select class="form-control" id="category_id" style="background: black;"
+                                                name="category_id" onchange="setsubcategory()" required>
+                                            <option>Select Category</option>
+                                            @forelse ($categories as $category)
+                                                <option value="{{ $category->id }}">
+                                                    {{ $category->category_name }}
+                                                </option>
+                                            @empty
+                                            @endforelse
+                                        </select>
+                                    </div>
+                                </div>
 
-                                    <div class="col-lg-12">
+                                <div class="col-6">
+                                    <div class="form-group mb-3">
+                                        <label for="ProductCategory" style="width: 100%">Sub Category <span
+                                                    class="text-danger">*</span></label>
+                                        <select class="form-control" id="sub_category_id"
+                                                style="background: black;" name="subcategory_id">
+                                            <option>Select Sub-Category</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="ProductRegularPrice">Product Short Description <span
+                                            class="text-danger">*</span></label>
+                                <textarea class="form-control" name="ProductBreaf" rows="2"></textarea>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="ProductDetailsss">Product Description <span
+                                            class="text-danger">*</span></label>
+                                <textarea class="form-control" id="ProductDetails" name="ProductDetails"
+                                          rows="5"></textarea>
+                            </div>
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+                                    $('#ProductDetails').summernote();
+                                });
+                            </script>
+
+                        </div>
+
+                        <div class="col-lg-12">
 
 
-                                        <h5 class="text-uppercase mt-0 mb-3 bg-light p-2">Product Images</h5>
+                            <h5 class="text-uppercase mt-0 mb-3 bg-light p-2">Product Images</h5>
 
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group mb-3">
-                                                    <label for="ProductSalePrice">Youtube Embade Code</label>
-                                                    <input type="text" id="youtube_embade" name="youtube_embade"
-                                                           class="form-control">
-                                                </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group mb-3">
+                                        <label for="ProductSalePrice">Youtube Embade Code</label>
+                                        <input type="text" id="youtube_embade" name="youtube_embade"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group mb-3">
+                                        <label for="ProductDetails">Product Image <span
+                                                    class="text-danger">*</span></label>
+                                        <button type="button" class="btn btn-danger d-block mb-2"
+                                                style="background: red">
+                                            <input type="file" name="ProductImage" id="ProductImage"
+                                                   onchange="loadFile(event)">
+                                        </button>
+                                        <div class="single-image image-holder-wrapper clearfix">
+                                            <div class="image-holder placeholder">
+                                                <img id="prevImage" style="height:100px;width:100%"/>
+                                                <i class="mdi mdi-folder-image"></i>
                                             </div>
-                                            <div class="col-12">
-                                                <div class="form-group mb-3">
-                                                    <label for="ProductDetails">Product Image <span
-                                                                class="text-danger">*</span></label>
-                                                    <button type="button" class="btn btn-danger d-block mb-2"
-                                                            style="background: red">
-                                                        <input type="file" name="ProductImage" id="ProductImage"
-                                                               onchange="loadFile(event)">
-                                                    </button>
-                                                    <div class="single-image image-holder-wrapper clearfix">
-                                                        <div class="image-holder placeholder">
-                                                            <img id="prevImage" style="height:100px;width:100%" />
-                                                            <i class="mdi mdi-folder-image"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                                            <div class="col-12 mb-4">
-                                                <div class="form-group"
-                                                     style="padding: 10px;padding-top: 3px;margin:0;padding-bottom:3px;width:96%;margin-left: 8px;border-radius: 8px;padding-left: 0;margin-left: -0;">
-                                                    <label class="fileContainer">
+                                <div class="col-12 mb-4">
+                                    <div class="form-group"
+                                         style="padding: 10px;padding-top: 3px;margin:0;padding-bottom:3px;width:96%;margin-left: 8px;border-radius: 8px;padding-left: 0;margin-left: -0;">
+                                        <label class="fileContainer">
                                                     <span style="font-size: 20px;">Product Slider
                                                         image</span>
-                                                    </label>
-                                                    <br>
-                                                    <button type="button" class="btn btn-danger d-block mb-2"
-                                                            style="background: red">
-                                                        <input type="file" onchange="prevPost_Img()"
-                                                               name="PostImage[]" id="PostImage" multiple>
-                                                    </button>
-                                                </div>
-                                                <div class="file">
-                                                    <div id="prevFile"
-                                                         style="width: 100%;float:left;background: lightgray;">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <h5 class="text-uppercase mt-0 mb-3 bg-light p-2">Product Variants</h5>
-
-                                        <div class="row">
-{{--                                            <div class="col-12">--}}
-{{--                                                <div class="form-group mb-3">--}}
-{{--                                                    <label for="ProductRegularPrice">Colour--}}
-{{--                                                        <span class="text-danger">*</span></label>--}}
-{{--                                                    <br>--}}
-{{--                                                    @forelse ($colors as $color)--}}
-{{--                                                        <input type="checkbox" name="color[]"--}}
-{{--                                                               value="{{ $color->value }}">--}}
-{{--                                                        {{ $color->value }} &nbsp;--}}
-{{--                                                    @empty--}}
-{{--                                                    @endforelse--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-12">--}}
-{{--                                                <div class="form-group mb-3">--}}
-{{--                                                    <label for="ProductSalePrice">Size <span--}}
-{{--                                                                class="text-danger">*</span></label>--}}
-{{--                                                    <br>--}}
-{{--                                                    @forelse ($sizes as $size)--}}
-{{--                                                        <input type="checkbox" name="size[]"--}}
-{{--                                                               value="{{ $size->value }}">--}}
-{{--                                                        {{ $size->value }} &nbsp;--}}
-{{--                                                    @empty--}}
-{{--                                                    @endforelse--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-
-
-                                        </div>
-
+                                        </label>
+                                        <br>
+                                        <button type="button" class="btn btn-danger d-block mb-2"
+                                                style="background: red">
+                                            <input type="file" onchange="prevPost_Img()"
+                                                   name="PostImage[]" id="PostImage" multiple>
+                                        </button>
                                     </div>
+                                    <div class="file">
+                                        <div id="prevFile"
+                                             style="width: 100%;float:left;background: lightgray;">
 
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <strong>Product Weight</strong>
-                                            </div>
-                                            <div class="card-body">
-                                                <table id="productTable" style="width: 100% !important;" class="table table-bordered table-striped">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th>Weight</th>
-                                                        <th>Regular Price</th>
-                                                        <th>Discount (%)</th>
-                                                        <th>Quantity</th>
-{{--                                                        <th>Available Quantity</th>--}}
-{{--                                                        <th>Sold Quantity</th>--}}
-                                                        <th>Action</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    </tbody>
-                                                    <tfoot>
-                                                    <tr>
-                                                        <td colspan="8">
-                                                            <select id="productID" style="width: 100%;">
-                                                                <option value="">Select Weight</option>
-                                                            </select>
-                                                        </td>
-                                                    </tr>
-                                                    </tfoot>
-
-                                                </table>
-                                            </div>
                                         </div>
                                     </div>
-                                
+                                </div>
+                            </div>
+                            <h5 class="text-uppercase mt-0 mb-3 bg-light p-2">Product Variants</h5>
+
+                            <div class="row">
+                                {{--                                            <div class="col-12">--}}
+                                {{--                                                <div class="form-group mb-3">--}}
+                                {{--                                                    <label for="ProductRegularPrice">Colour--}}
+                                {{--                                                        <span class="text-danger">*</span></label>--}}
+                                {{--                                                    <br>--}}
+                                {{--                                                    @forelse ($colors as $color)--}}
+                                {{--                                                        <input type="checkbox" name="color[]"--}}
+                                {{--                                                               value="{{ $color->value }}">--}}
+                                {{--                                                        {{ $color->value }} &nbsp;--}}
+                                {{--                                                    @empty--}}
+                                {{--                                                    @endforelse--}}
+                                {{--                                                </div>--}}
+                                {{--                                            </div>--}}
+                                {{--                                            <div class="col-12">--}}
+                                {{--                                                <div class="form-group mb-3">--}}
+                                {{--                                                    <label for="ProductSalePrice">Size <span--}}
+                                {{--                                                                class="text-danger">*</span></label>--}}
+                                {{--                                                    <br>--}}
+                                {{--                                                    @forelse ($sizes as $size)--}}
+                                {{--                                                        <input type="checkbox" name="size[]"--}}
+                                {{--                                                               value="{{ $size->value }}">--}}
+                                {{--                                                        {{ $size->value }} &nbsp;--}}
+                                {{--                                                    @empty--}}
+                                {{--                                                    @endforelse--}}
+                                {{--                                                </div>--}}
+                                {{--                                            </div>--}}
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong>Product Weight</strong>
+                                </div>
+                                <div class="card-body">
+                                    <table id="productTable" style="width: 100% !important;"
+                                           class="table table-bordered table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Weight</th>
+                                            <th>Regular Price</th>
+                                            <th>Discount (%)</th>
+                                            <th>Quantity</th>
+                                            {{--                                                        <th>Available Quantity</th>--}}
+                                            {{--                                                        <th>Sold Quantity</th>--}}
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <td colspan="8">
+                                                <select class="form-control" id="productID" style="width: 100%;"
+                                                        required>
+                                                    <option value="">Select Weight</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        </tfoot>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h5 class="text-uppercase mt-3 mb-3 bg-light p-2">Meta Information</h5>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="meta_title" id="meta_title"
+                                           placeholder="Meta Title">
+                                    <label for="floatingInput">Meta Title</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <textarea type="text" class="form-control" name="meta_desc" id="meta_desc"
+                                              placeholder="meta_desc"></textarea>
+                                    <label for="meta_desc">Meta Description</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <textarea type="text" class="form-control" name="meta_keyword" id="meta_keyword"
+                                              placeholder="meta_keyword"></textarea>
+                                    <label for="meta_keyword">Meta Keywords</label>
+                                </div>
+
+                                <div class="mt-4 mb-4">
+                                    <input class="form-control form-control-lg bg-dark" name="meta_image"
+                                           id="meta_image" type="file">
+                                </div>
+                                <div class="m-3 ms-0 mb-0"
+                                     style="text-align: center;height: 100px;margin-top:20px !important">
+                                    <h4 style="width:30%;float: left;text-align: left;">Icon : </h4>
+                                    <div id="previmg2" style="float: left;"></div>
                                 </div>
                                 <br>
-                                <div class="form-group mt-2" style="text-align: right">
-                                    <div class="submitBtnSCourse">
-                                       
-                                        <button type="submit" name="btn" 
-                                                class="btn btn-primary btn-block">Save</button>
-                                    </div>
-                                </div>
-                            </form>
+
+                            </div>
+                            </div>
+
+                        </div>
+                        <br>
+                        <div class="form-group mt-2" style="text-align: right">
+                            <div class="submitBtnSCourse">
+
+                                <button type="submit" name="btn"
+                                        class="btn btn-primary btn-block">Save
+                                </button>
+                            </div>
+                        </div>
+                </form>
             </div>
             {{-- Create New Product Modal Ends --}}
 
 
-            
         </div>
     </div>
 
@@ -286,13 +322,13 @@
 
     <script>
 
-        $(document).ready(function() {
-            $('#ProductSalePrice, #ProductRegularPrice').on('input', function() {
+        $(document).ready(function () {
+            $('#ProductSalePrice, #ProductRegularPrice').on('input', function () {
                 var salePrice = parseFloat($('#ProductSalePrice').val());
                 var regularPrice = parseFloat($('#ProductRegularPrice').val());
 
                 if (!isNaN(salePrice) && !isNaN(regularPrice) && regularPrice !== 0) {
-                    var discountPercentage =Math.round(((regularPrice - salePrice) / regularPrice) * 100);
+                    var discountPercentage = Math.round(((regularPrice - salePrice) / regularPrice) * 100);
                     $('#Discount').val(discountPercentage);
                 } else {
                     $('#Discount').val('');
@@ -301,16 +337,16 @@
         });
     </script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var token = $("input[name='_token']").val();
-            
+
             //add Product
-          
-            $('#AddProduct').submit(function(e) {
+
+            $('#AddProduct').submit(function (e) {
                 e.preventDefault();
-                
+
                 var product = [];
-                var productCount = 0 ;
+                var productCount = 0;
                 $("#productTable tbody tr").each(function (index, value) {
                     var currentRow = $(this);
                     var obj = {};
@@ -318,7 +354,7 @@
                     obj.productWeight = currentRow.find(".productWeight").text();
                     obj.productRegularPrice = currentRow.find(".productRegularPrice").val();
                     obj.productDiscount = currentRow.find(".productDiscount").val();
-                    obj.total_qty=currentRow.find(".qty").val();
+                    obj.total_qty = currentRow.find(".qty").val();
                     product.push(obj);
                     productCount++;
                 });
@@ -328,17 +364,17 @@
 
                 // Collect form data
                 var formData = new FormData(this);
-                
+
                 // Example: Appending product data
                 formData.append('product', JSON.stringify(product));
-               
-              
+
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-                
+
                 $.ajax({
                     type: 'POST',
                     url: "{{url('admin/products')}}",
@@ -346,8 +382,8 @@
                     contentType: false,
                     data: formData,
 
-                  
-                    success: function(data) {
+
+                    success: function (data) {
                         $('#ProductName').val("");
                         $('#ProductSalePrice').val("");
                         $('#Discount').val("");
@@ -360,11 +396,11 @@
                             title: "Success!",
                             icon: "success",
                         });
-                        
+
                         window.location.href = "{{url('admin/products')}}";
-                        
+
                     },
-                    error: function(error) {
+                    error: function (error) {
                         console.log('error');
                     }
                 });
@@ -385,7 +421,7 @@
                     return $state;
                 },
                 ajax: {
-                    type:'GET',
+                    type: 'GET',
                     url: '{{url('admin/weight-info')}}',
                     processResults: function (data) {
                         // var data = $.parseJSON(data);
@@ -403,19 +439,19 @@
                     '<td><input type="number" class="productRegularPrice form-control" style="width:80px;" value="1"></td>' +
                     '<td><input type="number" class="productDiscount form-control" style="width:80px;" value="1"></td>' +
 
-                    '<td><input type="number" class="qty form-control" style="width:80px;" value="1" ></td>'+
-                    
+                    '<td><input type="number" class="qty form-control" style="width:80px;" value="1" ></td>' +
+
 
                     '<td><button class="btn btn-sm btn-danger delete-btn"><i class="fa fa-trash"></i></button></td>\n' +
                     "</tr>"
                 );
-               
+
             });
-            
-        //    Delete Button
+
+            //    Delete Button
             $(document).on("click", ".delete-btn", function () {
                 $(this).closest("tr").remove();
-                
+
             });
 
         });
@@ -428,7 +464,7 @@
                 type: 'GET',
                 url: 'get/subcategory/' + sub_id,
 
-                success: function(data) {
+                success: function (data) {
                     $('#sub_category_id').html('');
 
                     for (var i = 0; i < data.length; i++) {
@@ -437,7 +473,7 @@
                         `)
                     }
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log('error');
                 }
             });
@@ -449,7 +485,7 @@
                 type: 'GET',
                 url: 'get/subcategory/' + sub_id,
 
-                success: function(data) {
+                success: function (data) {
                     $('#editsub_category_id').html('');
 
                     for (var i = 0; i < data.length; i++) {
@@ -458,42 +494,42 @@
                         `)
                     }
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log('error');
                 }
             });
         }
     </script>
     <script>
-        var loadFile = function(event) {
+        var loadFile = function (event) {
             var output = document.getElementById('prevImage');
             output.src = URL.createObjectURL(event.target.files[0]);
-            output.onload = function() {
+            output.onload = function () {
                 URL.revokeObjectURL(output.src) // free memory
             }
         };
-        var galleryloadFile = function(event) {
+        var galleryloadFile = function (event) {
             // document.getElementById("previmg").style.display = "none";
             var output = document.getElementById('galleryprevImage');
             output.src = URL.createObjectURL(event.target.files[0]);
-            output.onload = function() {
+            output.onload = function () {
                 URL.revokeObjectURL(output.src) // free memory
             }
         };
 
-        var editloadFile = function(event) {
+        var editloadFile = function (event) {
             $('#previmg').html('');
             var output = document.getElementById('editprevImage');
             output.src = URL.createObjectURL(event.target.files[0]);
-            output.onload = function() {
+            output.onload = function () {
                 URL.revokeObjectURL(output.src) // free memory
             }
         };
-        var editgalleryloadFile = function(event) {
+        var editgalleryloadFile = function (event) {
             // document.getElementById("previmg").style.display = "none";
             var output = document.getElementById('editgalleryprevImage');
             output.src = URL.createObjectURL(event.target.files[0]);
-            output.onload = function() {
+            output.onload = function () {
                 URL.revokeObjectURL(output.src) // free memory
             }
         };

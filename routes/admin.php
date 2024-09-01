@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\SupplierPaymentController;
 use App\Http\Controllers\WeightController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\RolesController;
@@ -282,6 +283,9 @@ Route::group(['middleware' => ['auth.admin:admin']], function () {
     
 //   Supply Ledger
     Route::get('supply/ledger/{id}', [SupplierController::class, 'supplierLedger'])->name('supply.ledger');
+    
+//   Supply Payment
+    Route::resource('/supply-payment', SupplierPaymentController::class)->names('supply.payment');
     
     //payment method
     Route::resource('paymenttypes', PaymenttypeController::class);

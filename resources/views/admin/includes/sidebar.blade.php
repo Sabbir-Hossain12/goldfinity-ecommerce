@@ -7,18 +7,20 @@
 
         @if ($admin->hasRole('user'))
         <li class="nav-item">
-            <a class="nav-link " href="{{ url('order/dashboard') }}">
+            <a class="nav-link" href="{{ url('order/dashboard') }}">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
-        </li><!-- End Dashboard Nav -->
+        </li>
+           
         @else
         <li class="nav-item">
             <a class="nav-link " href="{{ url('admin/dashboard') }}">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
-        </li><!-- End Dashboard Nav -->
+        </li>
+        
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-box"></i><span>Store</span><i class="bi bi-chevron-down ms-auto"></i>

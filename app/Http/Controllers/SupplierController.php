@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Paymenttype;
 use App\Models\Purchase;
 use App\Models\Supplier;
 use App\Models\SupplierPayment;
@@ -29,8 +30,8 @@ class SupplierController extends Controller
         return Datatables::of($suppliers)
             ->addColumn('action', function ($suppliers) {
                 return '<a href="'. route('supply.ledger', $suppliers->id).'" type="button" id="editSupplierBtn"  class="btn btn-primary btn-sm mx-2"><i class="bi bi-cash-coin" ></i>
-                        <a href="#" type="button" id="editSupplierBtn" data-id="' . $suppliers->id . '" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editmainSupplier" ><i class="bi bi-pencil-square" ></i></a>
-                        <a href="#" type="button" id="deleteSupplierBtn" data-id="' . $suppliers->id . '" class="btn btn-danger btn-sm"><i class="bi bi-archive"></i></a>';
+                        <a href="#" type="button" id="editSupplierBtn" data-id="' . $suppliers->id . '" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editmainSupplier" ><i class="bi bi-pencil-square" ></i></a>';
+//         <a href="#" type="button" id="deleteSupplierBtn" data-id="' . $suppliers->id . '" class="btn btn-danger btn-sm"><i class="bi bi-archive"></i></a>
             })
 
             ->make(true);
@@ -132,8 +133,9 @@ class SupplierController extends Controller
         $supplier=Supplier::findOrfail($id);
         $supplierPayments=SupplierPayment::where('supplier_id',$id)->get();
         $purchases=Purchase::where('supplier_id',$id)->get();
+        $paymentTypes=PaymentType::all();
         
-        return view('admin.content.supplier.ledger',compact('supplier','supplierPayments','purchases'));
+        return view('admin.content.supplier.ledger',compact('supplier','supplierPayments','purchases','paymentTypes'));
     }
 
 
