@@ -293,19 +293,19 @@
 
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" name="meta_title" id="meta_title"
-                                           placeholder="Meta Title">
+                                           placeholder="Meta Title" value="{{$product->meta_title}}">
                                     <label for="floatingInput">Meta Title</label>
                                 </div>
 
                                 <div class="form-floating mb-3">
                                     <textarea type="text" class="form-control" name="meta_desc" id="meta_desc"
-                                              placeholder="meta_desc"></textarea>
+                                              placeholder="meta_desc">{{$product->meta_desc}}</textarea>
                                     <label for="meta_desc">Meta Description</label>
                                 </div>
 
                                 <div class="form-floating mb-3">
                                     <textarea type="text" class="form-control" name="meta_keyword" id="meta_keyword"
-                                              placeholder="meta_keyword"></textarea>
+                                              placeholder="meta_keyword">{{$product->meta_keyword}}</textarea>
                                     <label for="meta_keyword">Meta Keywords</label>
                                 </div>
 
@@ -315,8 +315,16 @@
                                 </div>
                                 <div class="m-3 ms-0 mb-0"
                                      style="text-align: center;height: 100px;margin-top:20px !important">
-                                    <h4 style="width:30%;float: left;text-align: left;">Icon : </h4>
-                                    <div id="previmg2" style="float: left;"></div>
+                                    <h4 style="width:30%;float: left;text-align: left;">Meta Image : </h4>
+                                    <div id="previmg2" style="float: left;">
+                                        
+                                        @if($product->meta_image != null)
+                                            
+                                            <img src="{{asset($product->meta_image)}}" height="150px" width="150px" /> 
+                                            
+                                        @endif
+                                        
+                                    </div>
                                 </div>
                                 <br>
 
@@ -420,7 +428,7 @@
                             icon: "success",
                         });
                         
-                        window.location.reload();
+                        window.location.href = "{{url('admin/products')}}";
 
                     },
                     error: function(error) {

@@ -98,6 +98,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        
         $product = new Product();
         $product->ProductName = $request->ProductName;
         $product->ProductBreaf = $request->ProductBreaf;
@@ -111,9 +112,9 @@ class ProductController extends Controller
         $product->brand_id= $request->brand_id;
         $product->subcategory_id= $request->subcategory_id;
 
-        $category->meta_title= $request->meta_title;
-        $category->meta_desc= $request->meta_desc;
-        $category->meta_keyword= $request->meta_keyword;
+        $product->meta_title= $request->meta_title;
+        $product->meta_desc= $request->meta_desc;
+        $product->meta_keyword= $request->meta_keyword;
 
 
         if ($request->hasFile('meta_image'))
@@ -121,8 +122,8 @@ class ProductController extends Controller
             $file = $request->file('meta_image');
             $extension = $file->getClientOriginalExtension();
             $filename = time() .uniqid() .'.' . $extension;
-            $file->move('public/images/products/meta/', $filename);
-            $category->meta_image = 'public/images/products/meta/'.$filename;
+            $file->move('public/images/product/meta/', $filename);
+            $product->meta_image = 'public/images/product/meta/'.$filename;
         }
 
         if ($request->color) {
@@ -281,8 +282,27 @@ class ProductController extends Controller
         $product->ProductSalePrice=$request->ProductSalePrice;
         $product->category_id= $request->category_id;
         $product->youtube_embade= $request->youtube_embade;
-        $product->subcategory_id= $request->subcategory_id;
+        $product->subcategory_id= $request->subcategory_id ?? null;
         $product->brand_id= $request->brand_id;
+
+        $product->meta_title= $request->meta_title;
+        $product->meta_desc= $request->meta_desc;
+        $product->meta_keyword= $request->meta_keyword;
+
+
+        if ($request->hasFile('meta_image'))
+        {
+            if ($product->meta_image && file_exists($product->meta_image)) {
+                
+             unlink($product->meta_image);
+            }
+            
+            $file = $request->file('meta_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() .uniqid() .'.' . $extension;
+            $file->move('public/images/product/meta/', $filename);
+            $product->meta_image = 'public/images/product/meta/'.$filename;
+        }
 
         if ($request->color) {
             $product->color = json_encode($request->color);
