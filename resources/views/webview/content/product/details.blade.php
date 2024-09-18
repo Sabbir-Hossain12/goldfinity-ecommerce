@@ -80,7 +80,7 @@
     .product__item {
         padding: 0;
         padding-top: 0px;
-        background: #fee3e4;
+        background: #dedede;
     }
 
     @media screen and (max-width: 480px) {
@@ -148,17 +148,17 @@
   #relatedCarousel  .col-xs-12 {
         width: 100%;
     }
-    
-    
+
+
 </style>
 <!-- Body -->
 
-<div class="body-content mt-4" id="top-banner-and-menu">
+<div class="mt-4 body-content" id="top-banner-and-menu">
     <div class='container'>
         <div class='row single-product'>
-            <div class='col-md-12 p-0'>
+            <div class='p-0 col-md-12'>
                 <div class="detail-block">
-                    <div class="row  wow fadeInUp">
+                    <div class="row wow fadeInUp">
 
                         <div class="col-xs-12 col-sm-12 col-md-6 gallery-holder">
                             <div class="product-item-holder size-big single-product-gallery small-gallery">
@@ -212,9 +212,9 @@
                                         </div>
                                         <div class="col-9 col-sm-9">
                                             <div class="product-price strong-700" id="productPriceAmount">
-                                                
+
                                                 @if(count($productdetails->weights)>0)
-                                                    
+
                                                 <del id="pRegularPrice" style="font-size: 20px;color: red;" >৳{{round($productdetails->weights[0]->productRegularPrice)}}</del> &nbsp;&nbsp;
                                               <span id="pSalePrice">  ৳ {{ $productdetails->weights[0]->productSalePrice }} </span>
                                                     <input id="psprice" type="text" value="{{ $productdetails->weights[0]->productSalePrice }}" hidden/>
@@ -254,10 +254,10 @@
                                     </div>
                                     <!-- /.row -->
                                 </div>
-                                <div class="row mb-2 mt-2">
+                                <div class="mt-2 mb-2 row">
                                     @if (empty($productdetails->color))
                                     @else
-                                        <div class="col-12 col-md-12 colorpart mb-2">
+                                        <div class="mb-2 col-12 col-md-12 colorpart">
                                             <div class="d-flex">
                                                 <h4 id="resellerprice" class="m-0"><b style="font-size:20px">কালার:&nbsp;&nbsp;&nbsp;</b></h4>
                                                 <div class="colorinfo">
@@ -289,7 +289,7 @@
                                 {{--  Weight Field   --}}
                                         @if (count($productdetails->weights)>0)
 
-                                            <div class="col-12 col-md-12 colorpart mt-2">
+                                            <div class="mt-2 col-12 col-md-12 colorpart">
                                                 <div class="d-flex">
                                                     <h4 id="resellerprice" class="m-0"><b style="font-size:20px">ওজন: &nbsp;&nbsp;&nbsp;</b></h4>
                                                     <div class="weightinfo">
@@ -302,11 +302,11 @@
                                                 </div>
                                             </div>
                                         @else
-                                    
+
                                         @endif
                                 </div>
                                 <!-- /.stock-container -->
-                                <div class="quantity-container info-container text-center"
+                                <div class="text-center quantity-container info-container"
                                     style="width: 100%;border-bottom: 1px solid #dfd6d6; float: left;">
 
 
@@ -326,28 +326,28 @@
                                             <input type="text" name="productSalePrice" id="cartProductPrice" value="{{ $productdetails->ProductSalePrice }}" hidden>
 
                                         @endif
-                                        
+
                                         <input type="text" name="qty" value="1" id="qtyor" hidden>
                                         <button type="submit"
-                                            class=" mb-0  ml-2 btn btn-styled btn-base-1 btn-icon-left strong-700 hov-bounce hov-shaddow buy-now" style="background:#F27336;color:white;width: 95%;font-size: 17px;">
+                                            class="mb-0 ml-2 btn btn-styled btn-base-1 btn-icon-left strong-700 hov-bounce hov-shaddow buy-now" style="background:#F27336;color:white;width: 95%;font-size: 17px;">
                                             কার্টে যোগ করুন
                                         </button>
                                     </form>
-                                    
+
                                     <form name="form" action="{{url('add-to-cart')}}" method="POST" enctype="multipart/form-data"
                                         style="width: 50%;float: left;text-align: center;">
                                         @method('POST')
                                         @csrf
                                         <input type="text" name="color" id="product_colorOr" hidden>
                                         <input type="text" name="size" id="product_sizeOr" hidden>
-                                        @if(count($productdetails->weights)>0) 
+                                        @if(count($productdetails->weights)>0)
                                         <input type="text" name="weight" id="product_weightOr" value="{{$productdetails->weights[0]->weight_name}}" hidden>
                                         @else
 
                                         @endif
                                         <input type="text" name="product_id" value=" {{ $productdetails->id }}"
                                             hidden>
-                                        
+
                                         @if(count($productdetails->weights)>0)
                                             <input type="text" name="productSalePrice" id="orderProductPrice" value="{{ $productdetails->weights[0]->productSalePrice }}" hidden>
                                         @else
@@ -356,7 +356,7 @@
                                         @endif
                                         <input type="text" name="qty" value="1" id="qtyor" hidden>
                                         <button type="submit"
-                                            class=" mb-0  ml-2 btn btn-styled btn-base-1 btn-icon-left strong-700 hov-bounce hov-shaddow buy-now" style="background:green;color:white;width: 95%;font-size: 17px;">
+                                            class="mb-0 ml-2 btn btn-styled btn-base-1 btn-icon-left strong-700 hov-bounce hov-shaddow buy-now" style="background:green;color:white;width: 95%;font-size: 17px;">
                                             অর্ডার করুন
                                         </button>
                                     </form>
@@ -364,11 +364,11 @@
                                     <!-- /.row -->
                                 </div>
 
-                                <div class="quantity-container info-container text-center"
+                                <div class="text-center quantity-container info-container"
                                     style="border-bottom: 1px solid #dfd6d6;">
-                                    <div class="row no-gutters pt-2">
+                                    <div class="pt-2 row no-gutters">
                                         <div class="col-2 col-sm-2" style="margin-top: -2px;">
-                                            <div class="product-description-label mt-2">Charge:</div>
+                                            <div class="mt-2 product-description-label">Charge:</div>
                                         </div>
                                         <div class="col-10 col-sm-10">
                                             <div class="product-description-label"
@@ -385,19 +385,19 @@
                                     </div>
                                 </div>
 
-                                 <div class="quantity-container info-container text-center"
+                                 <div class="text-center quantity-container info-container"
                                     style="border-bottom: 1px solid #dfd6d6;">
-                                    <div class="row no-gutters pt-2">
-                                        <div class="col-12 col-md-12 mb-2">
+                                    <div class="pt-2 row no-gutters">
+                                        <div class="mb-2 col-12 col-md-12">
                                             <a class="btn btn-success" id="formText" href="tel:{{App\Models\Basicinfo::first()->phone_one}}" style="width: 85%;font-size: 22px; "> কল করুন {{App\Models\Basicinfo::first()->phone_one}}</a>
                                         </div>
-                                         
+
                                     </div>
                                 </div>
 
                             </div>
                             <!-- /.product-info -->
-                        </div> 
+                        </div>
                         <!-- /.col-sm-7 -->
                     </div>
                     <!-- /.row -->
@@ -407,16 +407,14 @@
             <div class="clearfix"></div>
         </div>
         <div class="row single-product">
-            <div class="col-md-12 p-0">
-                <div class="product-tabs inner-bottom-xs  wow fadeInUp">
+            <div class="p-0 col-md-12">
+                <div class="product-tabs inner-bottom-xs wow fadeInUp">
                     <div class="row">
                         <div class="col-sm-12">
                             <ul id="product-tabs" class="nav nav-tabs nav-tab-cell" style="display: inline-flex;">
                                 <li class="active"><a data-bs-toggle="tab" id="istteb"
                                         href="#description">DESCRIPTION</a></li>
-                                <li><a data-bs-toggle="tab" href="#review">REVIEW</a></li>
-                                <li class="d-lg-none"><a data-bs-toggle="tab" href="#shipping-info">SHIPPING INFO</a>
-                                </li>
+
                             </ul>
                             <!-- /.nav-tabs #product-tabs -->
                         </div>
@@ -443,131 +441,6 @@
                                 </div>
                                 <!-- /.tab-pane -->
 
-                                <div id="review" class="tab-pane">
-                                    <div class="product-tab">
-
-                                        <div class="product-reviews">
-
-                                            <div class="row">
-                                                <div class="review">
-
-                                                </div>
-
-                                            </div>
-                                            <!-- /.reviews -->
-                                        </div>
-
-                                    </div>
-                                    <!-- /.product-tab -->
-                                </div>
-                                <!-- /.tab-pane -->
-
-                                <div id="shipping-info" class="tab-pane">
-                                    <div class="product-tag">
-
-                                        <div class="row">
-                                            <div class='p-0 col-sm-12 col-md-3 product-info-block d-lg-none'
-                                                style="padding: 0;">
-                                                <div class="row no-gutters mt-2 ">
-                                                    <div class="col-1 col-sm-1">
-                                                        <i class="fas fa-phone" aria-hidden="true"
-                                                            style="font-size: 18px;color: #8a8686;"></i>
-                                                    </div>
-                                                    <div class="col-5 col-sm-5">
-                                                        <div class="product-description-label" id="textsize">
-                                                            Contact Us:</div>
-                                                    </div>
-                                                    <div class="col-5 col-sm-5" id="textsize">
-                                                        <a href="tel:" target="_blank" id="textsize">
-                                                            {{ $shipping->contact }}
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="row no-gutters mt-2">
-                                                    <div class="col-1 col-sm-1">
-                                                        <i class="fas fa-motorcycle" aria-hidden="true"
-                                                            style="font-size: 16px;col-smor: #8a8686;"></i>
-                                                    </div>
-                                                    <div class="col-5 col-sm-5 pe-0">
-                                                        <div class="product-description-label" id="textsize">
-
-                                                            Inside Dhaka:</div>
-                                                    </div>
-                                                    <div class="col-5 col-sm-5" id="textsize">
-                                                        {{ $shipping->insie_dhaka }}
-                                                    </div>
-                                                </div>
-                                                <div class="row no-gutters mt-2">
-                                                    <div class="col-1 col-sm-1">
-                                                        <i class="fas fa-truck" aria-hidden="true"
-                                                            style="font-size: 18px;col-smor: #8a8686;"></i>
-                                                    </div>
-                                                    <div class="col-5 col-sm-5">
-                                                        <div class="product-description-label" id="textsize">
-
-                                                            Outside Dhaka:</div>
-                                                    </div>
-                                                    <div class="col-5 col-sm-5" id="textsize">
-                                                        {{ $shipping->outside_dhaka }}
-
-                                                    </div>
-                                                </div>
-                                                <div class="row no-gutters mt-2">
-                                                    <div class="col-1 col-sm-1">
-                                                        <i class="fas fa-money-bill-alt" aria-hidden="true"
-                                                            style="font-size: 18px;col-smor: #8a8686;"></i>
-                                                    </div>
-
-                                                    <div class="col-5 col-sm-5">
-                                                        <div class="product-description-label" id="textsize"> Cash on
-                                                            Delivery :</div>
-                                                    </div>
-                                                    <div class="col-5 col-sm-5" id="textsize">
-                                                        @if ($shipping->cash_on_delivery == 'ON')
-                                                            Available
-                                                        @else
-                                                            Unavailable
-                                                        @endif
-                                                    </div>
-
-                                                </div>
-                                                <div class="row no-gutters mt-2">
-                                                    <div class="col-1 col-sm-1">
-                                                        <i class="fas fa-refresh" aria-hidden="true"
-                                                            style="font-size: 18px;col-smor: #8a8686;"></i>
-                                                    </div>
-                                                    <div class="col-5 col-sm-5">
-                                                        <div class="product-description-label" id="textsize">Refund
-                                                            Rules:</div>
-                                                    </div>
-                                                    <div class="col-5 col-sm-5" id="textsize">
-                                                        {{ $shipping->refund_rule }}<a
-                                                            href="#" class="ml-2"
-                                                            target="_blank">View Policy</a>
-                                                    </div>
-                                                </div>
-                                                <div class="row no-gutters mt-2">
-                                                    <div class="col-2 col-sm-2" id="textsize">
-                                                        <div class="product-description-label pt-2"
-                                                            style="padding-top: 14px;">Payment:</div>
-                                                    </div>
-                                                    <div class="col-10 col-sm-10">
-                                                        <ul class="inline-links">
-                                                            <li>
-                                                                <img src="{{ asset('public/webview/assets/images/Payment-Methods.gif') }}"
-                                                                    width="98%" class=" ">
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <!-- /.product-tab -->
-                                </div>
-                                <!-- /.tab-pane -->
-
                             </div>
                             <!-- /.tab-content -->
                         </div>
@@ -579,74 +452,36 @@
 
                 <!-- ============================================== UPSELL PRODUCTS ============================================== -->
                 <section class="pb-2 section featured-product wow fadeInUp" style="margin-bottom:0px !important">
-                    <h3 class="section-title" style="border-bottom: 1px solid #e62e04;    padding: 8px;margin-bottom: 0;">Related
+                    <h3 class="section-title" style="padding: 8px;margin-bottom: 0;">Related
                         products</h3>
                     <div class="owl-carousel related-owl-carousel featured-carousel owl-theme outer-top-xs"
                         id="relatedCarousel">
                         @forelse ($relatedproducts as $relatedproduct)
-                            <div class="col-sm-12 col-xs-12 padding-zero product-hover-effect pb-4"
-                                 style="background-color: #fff;padding: 0px;border: 1px solid #c6c6c6;">
+
+                            <div class="mb-2 col-sm-12 col-xs-12 padding-zero product-hover-effect"
+                                    style="background-color: #fff;padding: 0px;box-shadow: 0px 1px 12px 4px #efefef;border-radius: 6px;">
                                 <a style="padding: 0px;overflow: hidden;"
-                                   class="img-hover col-sm-12 padding-zero image_thum"
-                                   href="{{ url('product/' . $relatedproduct->ProductSlug) }}" id="374">
+                                    class="img-hover col-sm-12 padding-zero image_thum"
+                                    href="{{ url('product/' . $relatedproduct->ProductSlug) }}" id="374">
                                     <img class="img-fluid" style="margin: 0 auto;padding:5px; height: 175px"
-                                         src="{{ asset($relatedproduct->ViewProductImage) }}">
+                                            src="{{ asset($relatedproduct->ViewProductImage) }}">
                                 </a>
-                                <div class="col-sm-12 col-xs-12 product__item" style="">
+                                <div class="col-sm-12 col-xs-12 product__item" style="border-radius:0px 0px 6px 6px">
                                     <span id="productName374"
-                                          class="col-sm-12 text-center">{{$relatedproduct->ProductName}}</span>
+                                            class="text-center col-sm-12">{{$relatedproduct->ProductName}}</span>
                                     @if(count($relatedproduct->weights)>0)
 
-                                        <span id="productPrice374" class="col-sm-12  col-xs-12 text-center" style="">
+                                        <span id="productPrice374" class="text-center col-sm-12 col-xs-12" style="">
                                                 Tk. {{ round($relatedproduct->weights[0]->productSalePrice) }}   </span>
                                     @else
-                                        <span id="productPrice374" class="col-sm-12  col-xs-12 text-center" style="">
-                                                Tk. {{$relatedproduct->ProductSalePrice}}   </span>
+                                        <span id="productPrice374" class="text-center col-sm-12 col-xs-12" style="">
+                                                Tk. {{round($relatedproduct->ProductSalePrice)}}   </span>
 
                                     @endif
 
-                                    <span class="col-sm-12  col-xs-12 text-center product_form" style="">
-                                           
-                                                <div class="btn col-xs-12 col-sm-12 col-md-12"
-                                                     style="font-size: 21px;margin-bottom: 20px;background:#C50009;color:#fff">
-                                                  
-                                                    <form name="form" action="{{url('add-to-cart')}}" method="POST"
-                                                          enctype="multipart/form-data"
-                                                          style="width: 100%;float: left;text-align: center;">
-                                                  @method('POST')
-                                                        @csrf
-                                                 <input type="text" name="color" id="product_colorold" hidden>
-                                                 <input type="text" name="size" id="product_sizeold" hidden>
-                                              
-                                                        @if(count($relatedproduct->weights)>0)
-                                                            <input type="text" name="weight" value="{{$relatedproduct->weights[0]->weight_name}}"  hidden>
-                                                        @else
-                                                            
-                                                        @endif
-                                                        
-                                                 <input type="text" name="product_id" value=" {{ $relatedproduct->id }}"
-                                                        hidden>
-                                                  @if(count($relatedproduct->weights)>0)
-                                                            <input type="text" name="productSalePrice"
-                                                                   value="{{round($relatedproduct->weights[0]->productSalePrice)}}"
-                                                                   hidden="">
-                                                        @else
-                                                            <input type="text" name="productSalePrice"
-                                                                   value="{{ round($relatedproduct->ProductSalePrice) }}"
-                                                                   hidden="">
-                                                        @endif
-                                                  <input type="text" name="qty" value="1" id="qtyor" hidden>
-                                               <button class="add-to-cart p-0 m-0"
-                                                       style="background-color:transparent;border:0px;font-size:14px; font-weight: 500;"
-                                                       type="submit">
-                                                                                                        Buy Now
-                                               </button>
-                                                                                                  
-                                               </form>
-                                                </div>
-                                                </span>
                                 </div>
                             </div>
+
                         @empty
                         @endforelse
                     </div>
@@ -658,104 +493,7 @@
         </div>
         <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
     </div>
-    <!-- /.container -->
-</div>
-<!-- /.body-content -->
 
-{{--<div class="container mt-4">--}}
-
-{{--    <div class="row">--}}
-{{--        <div class="col-sm-12 p-0">--}}
-{{--            <section class="pb-2 section featured-product wow fadeInUp">--}}
-{{--                <div class="col-12" style="border-bottom: 1px solid #e62e04;padding-left: 0;display: flex;justify-content: space-between;">--}}
-{{--                    <div class="px-2 p-md-3 pt-0 d-flex justify-content-between" style="padding-bottom:4px !important;padding-top: 8px !important;">--}}
-{{--                        <h4 class="m-0"><b>Promotional Offers</b></h4>--}}
-{{--                    </div>--}}
-{{--                    <a href="{{ url('promotional/products') }}" class="btn btn-danger btn-sm mb-0" style="padding: 2px;height: 26px;color: white;font-weight: bold;margin-top:9px;">VIEW ALL</a>--}}
-{{--                </div>--}}
-{{--                <div class="owl-carousel " id="promotionalofferSlide">--}}
-{{--                    @forelse ($topproducts as $promotional)--}}
-{{--                        <div class="col-sm-12 col-xs-12 padding-zero product-hover-effect pb-4"--}}
-{{--                             style="background-color: #fff;padding: 0px;border: 1px solid #c6c6c6;">--}}
-{{--                            <a style="padding: 0px;overflow: hidden;"--}}
-{{--                               class="img-hover col-sm-12 padding-zero image_thum"--}}
-{{--                               href="{{ url('product/' . $promotional->ProductSlug) }}" id="374">--}}
-{{--                                <img class="img-fluid" style="margin: 0 auto;padding:5px; height: 175px"--}}
-{{--                                     src="{{ asset($promotional->ViewProductImage) }}">--}}
-{{--                            </a>--}}
-{{--                            <div class="col-sm-12 col-xs-12 product__item" style="">--}}
-{{--                                    <span id="productName374"--}}
-{{--                                          class="col-sm-12 text-center">{{$promotional->ProductName}}</span>--}}
-{{--                                @if(count($promotional->weights)>0)--}}
-
-{{--                                    <span id="productPrice374" class="col-sm-12  col-xs-12 text-center" style="">--}}
-{{--                                                Tk. {{ round($promotional->weights[0]->productSalePrice) }}   </span>--}}
-{{--                                @else--}}
-{{--                                    <span id="productPrice374" class="col-sm-12  col-xs-12 text-center" style="">--}}
-{{--                                                Tk. {{$promotional->ProductSalePrice}}   </span>--}}
-
-{{--                                @endif--}}
-
-{{--                                <span class="col-sm-12  col-xs-12 text-center product_form" style="">--}}
-{{--                                           --}}
-{{--                                                <div class="btn col-xs-12 col-sm-12 col-md-12"--}}
-{{--                                                     style="font-size: 21px;margin-bottom: 20px;background:#C50009;color:#fff">--}}
-{{--                                                  --}}
-{{--                                                    <form name="form" action="{{url('add-to-cart')}}" method="POST"--}}
-{{--                                                          enctype="multipart/form-data"--}}
-{{--                                                          style="width: 100%;float: left;text-align: center;">--}}
-{{--                                                  @method('POST')--}}
-{{--                                                        @csrf--}}
-{{--                                                 <input type="text" name="color" id="product_colorold" hidden>--}}
-{{--                                                 <input type="text" name="size" id="product_sizeold" hidden>--}}
-{{--                                              --}}
-{{--                                                        @if(count($promotional->weights)>0)--}}
-{{--                                                            <input type="text" name="weight" value="{{$promotional->weights[0]->weight_name}}"  hidden>--}}
-{{--                                                        @else--}}
-
-{{--                                                        @endif--}}
-{{--                                                        --}}
-{{--                                                 <input type="text" name="product_id" value=" {{ $promotional->id }}"--}}
-{{--                                                        hidden>--}}
-{{--                                                  @if(count($promotional->weights)>0)--}}
-{{--                                                            <input type="text" name="productSalePrice"--}}
-{{--                                                                   value="{{round($promotional->weights[0]->productSalePrice)}}"--}}
-{{--                                                                   hidden="">--}}
-{{--                                                        @else--}}
-{{--                                                            <input type="text" name="productSalePrice"--}}
-{{--                                                                   value="{{ round($promotional->ProductSalePrice) }}"--}}
-{{--                                                                   hidden="">--}}
-{{--                                                        @endif--}}
-{{--                                                  <input type="text" name="qty" value="1" id="qtyor" hidden>--}}
-{{--                                               <button class="add-to-cart p-0 m-0"--}}
-{{--                                                       style="background-color:transparent;border:0px;font-size:14px; font-weight: 500;"--}}
-{{--                                                       type="submit">--}}
-{{--                                                                                                        Buy Now--}}
-{{--                                               </button>--}}
-{{--                                                                                                  --}}
-{{--                                               </form>--}}
-{{--                                                </div>--}}
-{{--                                                </span>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    @empty--}}
-{{--                    @endforelse--}}
-{{--                </div>--}}
-{{--                <!-- /.home-owl-carousel -->--}}
-{{--            </section>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-
-{{--</div>--}}
-<!-- Body end -->
-
-
-{{-- modal for process and cart --}}
-
-
-
-
-{{-- csrf --}}
 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
 <script>
@@ -933,7 +671,7 @@
             dots: false,
             responsive: {
                 0: {
-                    items: 3,
+                    items: 2,
                 },
                 600: {
                     items: 3,
@@ -997,7 +735,7 @@
         $('#product_color').val(color);
 
         $('#product_colorOr').val(color);
-        
+
         $('.colortext').css('color','#000');
         $('.colortext').css('background','#fff');
         $('#colortext'+color).css('color','#fff');
@@ -1007,7 +745,7 @@
     function getsize(size) {
         $('#product_size').val(size);
         $('#product_sizeOr').val(size);
-        
+
         $('.sizetext').css('color','#000');
         $('.sizetext').css('background','#fff');
         $('#sizetext'+size).css('color','#fff');
@@ -1017,7 +755,7 @@
     function encodeID(id) {
         return id.replace(/[^a-zA-Z0-9]/g, '_');
     }
-    
+
     function getWeight(weight) {
         // console.log(weight);
 
@@ -1038,10 +776,10 @@
 
                 $('#orderProductPrice').val(res.productSalePrice);
                 $('#cartProductPrice').val(res.productSalePrice);
-                
+
                 $('#product_weight').val(weight);
                 $('#product_weightOr').val(weight);
-                
+
                 $('.weighttext').css('color','#000');
                 $('.weighttext').css('background','#fff');
 
@@ -1051,21 +789,21 @@
                 // console.log('Styles applied to:', '#weightText' + weight);
                 // console.log('Color:', $('#weightText' + weight).css('#fff'));
                 // console.log('Background:', $('#weightText' + weight).css('#613EEA'));
-                
-                
+
+
             },
             error: function(error) {
                 console.log('error');
 
-            
+
             }
         });
 
-     
+
     }
-    
-    
-    
+
+
+
 
 </script>
 

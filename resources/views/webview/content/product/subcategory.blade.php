@@ -6,15 +6,130 @@
 @endsection
 {{-- category slug --}}
 <input type="hidden" name="subcategory" id="subcategoryslug" value="{{ $subcategorysingle->slug }}">
+<style>
+    #featureimageCt {
+        height: 180px;
+        width: auto;
+        padding: 2px;
+        padding-top: 0;
+    }
+    @media only screen and (max-width: 600px) {
+       #featureimageCt {
+           height: 180px;
+            width: auto;
+            padding: 2px;
+            padding-top: 0;
+        }
+    }
 
+    @media screen and (max-width: 480px) {
+        .cat__bg .col-xs-3 {
+            width: 20% !important;
+        }
+    }
+
+    .col-xs-3 {
+        width: 20%;
+    }
+
+    .cat__img {
+        border-radius: 50%;
+        margin-bottom: 5px;
+    }
+
+    /*   Featured Product */
+    .image_thum {
+        width: 183px;
+        height: 183px;
+    }
+
+    .image_thum img {
+        width: 100%;
+        height: 100%;
+        min-height: 140px;
+        object-fit: contain;
+    }
+
+    .product__item {
+        padding: 0;
+        padding-top: 0px;
+        background: #dedede;
+    }
+
+    @media screen and (max-width: 480px) {
+        #productName374 {
+            height: 18px;
+        }
+    }
+
+    #productName374 {
+        padding: 0;
+        padding-bottom: 0px;
+        display: block;
+        line-height: 26px;
+        color: #000;
+        font-size: 12px;
+        height: 20px;
+        overflow: hidden;
+    }
+
+    #productPrice374 {
+        padding: 0;
+        padding-bottom: 10px;
+        display: block;
+        height: 28px;
+        line-height: 28px;
+        color: #000;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .product_form {
+        padding: 0;
+        display: block;
+        height: 21px;
+        font-size: 12px;
+        font-weight: bold !important;
+    }
+
+    /*    Button*/
+    button, input, select, textarea {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+
+    button, html input[type=button], input[type=reset], input[type=submit] {
+        -webkit-appearance: button;
+        cursor: pointer;
+    }
+
+    button, select {
+        text-transform: none;
+    }
+
+    button {
+        overflow: visible;
+    }
+
+    button, input, optgroup, select, textarea {
+        margin: 0;
+        font: inherit;
+        color: inherit;
+    }
+
+    .col-xs-12 {
+        width: 100%;
+    }
+</style>
 <!-- /.breadcrumb -->
 <div class="body-content outer-top-xs">
-    <div class="breadcrumb pt-2">
+    <div class="pt-2 breadcrumb">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="breadcrumb-inner p-0">
-                        <ul class="list-inline list-unstyled mb-0">
+                    <div class="p-0 breadcrumb-inner">
+                        <ul class="mb-0 list-inline list-unstyled">
                             <li><a href="#"
                                     style="text-transform: capitalize !important;color: #888;padding-right: 12px;font-size: 12px;">Home
                                     > subcategory > <span
@@ -28,32 +143,10 @@
         </div>
         <!-- /.container -->
     </div>
- 
+
     <div class='container'>
-        <div class='row'> 
-            <!-- /.sidebar -->
-            <div class='col-md-12' id="cateoryPro">
-                <div class="container" id="viewCategoryProduct">
+        <div class='row' id="viewCategoryProduct">
 
-                </div>
-                <!-- /.category-product -->
-
-
-                <!-- /.tab-content -->
-                <div class="clearfix filters-container">
-                    <div class="text-right">
-                        <div class="pagination-container">
-
-                        </div>
-                        <!-- /.pagination-container -->
-                    </div>
-                    <!-- /.text-right -->
-
-                </div>
-                <!-- /.filters-container -->
-
-            </div>
-            <!-- /.col -->
         </div>
 
         <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->

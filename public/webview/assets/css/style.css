@@ -38,13 +38,12 @@ button#purcheseBtn {
 .top-barhead .cnt-account ul>li {
     display: inline-block;
     line-height: 12px;
-    padding: 3px 12px 3px 7px;
-    border-right: 1px solid hsla(0, 0%, 100%, .2);
+    padding: 4px 4px 3px 0px;
     font-size: 12px;
 }
 
 .top-barhead .cnt-account ul>li a {
-    color: #000000;
+    color: #fff;
     font-size: 16px;
     padding: 0px;
     font-weight: 400;
@@ -200,15 +199,15 @@ button#purcheseBtn {
 .nav-box-number {
     position: absolute;
     top: 0;
-    left: 34px;
-    min-width: 25px;
+    left: 24px;
+    min-width: 16px;
     height: 16px;
-    line-height: 17px;
+    line-height: 16px;
     text-align: center;
-    border-radius: 8px;
+    border-radius: 10px;
     color: #fff;
     font-size: 12px;
-    background: #F27336;
+    background: #000;
 }
 
 .top-cart-row .dropdown-cart .lnk-cart .items-cart-inner .total-price-basket {
@@ -473,7 +472,7 @@ button#purcheseBtn {
 .side-menu-header {
     position: relative;
     color: #fff;
-    background: #F27336;
+    background: #000;
 }
 
 .side-menu-close {
@@ -748,16 +747,23 @@ button#purcheseBtn {
 #catimg {
     width: 100%;
     height: auto;
-    margin-top: 6px;
-    border-radius: 50%;
-    border: 2px solid #F27336;
+    border-radius: 8px;
+    box-shadow: 0px 1px 12px 4px #efefef;
 }
 
 #catp {
-    font-size: 13px;
-    margin: 0;
+    font-size: 14px;
+    background: #000000;
+    border-radius: 6px;
+    width: 86%;
+    margin: auto;
+    position: relative;
+    top: -10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    color: white;
+    font-weight: bold;
     text-align: center;
-    padding-top: 6px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -775,23 +781,22 @@ button#purcheseBtn {
     #catimg {
         width: 100%;
         height: auto;
-        /*margin-top: 6px;*/
-        border-radius: 50%;
-        border: 2px solid #F27336;
+        border-radius: 5px;
+        box-shadow: 0px 1px 12px 4px #efefef;
     }
     #catp {
-        font-size: 8px;
-        margin: 0;
+        font-size: 10px;
+        background: #000000;
+        border-radius: 6px;
+        width: 86%;
+        margin: auto;
+        position: relative;
+        top: -10px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        color: white;
+        font-weight: bold;
         text-align: center;
-        /*padding-top: 4px;*/
-
-        height: 17px;
-
-        white-space: nowrap;          /* Prevent text from wrapping to the next line */
-        overflow: hidden;             /* Hide the overflowed text */
-        /*text-overflow: ellipsis;      !* Display ellipsis (...) for overflowed text *!*/
-        /*width: 50px;*/
-
     }
 }
 
@@ -808,9 +813,10 @@ button#purcheseBtn {
 }
 
 #menu a {
-    color: #fff;
+    color: #000;
     text-decoration: none;
     padding: 10px 15px;
+    font-weight: bold;
 }
 
 #menu a:hover {
@@ -944,7 +950,7 @@ a:focus {
 }
 
 #categoryimage {
-    width: 100%; 
+    width: 100%;
 }
 
 #featureimage {
@@ -993,7 +999,7 @@ a:focus {
 }
 
 .footer .footer-bottom {
-    background: #F27336;
+    background: #000;
     padding-top: 30px;
     padding-bottom: 30px;
 }
@@ -1267,7 +1273,7 @@ ul.toggle-footer {
         box-shadow: 0 -1px 1px 0 rgb(0 0 0 / 15%);
         transition: transform 0.3s;
         -webkit-transition: transform 0.3s;
-        background-color: #F27336;
+        background-color: #333333;
         opacity: 1;
         border-radius: 6px 6px 0px 0px;
     }
@@ -1504,7 +1510,7 @@ ul.toggle-footer {
 .btn-base-1 {
     background: #fa5e2f;
     color: white;
-    padding: 8px 0px; 
+    padding: 8px 0px;
     font-weight: bold;
 }
 

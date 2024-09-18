@@ -57,7 +57,7 @@
 
 </head>
 
-<body class="main-body">
+<body class="main-body" style="    background: white;">
 
     <!-- header -->
     @include('webview.partials.header')
@@ -222,13 +222,13 @@
                 dots: false,
                 responsive: {
                     0: {
-                        items: 3,
+                        items: 2,
                     },
                     600: {
-                        items: 3,
+                        items: 2,
                     },
                     1000: {
-                        items: 6,
+                        items: 4,
                     }
                 }
             });
@@ -245,10 +245,10 @@
                 nav: true,
                 responsive: {
                     0: {
-                        items: 3,
+                        items: 2,
                     },
                     600: {
-                        items: 3,
+                        items: 2,
                     },
                     1000: {
                         items:6,
@@ -270,10 +270,10 @@
                     dots: false,
                     responsive: {
                         0: {
-                            items: 3,
+                            items: 2,
                         },
                         600: {
-                            items: 3,
+                            items: 2,
                         },
                         1000: {
                             items: 6,

@@ -4,17 +4,137 @@
 @section('title')
     {{ env('APP_NAME') }}-{{ $categorysingle->category_name }}
 @endsection
+
+<style>
+    #featureimageCt {
+        height: 180px;
+        width: auto;
+        padding: 2px;
+        padding-top: 0;
+    }
+    @media only screen and (max-width: 600px) {
+       #featureimageCt {
+           height: 180px;
+            width: auto;
+            padding: 2px;
+            padding-top: 0;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .cat__bg .col-xs-3 {
+            width: 20% !important;
+        }
+    }
+
+    .col-xs-3 {
+        width: 20%;
+    }
+
+    .cat__img {
+        border-radius: 50%;
+        margin-bottom: 5px;
+    }
+
+    /*   Featured Product */
+    .image_thum {
+        width: 183px;
+        height: 183px;
+    }
+
+    .image_thum img {
+        width: 100%;
+        height: 100%;
+        min-height: 140px;
+        object-fit: contain;
+    }
+
+    .product__item {
+        padding: 0;
+        padding-top: 0px;
+        background: #dedede;
+    }
+
+    @media screen and (max-width: 480px) {
+        #productName374 {
+            height: 18px;
+        }
+    }
+
+    #productName374 {
+        padding: 0;
+        padding-bottom: 0px;
+        display: block;
+        line-height: 26px;
+        color: #000;
+        font-size: 12px;
+        height: 20px;
+        overflow: hidden;
+    }
+
+    #productPrice374 {
+        padding: 0;
+        padding-bottom: 10px;
+        display: block;
+        height: 28px;
+        line-height: 28px;
+        color: #000;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .product_form {
+        padding: 0;
+        display: block;
+        height: 21px;
+        font-size: 12px;
+        font-weight: bold !important;
+    }
+
+    /*    Button*/
+    button, input, select, textarea {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+
+    button, html input[type=button], input[type=reset], input[type=submit] {
+        -webkit-appearance: button;
+        cursor: pointer;
+    }
+
+    button, select {
+        text-transform: none;
+    }
+
+    button {
+        overflow: visible;
+    }
+
+    button, input, optgroup, select, textarea {
+        margin: 0;
+        font: inherit;
+        color: inherit;
+    }
+
+    .col-xs-12 {
+        width: 100%;
+    }
+</style>
+
+
+
 {{-- category slug --}}
 <input type="hidden" name="category" id="categoryslug" value="{{ $categorysingle->slug }}">
 
 <!-- /.breadcrumb -->
 <div class="body-content outer-top-xs">
-    <div class="breadcrumb pt-2">
-        <div class="container">
+    <div class="pt-2 breadcrumb">
+        <div class="container p-0">
             <div class="row">
                 <div class="col-12">
-                    <div class="breadcrumb-inner p-0">
-                        <ul class="list-inline list-unstyled mb-0">
+                    <div class="p-0 breadcrumb-inner">
+                        <ul class="mb-0 list-inline list-unstyled">
                             <li><a href="#"
                                     style="text-transform: capitalize !important;color: #888;padding-right: 12px;font-size: 12px;">Home
                                     > category > <span class="active"></span>{{ $categorysingle->category_name }}</span>
@@ -27,87 +147,11 @@
         </div>
         <!-- /.container -->
     </div>
-      <section class="mt-1 mb-3">
-        <div class="container">
-            <div class="px-2 py-1 p-md-3 bg-white shadow-sm">
-                <div class="owl-carousel best-category" id="categorySlide">
-                    @forelse ($subcategories as $ctlist)
-                        <div class="item">
-                            <div class="products best-product">
-                                <div class="product" id="categoryslider">
-                                    <div class="product-micro">
-                                        <div class="row product-micro-row">
-                                            <div class="col-12">
-                                                <div class="product-image">
-                                                    <div class="image text-center">
-                                                        <a onclick="viewsubcategoryproduct('{{ $ctlist->slug }}')"
-                                                            type="button">
-                                                            @if (isset($ctlist->subcategory_icon))
-                                                                <img src="{{ asset($ctlist->subcategory_icon) }}"
-                                                                    alt="{{ $ctlist->sub_category_name }}"
-                                                                    id="categoryimage">
-                                                            @else
-                                                                <img src="{{ asset('public/webview/assets/images/categoryimage.jpg') }}"
-                                                                    alt="{{ $ctlist->sub_category_name }}"
-                                                                    id="categoryimage">
-                                                            @endif
-                                                        </a>
-                                                    </div>
-                                                    <!-- /.image -->
-                                                </div>
-                                                <!-- /.product-image -->
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col-12 text-center" style="padding-top: 8px;">
-                                                <div class="product-info">
-                                                    <h3 class="name" id="categoryNameinfo"><a
-                                                            onclick="viewsubcategoryproduct('{{ $ctlist->slug }}')"
-                                                            type="button"
-                                                            id="category_name">{{ $ctlist->sub_category_name }}</a>
-                                                    </h3>
-                                                </div>
-                                            </div>
-                                            <!-- /.col -->
-                                        </div>
-                                        <!-- /.product-micro-row -->
-                                    </div>
-                                    <!-- /.product-micro -->
-
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                    @endforelse
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <div class='container'>
-        <div class='row'> 
-            <!-- /.sidebar -->
-            <div class='col-md-12' id="cateoryPro">
-                <div class="container" id="viewCategoryProduct">
-
-                </div>
-                <!-- /.category-product -->
 
 
-                <!-- /.tab-content -->
-                <div class="clearfix filters-container">
-                    <div class="text-right">
-                        <div class="pagination-container">
+    <div class="container">
+        <div class="row" id="viewCategoryProduct">
 
-                        </div>
-                        <!-- /.pagination-container -->
-                    </div>
-                    <!-- /.text-right -->
-
-                </div>
-                <!-- /.filters-container -->
-
-            </div>
-            <!-- /.col -->
         </div>
 
         <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->

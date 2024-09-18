@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Middleware\TrackVisitor;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -29,7 +30,7 @@ Route::get('products/category/{slug}', [WebviewController::class, 'categoryprodu
 Route::get('products/brand/{slug}', [WebviewController::class, 'brandproduct']);
 Route::get('get/products/by-category', [WebviewController::class, 'getcategoryproduct']);
 Route::get('get/products/by-subcategory', [WebviewController::class, 'getsubcategoryproduct']);
-Route::get('products/sub/category/{slug}', [WebviewController::class, 'subcategoryproduct']); 
+Route::get('products/sub/category/{slug}', [WebviewController::class, 'subcategoryproduct']);
 Route::get('/search', [WebviewController::class, 'search'])->name('search');
 Route::get('/combo-offer', [WebviewController::class, 'combo'])->name('combo');
 
@@ -54,10 +55,15 @@ Route::get('get-search-content', [WebviewController::class, 'searchcontent']);
 Route::get('track-order', [WebviewController::class, 'orderTraking']);
 Route::post('track-now', [WebviewController::class, 'orderTrakingNow']);
 
+Route::get('/blogs', [WebviewController::class, 'blogPage'])->name('blogPage');
+Route::get('/blog/{blog:slug}', [WebviewController::class, 'blogDetails'])->name('blogDetails');
+
+
 Route::group(['middleware' => ['auth:web']], function () {
     Route::get('user/profile', [WebviewController::class, 'profile']);
     Route::post('update/profile', [WebviewController::class, 'updateprofile']);
     Route::get('user/purchase_history', [WebviewController::class, 'orderhistory']);
+    
 
 });
 
@@ -78,3 +84,18 @@ Route::get('/dummyPr',function ()
   return  Product::where('status','Active')->where('frature','0')->select('id','ProductName','ViewProductImage','ProductSlug','ProductSku','ProductRegularPrice','ProductSalePrice','Discount','ProductImage')->with('weights')->get()->reverse();
 }
 );
+
+
+// SSLCOMMERZ Start
+Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
+Route::get('/example2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
+
+Route::post('/pay', [SslCommerzPaymentController::class, 'index']);
+Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END

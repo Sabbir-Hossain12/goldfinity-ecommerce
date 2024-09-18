@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use App\Models\Weight;
 use Illuminate\Http\Request;
 use App\Models\Information;
@@ -249,6 +250,22 @@ class WebviewController extends Controller
 
         return response()->json($weight, 200);
     }
+
+
+    public function blogPage()
+    {
+        $blogs= Blog::where('status',1)->get();
+        return view('webview.content.blog.index',compact('blogs'));
+    }
+
+    public function blogDetails(Blog $blog)
+    {
+        $blogs= Blog::where('status',1)->get();
+
+        return view('webview.content.blog.details',compact('blog','blogs'));
+    }
+    
+    
 
 
 

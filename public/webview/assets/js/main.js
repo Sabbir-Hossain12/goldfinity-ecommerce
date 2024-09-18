@@ -2,12 +2,10 @@ function openLgNav() {
     // document.getElementById("mySidepanel").style.top = "80px";
     // document.getElementById("mySidepanel").style.left = "5%";
     document.getElementById("mySidepanel").style.width = "300px";
-    closesideMenu();
 }
 
 function openNav() {
     document.getElementById("mySidepanel").style.width = "280px";
-    closesideMenu();
 }
 
 function closeNav() {
