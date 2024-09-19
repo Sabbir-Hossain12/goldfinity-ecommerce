@@ -36,6 +36,12 @@
                                 <textarea class="form-control" placeholder="Office Address" name="address" id="floatingTextarea" style="height: 100px;">{{ $webinfo->address }}</textarea>
                                 <label for="floatingTextarea">Office Address</label>
                             </div>
+
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" placeholder="Preorder Text" name="preorder_text" id="preorder_text" style="height: 100px;">{{ $webinfo->preorder_text }}</textarea>
+                                <label for="preorder_text">Preorder Text</label>
+                            </div>
+                            
                         </div>
                         <div class="col-lg-6">
                             <div class="form-floating mb-3">

@@ -305,12 +305,14 @@
 
                                         @endif
                                 </div>
+                                @if($productdetails->preorder_status)
+                                    <span class="my-2 text-muted">{{\App\Models\Basicinfo::first()->preorder_text}}</span>
+                                @endif
                                 <!-- /.stock-container -->
                                 <div class="text-center quantity-container info-container"
                                     style="width: 100%;border-bottom: 1px solid #dfd6d6; float: left;">
 
-
-
+                                  
                                     <form name="form" id="AddToCartForm" method="POST" enctype="multipart/form-data"
                                         style="width: 50%;float: left;text-align: center;">
                                         @method('POST')

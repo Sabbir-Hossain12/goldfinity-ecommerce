@@ -35,6 +35,7 @@ class BasicinfoController extends Controller
         $webinfo->phone_one=$request-> phone_one;
         $webinfo->phone_two=$request-> phone_two;
         $webinfo->address=$request-> address;
+        $webinfo->preorder_text=$request->preorder_text;
         if($request->logo){
             if($webinfo->logo =='public/webview/assets/images/logo.png'){
             }else{

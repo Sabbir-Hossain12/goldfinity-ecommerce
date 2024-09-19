@@ -103,9 +103,20 @@
                                             @endif
                                         </select>
                                     </div>
+
+                                   
                                 </div>
                             </div>
-
+                            <div class="form-group mb-3" style="width: 50%">
+                                <label for="preorder_status" > PreOrder Status *</label>
+                                <select class="form-control" id="preorder_status"
+                                        style="background: black;" name="preorder_status">
+                                    <option  value="1" {{$product->preorder_status ? 'selected' : '' }}>Active</option>
+                                    <option value="0" {{$product->preorder_status ? '' : 'selected' }}>Inactive</option>
+                                    
+                                </select>
+                            </div>
+                            
                             <div class="form-group mb-3">
                                 <label for="ProductRegularPrice">Product Short Description <span
                                             class="text-danger">*</span></label>

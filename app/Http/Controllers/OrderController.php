@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Library\SslCommerz\SslCommerzNotification;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\Customer;
@@ -13,36 +14,39 @@ use App\Models\Admin;
 use Cart;
 use Session;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon; 
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
 
     public function pressorder(Request $request)
     {
+//        dd($request->all());
         $products = Cart::content();
 
-        
 
-
-        if(!Session::has('cart')){
+        $tansID = uniqid();
+        if (!Session::has('cart')) {
             return redirect('/empty-cart');
-        }elseif(Cart::count() == 0){
+        } elseif (Cart::count() == 0) {
             return redirect('/empty-cart');
-        }else{
-            $admin = Admin::whereHas('roles', function($q) { $q->where('name', 'user'); })->where('status','Active')->inRandomOrder()->first();
+        } else {
+            $admin = Admin::whereHas('roles', function ($q) {
+                $q->where('name', 'user');
+            })->where('status', 'Active')->inRandomOrder()->first();
 
-            $order= new Order();
+            $order = new Order();
             $order->user_id = $request->user_id;
             $order->store_id = 1;
             $order->invoiceID = $this->uniqueID();
+            $order->transID = $tansID;
             $order->subTotal = $request->subTotal;
             $order->deliveryCharge = $request->deliveryCharge;
             $order->orderDate = date('Y-m-d');
             $order->customerNote = '';
-            if(isset($admin)){
+            if (isset($admin)) {
                 $order->admin_id = $admin->id;
-            }else{
+            } else {
                 $admin = Admin::findOrfail(1);
                 $order->admin_id = $admin->id;
             }
@@ -59,39 +63,89 @@ class OrderController extends Controller
                     $orderProducts->order_id = $order->id;
                     $orderProducts->product_id = $product->id;
                     $orderProducts->productCode = $product->code;
-                    if($product->options['color']=='undefined'){
-                        
-                    }else{
+                    if ($product->options['color'] == 'undefined') {
+                    } else {
                         $orderProducts->color = $product->options['color'];
                     }
-                    
-                    if($product->options['size']=='undefined'){
-                        
-                    }else{
+
+                    if ($product->options['size'] == 'undefined') {
+                    } else {
                         $orderProducts->size = $product->options['size'];
-                    } 
-                    
-                    if ($product->options['weight'])
-                    {
+                    }
+
+                    if ($product->options['weight']) {
                         $orderProducts->weight = $product->options['weight'];
                     }
-                    
+
                     $orderProducts->productName = $product->name;
                     $orderProducts->quantity = $product->qty;
-                    
+
                     $orderProducts->productPrice = $product->price;
                     $orderProducts->save();
                 }
 
                 $notification = new Comment();
                 $notification->order_id = $order->id;
-                $notification->comment =  $order->invoiceID . ' Order Has Been Created for ' . $admin->name;
+                $notification->comment = $order->invoiceID.' Order Has Been Created for '.$admin->name;
                 $notification->admin_id = $order->admin_id;
                 $notification->save();
                 Cart::destroy();
                 Session::put('ordersubtotal', $request->subTotal);
                 Session::put('orderdeliverycharge', $request->deliveryCharge);
                 Session::put('order_id', $order->id);
+
+
+                if ($request->paymentMethod == 'sslcommerz') {
+                    $order = Order::where('transID', $tansID)->first();
+                    $order->payment_type_id = 6;
+                    $order->status = 'Payment Pending';
+                    $order->save();
+
+                    $post_data = array();
+                    $post_data['total_amount'] = $request->subTotal + $request->deliveryCharge; # You cant not pay less than 10
+                    $post_data['currency'] = "BDT";
+                    $post_data['tran_id'] = $tansID; // tran_id must be unique
+
+                    # CUSTOMER INFORMATION
+                    $post_data['cus_name'] = $request->customerName;
+                    $post_data['cus_email'] = 'customer@mail.com';
+                    $post_data['cus_add1'] = $request->customerAddress;
+                    $post_data['cus_add2'] = '';
+                    $post_data['cus_city'] = 'Dhaka';
+                    $post_data['cus_state'] = 'Dhaka';
+                    $post_data['cus_postcode'] = '';
+                    $post_data['cus_country'] = 'Bangladesh';
+                    $post_data['cus_phone'] = $request->customerPhone;
+                    $post_data['cus_fax'] = "123456";
+
+                    # SHIPMENT INFORMATION
+                    $post_data['ship_name'] = $request->customerName;
+                    $post_data['ship_add1'] = $request->customerAddress;
+                    $post_data['ship_add2'] = '';
+                    $post_data['ship_city'] = 'Dhaka';
+                    $post_data['ship_state'] = 'Dhaka';
+                    $post_data['ship_postcode'] = '';
+                    $post_data['ship_phone'] = $request->customerPhone;
+                    $post_data['ship_country'] = 'Bangladesh';
+
+                    $post_data['shipping_method'] = "NO";
+                    $post_data['product_name'] = "multivendor";
+                    $post_data['product_category'] = "Goods";
+                    $post_data['product_profile'] = "physical-goods";
+
+                    $sslc = new SslCommerzNotification();
+                    # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
+                    $payment_options = $sslc->makePayment($post_data, 'hosted');
+
+
+                    
+                    
+                    if (!is_array($payment_options)) {
+                        print_r($payment_options);
+                        $payment_options = array();
+                    }
+                }
+
                 toastr()->info('Order Press Successfully', 'Complete', ["positionClass" => "toast-top-center"]);
                 return redirect('order-received');
             } else {
@@ -103,7 +157,6 @@ class OrderController extends Controller
                 $response['message'] = 'Unsuccessful to press order';
             }
         }
-
     }
 
     public function uniqueID()
@@ -115,51 +168,57 @@ class OrderController extends Controller
             $orderID = 1;
         }
 
-        return 'BG77' . $orderID;
+        return 'BG77'.$orderID;
     }
 
     public function updatepaymentmethood(Request $request)
     {
-        $order=Order::where('id',$request->order_id)->first();
-        $order->Payment=$request->payment_option;
+        $order = Order::where('id', $request->order_id)->first();
+        $order->Payment = $request->payment_option;
         $order->update();
-        Session::put('successfulor','successfulor');
+        Session::put('successfulor', 'successfulor');
         return redirect('order/complete');
     }
-    
-    public function getorder(){
-		$from = date('Y-m-d' . ' 00:00:00', time()); //need a space after dates.
-        $to = date('Y-m-d' . ' 24:60:60', time());
+
+    public function getorder()
+    {
+        $from = date('Y-m-d'.' 00:00:00', time()); //need a space after dates.
+        $to = date('Y-m-d'.' 24:60:60', time());
 
 
         $now = Carbon::now();
         $yesterday = Carbon::now()->subDays(5);
 
-        $orders = DB::table('orders')->orderBy('id', 'DESC')->whereBetween('created_at',[$yesterday,$now])->take(200)->get();
-         
+        $orders = DB::table('orders')->orderBy('id', 'DESC')->whereBetween('created_at',
+            [$yesterday, $now])->take(200)->get();
+
         $orders->map(function ($order) {
             $order->products = DB::table('orderproducts')
-            ->leftjoin('products', 'orderproducts.product_id', '=', 'products.id')
-            ->where('orderproducts.order_id',$order->id)->select('products.*','orderproducts.*')->get(); 
+                ->leftjoin('products', 'orderproducts.product_id', '=', 'products.id')
+                ->where('orderproducts.order_id', $order->id)->select('products.*', 'orderproducts.*')->get();
             return $order;
         });
-        
+
         $orders->map(function ($order) {
-            $order->customers = DB::table('customers')->where('customers.order_id',$order->id)->select('customers.id','customers.order_id','customers.customerName','customers.customerPhone','customers.customerAddress')->get(); 
+            $order->customers = DB::table('customers')->where('customers.order_id', $order->id)->select('customers.id',
+                'customers.order_id', 'customers.customerName', 'customers.customerPhone',
+                'customers.customerAddress')->get();
             return $order;
         });
-         
+
         return response()->json($orders, 201);
-	}
-	
-	public function getproduct(){
-		$products = Product::select('id','ProductName','ProductSlug','ProductSku','ProductRegularPrice','ProductSalePrice','ProductImage','ViewProductImage','status')->where('status','Active')->get();
-		$response = [
-			'status' =>'s',
-			'products' =>$products,
-		];
-		return $products;
-	}
+    }
+
+    public function getproduct()
+    {
+        $products = Product::select('id', 'ProductName', 'ProductSlug', 'ProductSku', 'ProductRegularPrice',
+            'ProductSalePrice', 'ProductImage', 'ViewProductImage', 'status')->where('status', 'Active')->get();
+        $response = [
+            'status' => 's',
+            'products' => $products,
+        ];
+        return $products;
+    }
 
     /**
      * Display a listing of the resource.
@@ -189,7 +248,6 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-
     }
 
     /**

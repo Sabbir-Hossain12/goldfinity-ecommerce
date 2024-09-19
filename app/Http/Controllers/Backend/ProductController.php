@@ -111,6 +111,7 @@ class ProductController extends Controller
         $product->youtube_embade= $request->youtube_embade;
         $product->brand_id= $request->brand_id;
         $product->subcategory_id= $request->subcategory_id;
+        $product->preorder_status= $request->preorder_status;
 
         $product->meta_title= $request->meta_title;
         $product->meta_desc= $request->meta_desc;
@@ -284,6 +285,7 @@ class ProductController extends Controller
         $product->youtube_embade= $request->youtube_embade;
         $product->subcategory_id= $request->subcategory_id ?? null;
         $product->brand_id= $request->brand_id;
+        $product->preorder_status= $request->preorder_status;
 
         $product->meta_title= $request->meta_title;
         $product->meta_desc= $request->meta_desc;

@@ -39,7 +39,7 @@
                                 <header class="mb-4" style="background: green; ">
                                     <marquee behavior="alternate">
                                         <h1 class="m-0" style="color:white;font-size: 22px;">
-                     অর্ডার করতে নিচের ফর্মটি পূরণ করুন ....</h1></marquee>
+                                        অর্ডার করতে নিচের ফর্মটি পূরণ করুন ....</h1></marquee>
 
                                 </header>
                                 <form action="{{ url('press/order') }}" method="POST"
@@ -85,6 +85,19 @@
 
                                             </select>
                                         </div>
+
+                                        <div class="form-group col-sm-12">
+                                            <label for="paymentMethod">Select Payment Method </label>
+                                            <select id="paymentMethod" name="paymentMethod" class="form-control"
+                                                    onchange="paymentMethodChange()">
+                                                    <option value="cod" selected>Cash On Delivery</option>
+                                                    <option value="sslcommerz">SSLCommerz</option>
+
+                                            </select>
+                                        </div>
+                                        
+
+                                       
                                     </div>
                                     <div class="row">
                                         <div class="col-12 text-center">
@@ -271,6 +284,20 @@
 
     </style>
     <script>
+
+        function paymentMethodChange() {
+            
+            if ($('#paymentMethod').val() == 'cod') {
+                $('#orderConfirm').text('অর্ডার কনফার্ম করুন');
+            }
+            else
+            {
+
+                $('#orderConfirm').text('অনলাইন পেমেন্ট করুন');
+            }
+
+        }
+        
         function updatenum(id){
             var num=$('#QuantityPeo'+id).val();
             var fv=Number(num)+1;
